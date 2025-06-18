@@ -142,3 +142,46 @@ main.main-content {
   border-radius: 4px;
   padding: 4px;
 }
+
+@media (max-width: 768px) {
+  /* 1. 將整體改成直式排列 */
+  .wrapper {
+    flex-direction: column;
+  }
+
+  /* 2. 側邊選單拉成上方橫向滾動 */
+  nav.sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #ddd;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+  nav.sidebar ul {
+    display: flex;
+    white-space: nowrap;
+  }
+  nav.sidebar li {
+    flex: 0 0 auto;
+  }
+  nav.sidebar li ul {
+    display: none;  /* 隱藏子選單，或按需改成點擊展開 */
+  }
+
+  /* 3. 主要內容 full-width 並稍微壓窄 padding */
+  main.main-content {
+    padding: 10px;
+  }
+
+  /* 4. 卡片寬度縮小，2 欄或 1 欄 */
+  .product-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 12px;
+  }
+
+  /* 5. 表格匯出時也改用更小的字型 */
+  /* 如果你在匯出樣式也要響應，可加上： */
+  #export-container table {
+    font-size: 10px;
+  }
+}

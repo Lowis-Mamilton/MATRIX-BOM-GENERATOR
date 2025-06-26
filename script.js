@@ -45,8 +45,8 @@ document.addEventListener('DOMContentLoaded', () => {
     { code: "MJ2",           name: "MATRIX JOYSTICK II",             category: "JOY STICK" },
 
     // BATTERY
-    { code: "5521DC-06V2",   name: "6 Cell AA Battery Box",          category: "BATTERY" },
-    { code: "14-0004",       name: "Battery 9.6V SC2400mAH",         category: "BATTERY" },
+    { code: "5521DC-06V2_1",   name: "18650x2 Battery Box",          category: "BATTERY" },
+    { code: "5521DC-06V2_2",   name: "6 Cell AA Battery Box",         category: "BATTERY" },
     { code: "14-0004",       name: "Battery 9.6V SC2400mAH",         category: "BATTERY" },
 
     // SENSOR → ANALOG

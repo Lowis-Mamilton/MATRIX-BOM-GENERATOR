@@ -211,8 +211,8 @@ document.addEventListener('DOMContentLoaded', () => {
     {code:"13-0056", name:"Metal Gear - 56 Tooth", category:"GEAR"},
 
     // CHAIN KIT
-    {code:"#25-1X240", name:"Roller Chain 25 x 240 Link", category:"CHAIN KIT"},
-    {code:"#25-1X480", name:"Roller Chain 25 x 480 Link", category:"CHAIN KIT"},
+    {code:"25-1X240", name:"Roller Chain 25 x 240 Link", category:"CHAIN KIT"},
+    {code:"25-1X480", name:"Roller Chain 25 x 480 Link", category:"CHAIN KIT"},
     {code:"A025016", name:"25A Chain Gear - 16 Tooth", category:"CHAIN KIT"},
     {code:"A025024", name:"25A Chain Gear - 24 Tooth", category:"CHAIN KIT"},
     {code:"A025032", name:"25A Chain Gear - 32 Tooth", category:"CHAIN KIT"},
@@ -438,7 +438,7 @@ if (selected.length === 0) {
         bottom:20px;
         right:20px;
       ">
-        <img src="img/Matrix-icon-2.png" style="max-width:60px;">
+        <img src="img/Matrix-icon-2.png" style="max-width:160px;">
       </div>
     `;
 

@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
     { code: "MS-002V3",      name: "MATRIX Color Sensor V3",         category: "SENSOR", subCategory: "IIC" },
     { code: "MS-009V2",      name: "MATRIX Laser Sensor V2",         category: "SENSOR", subCategory: "IIC" },
     { code: "MS-017",        name: "MATRIX Gesture Sensor",          category: "SENSOR", subCategory: "IIC" },
-    { code: "BON055",        name: "BON055 Absolute Orientation IMU", category: "SENSOR", subCategory: "IIC" },
+    { code: "BNO055",        name: "BNO055 Absolute Orientation IMU", category: "SENSOR", subCategory: "IIC" },
 
     // SENSOR → UART
     { code: "MS-010",        name: "M-Vision AI Cam",                category: "SENSOR", subCategory: "UART" },

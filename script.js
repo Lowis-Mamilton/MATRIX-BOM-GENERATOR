@@ -1,3 +1,5 @@
+// script.js
+
 document.addEventListener('DOMContentLoaded', () => {
   // 主分類與子分類設定
   const categoryConfig = [
@@ -45,8 +47,8 @@ document.addEventListener('DOMContentLoaded', () => {
     { code: "MJ2",           name: "MATRIX JOYSTICK II",             category: "JOY STICK" },
 
     // BATTERY
-    { code: "5521DC-06V2_1",   name: "18650x2 Battery Box",          category: "BATTERY" },
-    { code: "5521DC-06V2_2",   name: "6 Cell AA Battery Box",         category: "BATTERY" },
+    { code: "18650-HD",   name: "18650x2 Battery Box",          category: "BATTERY" },
+    { code: "5521DC-06V2",   name: "6 Cell AA Battery Box",         category: "BATTERY" },
     { code: "14-0004",       name: "Battery 9.6V SC2400mAH",         category: "BATTERY" },
 
     // SENSOR → ANALOG
@@ -266,186 +268,183 @@ document.addEventListener('DOMContentLoaded', () => {
     {code:"13-0005", name:"Spacer - 4mm", category:"SCREW"},
     {code:"13-0004", name:"Spacer - 8mm", category:"SCREW"}
 ];
-// 初始化所有 qty 為 0
-productData.forEach(p => p.qty = p.qty || 0);
 
-const sidebar = document.getElementById('sidebar-menu');
-const content = document.getElementById('content-area');
+  productData.forEach(p => p.qty = p.qty || 0);
 
-// 3. 生成側邊選單
-categoryConfig.forEach(cat => {
-const li = document.createElement('li');
-const a  = document.createElement('a');
-a.textContent     = cat.name;
-a.dataset.cat     = cat.name;
-li.appendChild(a);
+  const sidebar = document.getElementById('sidebar-menu');
+  const content = document.getElementById('content-area');
 
-if (cat.sub) {
-    const ul = document.createElement('ul');
-    cat.sub.forEach(sub => {
-    const subLi = document.createElement('li');
-    const subA  = document.createElement('a');
-    subA.textContent     = sub;
-    subA.dataset.cat     = cat.name;
-    subA.dataset.sub     = sub;
-    subLi.appendChild(subA);
-    ul.appendChild(subLi);
+  categoryConfig.forEach(cat => {
+    const li = document.createElement('li');
+    const a  = document.createElement('a');
+    a.textContent = cat.name;
+    a.dataset.cat = cat.name;
+    li.appendChild(a);
+    if (cat.sub) {
+      const ul = document.createElement('ul');
+      cat.sub.forEach(sub => {
+        const subLi = document.createElement('li');
+        const subA  = document.createElement('a');
+        subA.textContent = sub;
+        subA.dataset.cat = cat.name;
+        subA.dataset.sub = sub;
+        subLi.appendChild(subA);
+        ul.appendChild(subLi);
+      });
+      li.appendChild(ul);
+    }
+    sidebar.appendChild(li);
+  });
+
+  sidebar.addEventListener('click', e => {
+    if (e.target.tagName !== 'A') return;
+    sidebar.querySelectorAll('li').forEach(li => li.classList.remove('active'));
+    e.target.parentNode.classList.add('active');
+    const parent = e.target.dataset.cat;
+    const sub    = e.target.dataset.sub;
+    showSection(sub || parent);
+  });
+
+  function showSection(key) {
+    content.innerHTML = '';
+    const isSub = categoryConfig.some(c => c.sub && c.sub.includes(key));
+    const items = isSub
+      ? productData.filter(p => p.subCategory === key)
+      : productData.filter(p => p.category === key);
+
+    const section = document.createElement('div');
+    section.className = 'product-section';
+    section.innerHTML = `<h2>${key}</h2><div class="product-grid"></div>`;
+    const grid = section.querySelector('.product-grid');
+
+    items.forEach(p => {
+      const card = document.createElement('div');
+      card.className = 'product-card';
+      card.innerHTML = `
+        <img src="img/${p.code}.png" alt="${p.code}">
+        <div class="product-code">${p.code}</div>
+        <div class="product-name">${p.name}</div>
+        <div class="quantity-control">
+          <button class="minus">−</button>
+          <input type="number" min="0" value="${p.qty}">
+          <button class="plus">＋</button>
+        </div>
+      `;
+      grid.appendChild(card);
+
+      const input = card.querySelector('input');
+      input.addEventListener('input', () => {
+        let v = Math.floor(Number(input.value));
+        if (isNaN(v) || v < 0) v = 0;
+        input.value = v;
+        p.qty = v;
+      });
+      card.querySelector('.minus').onclick = () => {
+        p.qty = Math.max(0, p.qty - 1);
+        input.value = p.qty;
+      };
+      card.querySelector('.plus').onclick = () => {
+        p.qty++;
+        input.value = p.qty;
+      };
     });
-    li.appendChild(ul);
-}
-sidebar.appendChild(li);
-});
 
-// 4. 側邊點擊
-sidebar.addEventListener('click', e => {
-if (e.target.tagName !== 'A') return;
-sidebar.querySelectorAll('li').forEach(li => li.classList.remove('active'));
-e.target.parentNode.classList.add('active');
-const parent = e.target.dataset.cat;
-const sub    = e.target.dataset.sub;
-showSection(sub || parent);
-});
+    content.appendChild(section);
+  }
 
-// 5. 顯示產品區塊
-function showSection(key) {
-content.innerHTML = '';
-const isSub = categoryConfig.some(c => c.sub && c.sub.includes(key));
-const items = isSub
-    ? productData.filter(p => p.subCategory === key)
-    : productData.filter(p => p.category === key);
+  const first = categoryConfig.find(c => !c.sub).name;
+  showSection(first);
+  document.querySelector(`nav.sidebar li > a[data-cat="${first}"]`)
+          .parentNode.classList.add('active');
 
-const section = document.createElement('div');
-section.className = 'product-section';
-section.innerHTML = `<h2>${key}</h2><div class="product-grid"></div>`;
-const grid = section.querySelector('.product-grid');
+  function showExportModal(cb) {
+    const m = document.createElement('div');
+    m.style = `
+      position:fixed;top:0;left:0;width:100%;height:100%;
+      background:rgba(0,0,0,0.4);display:flex;
+      justify-content:center;align-items:center;z-index:1000;
+    `;
+    m.innerHTML = `
+      <div style="background:#fff;padding:20px;border-radius:8px;min-width:300px;">
+        <h3>Export BOM</h3>
+        <label>NAME: <input id="export-name" style="width:100%"></label><br><br>
+        <label>FORMAT: 
+          <select id="export-format" style="width:100%">
+            <option value="pdf">PDF</option>
+            <option value="docx">Word (docx)</option>
+            <option value="xlsx">Excel (xlsx)</option>
+          </select>
+        </label><br><br>
+        <button id="export-cancel">CANCEL</button>
+        <button id="export-ok">CHECK</button>
+      </div>`;
+    document.body.appendChild(m);
+    m.querySelector('#export-cancel').onclick = () => m.remove();
+    m.querySelector('#export-ok').onclick = () => {
+      const name = m.querySelector('#export-name').value.trim();
+      const fmt  = m.querySelector('#export-format').value;
+      m.remove();
+      if (name) cb(name, fmt);
+    };
+  }
 
-items.forEach(p => {
-    const card = document.createElement('div');
-    card.className = 'product-card';
-    card.innerHTML = `
-    <img src="img/${p.code}.png" alt="${p.code}">
-    <div class="product-code">${p.code}</div>
-    <div class="product-name">${p.name}</div>
-    <div class="quantity-control">
-        <button class="minus">−</button>
-        <input type="number" min="0" value="${p.qty}">
-        <button class="plus">＋</button>
-    </div>`;
-    grid.appendChild(card);
-
-    const input = card.querySelector('input[type="number"]');
-    // 鍵盤輸入事件
-    input.addEventListener('input', () => {
-    let v = Math.floor(Number(input.value));
-    if (isNaN(v) || v < 0) v = 0;
-    input.value = v;
-    p.qty = v;
+  document.querySelector('.export-btn').addEventListener('click', () => {
+    showExportModal((userName, format) => {
+      const sel = productData.filter(p => p.qty > 0);
+      if (!sel.length) return alert("Didn't select any part yet.");
+      if (format === 'pdf')  exportPDF(userName, sel);
+      if (format === 'docx') exportDocx(userName, sel);
+      if (format === 'xlsx') exportXlsx(userName, sel);
     });
-    // 按鈕事件
-    card.querySelector('.minus').onclick = () => {
-    let v = p.qty;
-    p.qty = v = Math.max(0, v - 1);
-    input.value = v;
-    };
-    card.querySelector('.plus').onclick = () => {
-    p.qty = ++p.qty;
-    input.value = p.qty;
-    };
-});
+  });
 
-content.appendChild(section);
-}
-
-// 6. 初始化第一個分類
-const first = categoryConfig.find(c => !c.sub).name;
-showSection(first);
-document.querySelector(`nav.sidebar li > a[data-cat="${first}"]`)
-        .parentNode.classList.add('active');
-
-// 7. EXPORT 匯出 PDF
-document.querySelector('.export-btn').addEventListener('click', async () => {
-const userName = prompt('Please Enter Your Name:');
-if (!userName) return;
-const dateStr = new Date().toLocaleDateString();
-
-// 篩出有選數量的項目
-const selected = productData.filter(p => p.qty > 0);
-if (selected.length === 0) {
-    alert('No parts selected yet');
-    return;
-}
-
-    // 建立隱藏容器
-    const exportContainer = document.createElement('div');
-    exportContainer.style.position     = 'relative';
-    exportContainer.style.width        = '210mm';
-    exportContainer.style.minHeight    = '297mm';
-    exportContainer.style.padding      = '0';
-    exportContainer.style.margin       = '0';
-    exportContainer.style.fontFamily   = '"Microsoft JhengHei",sans-serif';
-    exportContainer.innerHTML = `
-      <div style="
-        width:100%;
-        background:#1e4f8a;
-        color:#fff;
-        text-align:center;
-        padding:12px 0;
-        font-size:18px;
-        font-weight:bold;
-      ">MATRIX Bill of Material</div>
-
-      <table style="
-        width:100%;
-        border:1px solid #000;
-        border-collapse:collapse;
-        font-size:12px;
-        table-layout:fixed;
-        margin-top:8px;
-      ">
-        <thead>
-          <tr>
-            <th style="border:1px solid #000;padding:6px;width:15%;">IMAGE</th>
-            <th style="border:1px solid #000;padding:6px;width:20%;">SKU</th>
-            <th style="border:1px solid #000;padding:6px;width:50%;">NAME</th>
-            <th style="border:1px solid #000;padding:6px;width:15%;">QTY</th>
-          </tr>
-        </thead>
+  async function exportPDF(userName, selected) {
+    const container = document.createElement('div');
+    container.style = `
+      position:relative;width:210mm;min-height:297mm;
+      padding:0;margin:0;font-family:"Microsoft JhengHei",sans-serif;
+    `;
+    container.innerHTML = `
+      <div style="width:100%;background:#1e4f8a;color:#fff;
+        text-align:center;padding:12px 0;font-size:18px;font-weight:bold;">
+        MATRIX Bill of Material
+      </div>
+      <table style="width:100%;border:1px solid #000;
+        border-collapse:collapse;font-size:12px;margin-top:8px;">
+        <thead><tr>
+          <th style="border:1px solid #000;padding:6px;width:15%;">IMAGE</th>
+          <th style="border:1px solid #000;padding:6px;width:20%;">SKU</th>
+          <th style="border:1px solid #000;padding:6px;width:50%;">NAME</th>
+          <th style="border:1px solid #000;padding:6px;width:15%;">QTY</th>
+        </tr></thead>
         <tbody>
           ${selected.map(p => `
             <tr>
               <td style="border:1px solid #000;padding:6px;text-align:center;">
                 <img src="img/${p.code}.png" style="max-width:40px;max-height:40px;">
               </td>
-              <td style="border:1px solid #000;padding:6px;text-align:center;">${p.code}</td>
-              <td style="border:1px solid #000;padding:6px;">${p.name}</td>
-              <td style="border:1px solid #000;padding:6px;text-align:center;">${p.qty}</td>
-            </tr>`).join('')}
+              <td style="border:1px solid #000;padding:6px;text-align:center;">
+                ${p.code}
+              </td>
+              <td style="border:1px solid #000;padding:6px;">
+                ${p.name}
+              </td>
+              <td style="border:1px solid #000;padding:6px;text-align:center;">
+                ${p.qty}
+              </td>
+            </tr>`
+          ).join('')}
         </tbody>
       </table>
-
-      <div style="
-        position:absolute;
-        bottom:20px;
-        left:20px;
-        font-size:12px;
-      ">
-        Name: ${userName}<br>
-        Date: ${new Date().toLocaleDateString()}
+      <div style="position:absolute;bottom:20px;left:20px;font-size:12px;">
+        Name: ${userName}<br>Date: ${new Date().toLocaleDateString()}
       </div>
-
-      <div style="
-        position:absolute;
-        bottom:20px;
-        right:20px;
-      ">
+      <div style="position:absolute;bottom:20px;right:20px;">
         <img src="img/Matrix-icon-2.png" style="max-width:160px;">
       </div>
     `;
-
-    document.body.appendChild(exportContainer);
-
-    // html2canvas + jsPDF
-    const canvas = await html2canvas(exportContainer, { scale:2 });
+    document.body.appendChild(container);
+    const canvas = await html2canvas(container, { scale: 2 });
     const imgData = canvas.toDataURL('image/png');
     const { jsPDF } = window.jspdf;
     const pdf = new jsPDF('p', 'mm', 'a4');
@@ -453,8 +452,106 @@ if (selected.length === 0) {
     const pdfH = (canvas.height * pdfW) / canvas.width;
     pdf.addImage(imgData, 'PNG', 0, 0, pdfW, pdfH);
     pdf.save('MATRIX_BOM.pdf');
+    document.body.removeChild(container);
+  }
 
-    document.body.removeChild(exportContainer);
-  });
+  async function fetchImageBuffer(url) {
+    const res = await fetch(url);
+    const buf = await res.arrayBuffer();
+    return new Uint8Array(buf);
+  }
+
+  async function exportDocx(userName, selected) {
+    const docxGlobal = window.docx;
+    if (!docxGlobal) return alert('did not load word export lib, please make sure you inlude index.iife.js');
+    const {
+      Document, Packer, Paragraph,
+      Table, TableRow, TableCell,
+      ImageRun, WidthType, HeadingLevel
+    } = docxGlobal;
+
+    const buffers = await Promise.all(
+      selected.map(p => fetchImageBuffer(`img/${p.code}.png`))
+    );
+
+    const rows = [
+      new TableRow({
+        children: [
+          new TableCell({ children: [ new Paragraph('IMAGE') ] }),
+          new TableCell({ children: [ new Paragraph('SKU') ] }),
+          new TableCell({ children: [ new Paragraph('NAME') ] }),
+          new TableCell({ children: [ new Paragraph('QTY') ] }),
+        ]
+      }),
+      ...selected.map((p, i) => new TableRow({
+        children: [
+          new TableCell({ children: [
+            new Paragraph({
+              children: [
+                new ImageRun({
+                  data: buffers[i],
+                  transformation: { width: 40, height: 40 }
+                })
+              ]
+            })
+          ]}),
+          new TableCell({ children: [ new Paragraph(p.code) ] }),
+          new TableCell({ children: [ new Paragraph(p.name) ] }),
+          new TableCell({ children: [ new Paragraph(p.qty.toString()) ] }),
+        ]
+      }))
+    ];
+
+    const table = new Table({
+      rows,
+      width: { size: 100, type: WidthType.PERCENTAGE }
+    });
+
+    const doc = new Document({
+      sections: [{
+        children: [
+          new Paragraph({ text: 'MATRIX Bill of Material', heading: HeadingLevel.HEADING_1 }),
+          new Paragraph(`Name: ${userName}`),
+          new Paragraph(`Date: ${new Date().toLocaleDateString()}`),
+          table
+        ]
+      }]
+    });
+
+    const blob = await Packer.toBlob(doc);
+    saveAs(blob, 'MATRIX_BOM.docx');
+  }
+
+
+  async function exportXlsx(userName, selected) {
+    if (!window.ExcelJS || typeof saveAs !== 'function') {
+      return alert('請確認已載入 exceljs.min.js 與 FileSaver.js');
+    }
+    const workbook = new ExcelJS.Workbook();
+    const sheet = workbook.addWorksheet('BOM');
+
+    sheet.columns = [
+      { header: 'IMAGE', key: 'image', width: 15 },
+      { header: 'SKU',   key: 'sku',   width: 20 },
+      { header: 'NAME',  key: 'name',  width: 50 },
+      { header: 'QTY',   key: 'qty',   width: 10 },
+    ];
+
+    for (let i = 0; i < selected.length; i++) {
+      const p = selected[i];
+      const buf = await fetchImageBuffer(`img/${p.code}.png`);
+      const imageId = workbook.addImage({ buffer: buf, extension: 'png' });
+      const rowIndex = i + 2;
+
+      sheet.addRow({ sku: p.code, name: p.name, qty: p.qty });
+      sheet.addImage(imageId, {
+        tl: { col: 0, row: rowIndex - 1 },
+        ext: { width: 40, height: 40 }
+      });
+    }
+
+    const buffer = await workbook.xlsx.writeBuffer();
+    saveAs(new Blob([buffer], { type: 'application/octet-stream' }), 'MATRIX_BOM.xlsx');
+  }
 
 });

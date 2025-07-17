@@ -27,7 +27,9 @@ document.addEventListener('DOMContentLoaded', () => {
     { name: "LINEAR SLIDE" },
     { name: "LEADSCREW" },
     { name: "WHEEL" },
-    { name: "SCREW" }
+    { name: "SCREW" },
+    { name: "NUT" },
+    { name: "WAHSER & SPACER"}
   ];
 
   // 產品資料：category 主分類，subCategory 子分類（需時才用）
@@ -56,16 +58,22 @@ document.addEventListener('DOMContentLoaded', () => {
     { code: "MS-003V3",      name: "MATRIX Grayscale Sensor V3",     category: "SENSOR", subCategory: "ANALOG" },
     { code: "MS-013",        name: "MATRIX Potentiometer Sensor",    category: "SENSOR", subCategory: "ANALOG" },
     { code: "MS-014",        name: "MATRIX Water Level Sensor",      category: "SENSOR", subCategory: "ANALOG" },
+    { code: "MS-016",        name: "MATRIX Soil Moister Sensor",      category: "SENSOR", subCategory: "ANALOG" },
+    { code: "28995",        name: "IR Range Sensor (10cm to 80cm)",   category: "SENSOR", subCategory: "ANALOG" },
 
     // SENSOR → DIGITAL
     { code: "MS-004V2",      name: "MATRIX Miniature Switch V2",     category: "SENSOR", subCategory: "DIGITAL" },
     { code: "MS-004V3",      name: "MATRIX Miniature Switch V3",     category: "SENSOR", subCategory: "DIGITAL" },
     { code: "MS-001",        name: "MATRIX Motion Sensor",           category: "SENSOR", subCategory: "DIGITAL" },
+    { code: "MS-011",        name: "MATRIX Temperature & Humidity Sensor",   category: "SENSOR", subCategory: "DIGITAL" },
     { code: "MS-012",        name: "MATRIX PIR Motion Sensor",       category: "SENSOR", subCategory: "DIGITAL" },
+    { code: "MS-015",        name: "MATRIX One Wire Temperature Sensor",    category: "SENSOR", subCategory: "DIGITAL" },
+    { code: "28015",        name: "PING Ultrasonic Distance Sensor",       category: "SENSOR", subCategory: "DIGITAL" },
 
     // SENSOR → IIC
     { code: "MS-002V2",      name: "MATRIX Color Sensor V2",         category: "SENSOR", subCategory: "IIC" },
     { code: "MS-002V3",      name: "MATRIX Color Sensor V3",         category: "SENSOR", subCategory: "IIC" },
+    { code: "MS-009",        name: "MATRIX Laser Sensor",         category: "SENSOR", subCategory: "IIC" },
     { code: "MS-009V2",      name: "MATRIX Laser Sensor V2",         category: "SENSOR", subCategory: "IIC" },
     { code: "MS-017",        name: "MATRIX Gesture Sensor",          category: "SENSOR", subCategory: "IIC" },
     { code: "BNO055",        name: "BNO055 Absolute Orientation IMU", category: "SENSOR", subCategory: "IIC" },
@@ -195,8 +203,13 @@ document.addEventListener('DOMContentLoaded', () => {
     {code:"09-0004", name:"4mm Joiner Block with M3 set screw", category:"JOINER & COLLAR"},
 
     // HUB
+    {code:"08-0006", name:"4mm Omni Flat Wheel Nut", category:"HUB"},
+    {code:"08-0024", name:"4mm Omni Thin Wheel with M4 set screw", category:"HUB"},
     {code:"08-0007", name:"4mm Hub with M4 set screw", category:"HUB"},
+    {code:"08-0014", name:"6mm Omni Flat Wheel Nut", category:"HUB"},
+    {code:"08-0013", name:"6mm Omni Thin Wheel with M4 set screw", category:"HUB"},
     {code:"08-0008", name:"6mm Hub with M4 set screw", category:"HUB"},
+    {code:"08-0039", name:"6mm Flanged Ball Bearing", category:"HUB"},
 
     // BEARING TUBE
     {code:"08-0015", name:"4mm Bearing Tube - 15mm", category:"BEARING TUBE"},
@@ -211,6 +224,7 @@ document.addEventListener('DOMContentLoaded', () => {
     {code:"13-0024", name:"Metal Gear - 24 Tooth", category:"GEAR"},
     {code:"13-0040", name:"Metal Gear - 40 Tooth", category:"GEAR"},
     {code:"13-0056", name:"Metal Gear - 56 Tooth", category:"GEAR"},
+    {code:"13-0104", name:"MMetal Gear - 104 Tooth", category:"GEAR"},
 
     // CHAIN KIT
     {code:"25-1X240", name:"Roller Chain 25 x 240 Link", category:"CHAIN KIT"},
@@ -227,6 +241,7 @@ document.addEventListener('DOMContentLoaded', () => {
     {code:"2GT-852-6", name:"2GT Synchronous Belt - 852 x 6mm", category:"SYNCHRONOUS WHEEL"},
 
     // LINEAR SLIDE
+    {code:"12-0001", name:"Tooth Belt -7 Hole", category:"LINEAR SLIDE"},
     {code:"12-0002", name:"Linear Slide - 3 Hole", category:"LINEAR SLIDE"},
     {code:"MGN09H", name:"HIWIN Miniature Guides MGN HIRES Series", category:"LINEAR SLIDE"},
     {code:"MGN15H", name:"HIWIN Miniature Guides MGN HIRES Series", category:"LINEAR SLIDE"},
@@ -262,11 +277,23 @@ document.addEventListener('DOMContentLoaded', () => {
     {code:"11-4124", name:"M4 Button Head Screw - 24mm", category:"SCREW"},
     {code:"11-4140", name:"M4 Button Head Screw - 40mm", category:"SCREW"},
     {code:"11-4604", name:"M4 Cylinder Head Screw - 4mm", category:"SCREW"},
-    {code:"11-4501", name:"M4 Hex Nut", category:"SCREW"},
-    {code:"11-4502", name:"M4 Hex Nut with Tooth Washer", category:"SCREW"},
-    {code:"11-4503", name:"M4 Hex Nut with Nylon Lock", category:"SCREW"},
-    {code:"13-0005", name:"Spacer - 4mm", category:"SCREW"},
-    {code:"13-0004", name:"Spacer - 8mm", category:"SCREW"}
+
+    // NUT
+    {code:"11-4501", name:"M4 Hex Nut", category:"NUT"},
+    {code:"11-4502", name:"M4 Hex Nut with Tooth Washer", category:"NUT"},
+    {code:"11-4503", name:"MM4 Hex Nut with Nylon Lock", category:"NUT"},
+    {code:"11-6000", name:"MATRIX Quick Connector – Battery Box", category:"NUT"},
+    {code:"11-6050", name:"MATRIX Quick Connector - 5mm", category:"NUT"},
+    {code:"11-6070", name:"MATRIX Quick Connector - 7mm", category:"NUT"},
+    {code:"11-6120", name:"MATRIX Quick Connector - 12mm", category:"NUT"},
+
+    // WASHER/SPACER
+    {code:"11-4402", name:"M4 Nylon Washer", category:"WAHSER & SPACER"},
+    {code:"11-4403", name:"M4 Nylon Shoulder Washer", category:"WAHSER & SPACER"},
+    {code:"09-0003", name:"M4 Standoff Spacer - 16mm", category:"WAHSER & SPACER"},
+    {code:"09-0001", name:"M4 Standoff Spacer - 32mm", category:"WAHSER & SPACER"},
+    {code:"13-0005", name:"Spacer -4mm", category:"WAHSER & SPACER"},
+    {code:"13-0004", name:"Spacer -48m", category:"WAHSER & SPACER"},
 ];
 
   productData.forEach(p => p.qty = p.qty || 0);

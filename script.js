@@ -169,6 +169,9 @@ document.addEventListener('DOMContentLoaded', () => {
     {code:"03-0001", name:"Beam Joiner - 1D Straight", category:"BEAM JOINER"},
     {code:"03-0002", name:"Beam Joiner - 2D Right Angle", category:"BEAM JOINER"},
     {code:"03-0003", name:"Beam Joiner - 3D Right Angle", category:"BEAM JOINER"},
+    {code:"03-0301", name:"Beam Joiner XL-1D Straight", category:"BEAM JOINER"},
+    {code:"03-0302", name:"Beam Joiner XL-2D Right Angle", category:"BEAM JOINER"},
+    {code:"03-0303", name:"Beam Joiner XL-3D Right Angle", category:"BEAM JOINER"},
 
     // SPECIAL PLATE
     {code:"17-0709", name:"Triangle Plate 6-8-10 Hole", category:"SPECIAL PLATE"},
@@ -264,6 +267,7 @@ document.addEventListener('DOMContentLoaded', () => {
     {code:"13-0015", name:"6mm Plastic Mecanum Wheel - 100mm", category:"WHEEL"},
     {code:"TT-TIRE_OR", name:"MATRIX TT Wheel (Off-Road)", category:"WHEEL"},
     {code:"TT-TIRE_B", name:"MATRIX TT Wheel (Blue Rim)", category:"WHEEL"},
+    {code:"13-0010", name:"MATRIX Steel Ball Caster", category:"WHEEL"},
 
     // SCREW
     {code:"11-3104", name:"M3 Button Head Screw - 4mm", category:"SCREW"},

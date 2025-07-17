@@ -198,6 +198,7 @@ document.addEventListener('DOMContentLoaded', () => {
     {code:"08-0021", name:"4mm to 4mm Coupling with M4 set screw", category:"JOINER & COLLAR"},
     {code:"08-0020", name:"4mm to 6mm Adaptor with M4 set screw", category:"JOINER & COLLAR"},
     {code:"08-0031", name:"4mm to TT Adapter with M4 set screw", category:"JOINER & COLLAR"},
+    {code:"08-0037", name:"4mm to TT Adapter with M4 set screw", category:"JOINER & COLLAR"},
     {code:"08-0032", name:"6mm Axle Collar with M4 set screw", category:"JOINER & COLLAR"},
     {code:"08-0033", name:"6mm to 6mm Coupling with M4 set screw", category:"JOINER & COLLAR"},
     {code:"09-0004", name:"4mm Joiner Block with M3 set screw", category:"JOINER & COLLAR"},
@@ -385,35 +386,75 @@ document.addEventListener('DOMContentLoaded', () => {
           .parentNode.classList.add('active');
 
   function showExportModal(cb) {
-    const m = document.createElement('div');
-    m.style = `
-      position:fixed;top:0;left:0;width:100%;height:100%;
-      background:rgba(0,0,0,0.4);display:flex;
-      justify-content:center;align-items:center;z-index:1000;
-    `;
-    m.innerHTML = `
-      <div style="background:#fff;padding:20px;border-radius:8px;min-width:300px;">
-        <h3>Export BOM</h3>
-        <label>NAME: <input id="export-name" style="width:100%"></label><br><br>
-        <label>FORMAT: 
-          <select id="export-format" style="width:100%">
-            <option value="pdf">PDF</option>
-            <option value="docx">Word (docx)</option>
-            <option value="xlsx">Excel (xlsx)</option>
-          </select>
-        </label><br><br>
-        <button id="export-cancel">CANCEL</button>
-        <button id="export-ok">CHECK</button>
-      </div>`;
-    document.body.appendChild(m);
-    m.querySelector('#export-cancel').onclick = () => m.remove();
-    m.querySelector('#export-ok').onclick = () => {
-      const name = m.querySelector('#export-name').value.trim();
-      const fmt  = m.querySelector('#export-format').value;
-      m.remove();
-      if (name) cb(name, fmt);
-    };
-  }
+  const m = document.createElement('div');
+  m.style = `
+    position:fixed; top:0; left:0;
+    width:100%; height:100%;
+    background:rgba(0,0,0,0.4);
+    display:flex; justify-content:center; align-items:center;
+    z-index:1000;
+  `;
+  m.innerHTML = `
+    <div style="
+      background:#fff;
+      padding:20px;
+      border-radius:8px;
+      min-width:300px;
+      text-align:center;            /* 文字置中 */
+      font-size:14px;
+      font-family:Microsoft JhengHei;
+    ">
+      <h3 style="margin-bottom:16px;">Export BOM</h3>
+
+      <div style="margin-bottom:12px;">
+        <label style="display:block; margin-bottom:4px;">Name</label>
+        <input id="export-name" style="width:80%; padding:6px;"/>
+      </div>
+
+      <div style="margin-bottom:20px;">
+        <label style="display:block; margin-bottom:4px;">Format</label>
+        <select id="export-format" style="width:80%; padding:6px;">
+          <option value="pdf">PDF</option>
+          <option value="docx">Word (docx)</option>
+          <option value="xlsx">Excel (xlsx)</option>
+        </select>
+      </div>
+
+      <button id="export-cancel"
+              style="
+                background:#e74c3c;     /* 紅色 */
+                color:#fff;
+                border:none;
+                padding:8px 16px;
+                border-radius:4px;
+                margin-right:12px;
+                cursor:pointer;
+              ">
+        CANCEL
+      </button>
+      <button id="export-ok"
+              style="
+                background:#27ae60;     /* 綠色 */
+                color:#fff;
+                border:none;
+                padding:8px 16px;
+                border-radius:4px;
+                cursor:pointer;
+              ">
+        EXPORT
+      </button>
+    </div>
+  `;
+  document.body.appendChild(m);
+  m.querySelector('#export-cancel').onclick = () => m.remove();
+  m.querySelector('#export-ok').onclick = () => {
+    const name = m.querySelector('#export-name').value.trim();
+    const fmt  = m.querySelector('#export-format').value;
+    m.remove();
+    if (name) cb(name, fmt);
+  };
+}
+
 
   document.querySelector('.export-btn').addEventListener('click', () => {
     showExportModal((userName, format) => {

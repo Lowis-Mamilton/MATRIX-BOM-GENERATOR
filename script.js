@@ -146,6 +146,7 @@ document.addEventListener('DOMContentLoaded', () => {
     {code:"04-0307", name:"Gusset Plate 3 x 7 Hole", category:"GUSSET PLATE"},
     {code:"04-0309", name:"Gusset Plate 3 x 9 Hole", category:"GUSSET PLATE"},
     {code:"04-0505", name:"Gusset Plate 5 x 5 Hole", category:"GUSSET PLATE"},
+    {code:"04-0921", name:"Gusset Plate 9 x 21 Hole",category:"GUSSET PLATE"},
 
     // C SHAPED BEAM
     {code:"06-0005", name:"C Shaped Beam - 5 Hole", category:"C SHAPED BEAM"},

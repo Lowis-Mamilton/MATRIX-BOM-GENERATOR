@@ -471,19 +471,35 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  async function exportPDF(userName, selected) {
+async function exportPDF(userName, selected) {
+  const { jsPDF } = window.jspdf;
+  const pdf = new jsPDF('p', 'mm', 'a4');
+  const pageWidth = pdf.internal.pageSize.getWidth();
+  const itemsPerPage = 18;
+  const totalPages = Math.ceil(selected.length / itemsPerPage);
+
+  for (let page = 0; page < totalPages; page++) {
+    const chunk = selected.slice(page * itemsPerPage, (page + 1) * itemsPerPage);
+
     const container = document.createElement('div');
     container.style = `
-      position:relative;width:210mm;min-height:297mm;
-      padding:0;margin:0;font-family:"Microsoft JhengHei",sans-serif;
+      position:relative;
+      width:210mm; min-height:297mm;
+      padding:0; margin:0;
+      font-family:"Microsoft JhengHei",sans-serif;
     `;
+
     container.innerHTML = `
-      <div style="width:100%;background:#1e4f8a;color:#fff;
-        text-align:center;padding:12px 0;font-size:18px;font-weight:bold;">
-        MATRIX Bill of Material
-      </div>
-      <table style="width:100%;border:1px solid #000;
-        border-collapse:collapse;font-size:12px;margin-top:8px;">
+      <div style="
+        width:100%;background:#1e4f8a;color:#fff;
+        text-align:center;padding:12px 0;
+        font-size:18px;font-weight:bold;
+      ">MATRIX Bill of Material (Page ${page+1}/${totalPages})</div>
+      <table style="
+        width:100%;border:1px solid #000;
+        border-collapse:collapse;font-size:12px;
+        margin-top:8px;table-layout:fixed;
+      ">
         <thead><tr>
           <th style="border:1px solid #000;padding:6px;width:15%;">IMAGE</th>
           <th style="border:1px solid #000;padding:6px;width:20%;">SKU</th>
@@ -491,7 +507,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <th style="border:1px solid #000;padding:6px;width:15%;">QTY</th>
         </tr></thead>
         <tbody>
-          ${selected.map(p => `
+          ${chunk.map(p => `
             <tr>
               <td style="border:1px solid #000;padding:6px;text-align:center;">
                 <img src="img/${p.code}.png" style="max-width:40px;max-height:40px;">
@@ -505,28 +521,37 @@ document.addEventListener('DOMContentLoaded', () => {
               <td style="border:1px solid #000;padding:6px;text-align:center;">
                 ${p.qty}
               </td>
-            </tr>`
-          ).join('')}
+            </tr>`).join('')}
         </tbody>
       </table>
-      <div style="position:absolute;bottom:20px;left:20px;font-size:12px;">
+      <div style="
+        position:absolute;bottom:20px;left:20px;font-size:12px;
+      ">
         Name: ${userName}<br>Date: ${new Date().toLocaleDateString()}
       </div>
-      <div style="position:absolute;bottom:20px;right:20px;">
+      <div style="
+        position:absolute;bottom:20px;right:20px;
+      ">
         <img src="img/Matrix-icon-2.png" style="max-width:160px;">
       </div>
     `;
+
     document.body.appendChild(container);
-    const canvas = await html2canvas(container, { scale: 2 });
+
+    const canvas = await html2canvas(container, { scale: 2, useCORS: true });
     const imgData = canvas.toDataURL('image/png');
-    const { jsPDF } = window.jspdf;
-    const pdf = new jsPDF('p', 'mm', 'a4');
-    const pdfW = pdf.internal.pageSize.getWidth();
-    const pdfH = (canvas.height * pdfW) / canvas.width;
-    pdf.addImage(imgData, 'PNG', 0, 0, pdfW, pdfH);
-    pdf.save('MATRIX_BOM.pdf');
+    const imgProps = pdf.getImageProperties(imgData);
+    const pdfHeight = (imgProps.height * pageWidth) / imgProps.width;
+
+    if (page > 0) pdf.addPage();
+    pdf.addImage(imgData, 'PNG', 0, 0, pageWidth, pdfHeight);
+
     document.body.removeChild(container);
   }
+
+  pdf.save('MATRIX_BOM.pdf');
+}
+
 
   async function fetchImageBuffer(url) {
     const res = await fetch(url);
@@ -604,7 +629,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const sheet = workbook.addWorksheet('BOM');
 
     sheet.columns = [
-      { header: 'IMAGE', key: 'image', width: 15 },
+      { header: 'IMAGE', key: 'image', width: 20 },
       { header: 'SKU',   key: 'sku',   width: 20 },
       { header: 'NAME',  key: 'name',  width: 50 },
       { header: 'QTY',   key: 'qty',   width: 10 },

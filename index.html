@@ -24,6 +24,24 @@
     <main class="main-content" id="content-area"></main>
   </div>
 
+  <!-- 已選清單浮動購物籃 + 右側面板 -->
+  <div id="cart-fab" aria-label="Selected items">
+    <!-- 你也可以換成自己的購物籃 png -->
+    <img src="img/shoppingbasket.png">
+    <span id="cart-count">0</span>
+  </div>
+
+  <div id="cart-overlay"></div>
+
+  <aside id="selected-panel">
+    <div class="panel-header">
+      <h3>Selected Items</h3>
+      <button id="panel-close" aria-label="Close">✕</button>
+    </div>
+    <div id="selected-list"></div>
+  </aside>
+
+
   <!-- PDF -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>

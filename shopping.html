@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MATRIX Store</title>
+
+  <link rel="shortcut icon" href="img/Matrix-icon.png" type="image/x-icon">
+  <link rel="stylesheet" href="shopstyle.css">
+</head>
+
+<body>
+
+  <header>
+    <div class="logo">
+      <img src="img/Matrix-icon-white.png" alt="MATRIX Logo">
+      <h1>MATRIX STORE</h1>
+    </div>
+    <button class="export-btn">EXPORT</button>
+  </header>
+
+  <div class="wrapper">
+    <nav class="sidebar">
+      <ul id="sidebar-menu"></ul>
+    </nav>
+
+    <main class="main-content" id="content-area"></main>
+  </div>
+
+  <!-- 右下角購物袋 -->
+  <div id="cart-fab" aria-label="Shopping Bag">
+    <img src="img/shoppingbasket.png">
+    <span id="cart-count">0</span>
+  </div>
+
+  <!-- 背景遮罩 -->
+  <div id="cart-overlay"></div>
+
+  <!-- 右側購物袋面板 -->
+  <aside id="selected-panel">
+    <div class="panel-header">
+      <h3>Shopping Bag</h3>
+      <button id="panel-close" aria-label="Close">✕</button>
+    </div>
+
+    <div id="selected-list"></div>
+
+    <div class="cart-summary">
+      <div>Subtotal: <b>NT$<span id="cart-subtotal">0</span></b></div>
+      <div style="font-size:12px;color:#888;margin-top:4px;">
+        Shipping: <span id="cart-shipping">Calculated at export</span>
+      </div>
+      <div class="cart-total">Total: NT$<span id="cart-total">0</span></div>
+    </div>
+  </aside>
+
+  <!-- PDF 匯出套件 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <!-- 主程式 -->
+  <script src="shopscript.js"></script>
+</body>
+</html>

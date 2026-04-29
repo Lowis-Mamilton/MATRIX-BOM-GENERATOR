@@ -352,15 +352,89 @@ main.main-content {
     flex-direction: column;
   }
 
+  /* ── Sidebar as horizontal scrollable tab bar ── */
   nav.sidebar {
     width: 100%;
+    min-height: unset;
+    border-right: none;
+    border-bottom: 2px solid #ddd;
+    background: #fff;
     overflow-x: auto;
+    overflow-y: visible;
+    -webkit-overflow-scrolling: touch;
   }
 
-  nav.sidebar ul {
+
+
+  nav.sidebar > ul {
     display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    padding: 0;
+    margin: 0;
   }
 
+  nav.sidebar > ul > li {
+    flex-shrink: 0;
+    position: relative;
+  }
+
+  nav.sidebar > ul > li > a {
+    display: block;
+    padding: 10px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+    border-bottom: 3px solid transparent;
+  }
+
+  nav.sidebar > ul > li.active > a {
+    color: #1e4f8a;
+    border-bottom: 3px solid #1e4f8a;
+    text-decoration: none;
+  }
+
+  nav.sidebar > ul > li > a:hover {
+    text-decoration: none;
+    color: #1e4f8a;
+  }
+
+  /* Sub-category dropdown below active tab */
+  nav.sidebar li ul {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 0 0 6px 6px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    z-index: 500;
+    min-width: 180px;
+    padding: 4px 0;
+    white-space: nowrap;
+  }
+
+  nav.sidebar li.active ul {
+    display: block;
+  }
+
+  nav.sidebar li ul li a {
+    padding: 8px 16px;
+    font-size: 13px;
+    display: block;
+    color: #333;
+  }
+
+  nav.sidebar li ul li.active a,
+  nav.sidebar li ul li a:hover {
+    color: #1e4f8a;
+    background: #f0f5ff;
+    text-decoration: none;
+  }
+
+  /* ── Main content ── */
   main.main-content {
     padding: 10px;
   }
@@ -369,6 +443,12 @@ main.main-content {
     grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
   }
 
+  .product-card img {
+    max-width: 80px;
+    height: 80px;
+  }
+
+  /* ── Cart panel full width ── */
   #selected-panel {
     width: 100%;
     right: -100%;

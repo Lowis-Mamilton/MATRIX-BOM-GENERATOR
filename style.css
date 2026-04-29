@@ -45,6 +45,22 @@ header .export-btn:hover {
   transition: 0.2s;
 }
 
+header .store-btn {
+  background: #ff07b56e;
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+header .store-btn:hover {
+  background: white;
+  color: #ff07b5be;;
+  transition: 0.2s;
+}
+
 /* layout */
 .wrapper {
   flex: 1;

@@ -950,29 +950,8 @@ document.addEventListener("DOMContentLoaded", () => {
       document.body.removeChild(container);
     }
 
-    // ─── 輸出：手機用 Web Share API，桌機直接 save ─────────────
-    const fileName = "MATRIX_STORE_Order.pdf";
-    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-
-    if (isMobile) {
-      // 手機：用 blob + Web Share API（支援 AirDrop / 儲存至檔案）
-      try {
-        const pdfBlob = pdf.output("blob");
-        const file    = new File([pdfBlob], fileName, { type: "application/pdf" });
-        if (navigator.canShare && navigator.canShare({ files: [file] })) {
-          await navigator.share({ files: [file], title: "MATRIX Store Order" });
-          return;
-        }
-      } catch (e) {
-        // 使用者取消或 share 失敗，fallback 到 datauristring
-      }
-      // iOS fallback：用 data URI 在新分頁開啟（可長按存檔）
-      const dataUri = pdf.output("datauristring");
-      window.open(dataUri, "_blank");
-    } else {
-      // 桌機：直接 save（最穩定）
-      pdf.save(fileName);
-    }
+    // ─── 統一用 pdf.save() 下載 ───────────────────────────────
+    pdf.save("MATRIX_STORE_Order.pdf");
   }
 
   // ─── Init ────────────────────────────────────────────────────

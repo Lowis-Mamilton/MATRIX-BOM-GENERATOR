@@ -289,25 +289,25 @@ document.addEventListener("DOMContentLoaded", () => {
   { code:"11-3104", name:"M3 Button Head Screw - 4mm", category:"SCREW", price:0, weight:200 },
   { code:"11-3106", name:"M3 Button Head Screw - 6mm", category:"SCREW", price:0, weight:200 },
   { code:"11-3204", name:"M3 Flat Point set screw - 4.5mm", category:"SCREW", price:0, weight:200 },
-  { code:"11-3404", name:"M4 Flat Point set screw - 4mm", category:"SCREW", price:1, weight:200 },
+  { code:"11-3404", name:"M4 Flat Point set screw - 4mm", category:"SCREW", price:100, weight:200 },
   { code:"11-3608", name:"M3 Cylinder Head Screw - 8mm", category:"SCREW", price:0, weight:200, eol:true },
-  { code:"11-4108", name:"M4 Button Head Screw - 8mm", category:"SCREW", price:4, weight:200 },
-  { code:"11-4112", name:"M4 Button Head Screw - 12mm", category:"SCREW", price:2, weight:200 },
-  { code:"11-4116", name:"M4 Button Head Screw - 16mm", category:"SCREW", price:2, weight:200 },
-  { code:"11-4120", name:"M4 Button Head Screw - 20mm", category:"SCREW", price:5, weight:200 },
-  { code:"11-4124", name:"M4 Button Head Screw - 24mm", category:"SCREW", price:3, weight:200 },
-  { code:"11-4140", name:"M4 Button Head Screw - 40mm", category:"SCREW", price:4, weight:200 },
+  { code:"11-4108", name:"M4 Button Head Screw - 8mm", category:"SCREW", price:400, weight:200 },
+  { code:"11-4112", name:"M4 Button Head Screw - 12mm", category:"SCREW", price:200, weight:200 },
+  { code:"11-4116", name:"M4 Button Head Screw - 16mm", category:"SCREW", price:200, weight:200 },
+  { code:"11-4120", name:"M4 Button Head Screw - 20mm", category:"SCREW", price:500, weight:200 },
+  { code:"11-4124", name:"M4 Button Head Screw - 24mm", category:"SCREW", price:300, weight:200 },
+  { code:"11-4140", name:"M4 Button Head Screw - 40mm", category:"SCREW", price:400, weight:200 },
   { code:"11-4604", name:"M4 Cylinder Head Screw - 4mm", category:"SCREW", price:0, weight:200, eol:true },
 
   // NUT
-  { code:"11-4501", name:"M4 Hex Nut", category:"NUT", price:1, weight:200 },
-  { code:"11-4502", name:"M4 Hex Nut with Tooth Washer", category:"NUT", price:2, weight:200 },
-  { code:"11-4503", name:"MM4 Hex Nut with Nylon Lock", category:"NUT", price:6, weight:200 },
+  { code:"11-4501", name:"M4 Hex Nut", category:"NUT", price:100, weight:200 },
+  { code:"11-4502", name:"M4 Hex Nut with Tooth Washer", category:"NUT", price:200, weight:200 },
+  { code:"11-4503", name:"MM4 Hex Nut with Nylon Lock", category:"NUT", price:600, weight:200 },
   { code:"11-6000", name:"MATRIX Quick Connector – Battery Box", category:"NUT", price:125, weight:200 },
-  { code:"11-6050", name:"MATRIX Quick Connector - 5mm", category:"NUT", price:1.25, weight:200 },
-  { code:"11-6070", name:"MATRIX Quick Connector - 7mm", category:"NUT", price:1.25, weight:200 },
-  { code:"11-6120", name:"MATRIX Quick Connector - 12mm", category:"NUT", price:1.25, weight:200 },
-  { code:"11-7050", name:"MATRIX Quick Connector - TB Link", category:"NUT", price:1.25, weight:200 },
+  { code:"11-6050", name:"MATRIX Quick Connector - 5mm", category:"NUT", price:125, weight:200 },
+  { code:"11-6070", name:"MATRIX Quick Connector - 7mm", category:"NUT", price:125, weight:200 },
+  { code:"11-6120", name:"MATRIX Quick Connector - 12mm", category:"NUT", price:125, weight:200 },
+  { code:"11-7050", name:"MATRIX Quick Connector - TB Link", category:"NUT", price:125, weight:200 },
 
   // WASHER / SPACER
   { code:"11-4402", name:"M4 Nylon Washer", category:"WAHSER & SPACER", price:200, weight:200 },
@@ -837,7 +837,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const { jsPDF }    = window.jspdf;
     const pdf          = new jsPDF("p", "mm", "a4");
     const pageWidth    = pdf.internal.pageSize.getWidth();
-    const itemsPerPage = 16;
+    const itemsPerPage = 18;
     const totalPages   = Math.ceil(selected.length / itemsPerPage);
     const subtotal     = selected.reduce((s, p) => s + p.price * p.qty, 0);
     const shipping     = order.shippingFee;
@@ -850,6 +850,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return m;
     };
 
+    // 載入圖片轉 DataURL，避免 canvas tainted
     function loadImg(src) {
       return new Promise(resolve => {
         const img = new Image();
@@ -871,40 +872,48 @@ document.addEventListener("DOMContentLoaded", () => {
       const dataUrls = await Promise.all(chunk.map(p => loadImg(`img/${p.code}.png`)));
 
       const container = document.createElement("div");
-      container.style.cssText = `
-        position:relative;width:210mm;min-height:297mm;
-        padding:0;margin:0;background:#fff;
+      container.style = `
+        position:relative;
+        width:210mm; min-height:297mm;
+        padding:0; margin:0; background:#fff;
         font-family:"Microsoft JhengHei",sans-serif;
       `;
+
       container.innerHTML = `
-        <div style="width:100%;background:#1e4f8a;color:#fff;text-align:center;padding:12px 0;font-size:18px;font-weight:bold;">
-          MATRIX Store Order Sheet (Page ${page + 1}/${totalPages})
-        </div>
-        <div style="padding:12px 18px;font-size:12px;line-height:1.6;">
+        <div style="
+          width:100%;background:#1e4f8a;color:#fff;
+          text-align:center;padding:12px 0;
+          font-size:18px;font-weight:bold;
+        ">MATRIX Store Order Sheet (Page ${page + 1}/${totalPages})</div>
+
+        <div style="padding:10px 18px 6px;font-size:12px;line-height:1.7;">
           <b>Customer Info</b><br>
           Name: ${order.name}<br>
           Address: ${order.address}<br>
           Package Weight: ${order.weight}g<br>
-          Shipping Method: ${methodName(order.shippingMethod)}
+          Shipping: ${methodName(order.shippingMethod)}
         </div>
-        <table style="width:calc(100% - 36px);margin:0 18px;border:1px solid #000;border-collapse:collapse;font-size:11px;table-layout:fixed;">
-          <thead>
-            <tr>
-              <th style="border:1px solid #000;padding:5px;width:12%;">IMAGE</th>
-              <th style="border:1px solid #000;padding:5px;width:18%;">SKU</th>
-              <th style="border:1px solid #000;padding:5px;width:36%;">NAME</th>
-              <th style="border:1px solid #000;padding:5px;width:10%;">QTY</th>
-              <th style="border:1px solid #000;padding:5px;width:12%;">PRICE</th>
-              <th style="border:1px solid #000;padding:5px;width:12%;">SUBTOTAL</th>
-            </tr>
-          </thead>
+
+        <table style="
+          width:100%;border:1px solid #000;
+          border-collapse:collapse;font-size:11px;
+          margin-top:4px;table-layout:fixed;
+        ">
+          <thead><tr>
+            <th style="border:1px solid #000;padding:5px;width:12%;">IMAGE</th>
+            <th style="border:1px solid #000;padding:5px;width:18%;">SKU</th>
+            <th style="border:1px solid #000;padding:5px;width:36%;">NAME</th>
+            <th style="border:1px solid #000;padding:5px;width:10%;">QTY</th>
+            <th style="border:1px solid #000;padding:5px;width:12%;">PRICE</th>
+            <th style="border:1px solid #000;padding:5px;width:12%;">SUBTOTAL</th>
+          </tr></thead>
           <tbody>
             ${chunk.map((p, i) => `
               <tr>
                 <td style="border:1px solid #000;padding:5px;text-align:center;">
                   ${dataUrls[i]
                     ? `<img src="${dataUrls[i]}" style="max-width:36px;max-height:36px;">`
-                    : `<span style="font-size:9px;color:#999;">No Img</span>`}
+                    : `<div style="width:36px;height:36px;display:inline-block;border:1px solid #ccc;font-size:9px;line-height:36px;color:#999;">No Img</div>`}
                 </td>
                 <td style="border:1px solid #000;padding:5px;text-align:center;">${p.code}</td>
                 <td style="border:1px solid #000;padding:5px;">${p.name}</td>
@@ -915,16 +924,18 @@ document.addEventListener("DOMContentLoaded", () => {
             `).join("")}
           </tbody>
         </table>
+
         ${page === totalPages - 1 ? `
           <div style="position:absolute;right:18px;bottom:70px;width:220px;font-size:13px;line-height:1.8;border-top:2px solid #000;padding-top:8px;">
             <div>Subtotal: NT$${formatMoney(subtotal)}</div>
             <div>Shipping: NT$${formatMoney(shipping)}</div>
             <div style="font-size:18px;font-weight:bold;color:#1e4f8a;">Total: NT$${formatMoney(total)}</div>
           </div>` : ""}
-        <div style="position:absolute;bottom:20px;right:18px;font-size:12px;">
+
+        <div style="position:absolute;bottom:20px;left:20px;font-size:12px;">
           Date: ${new Date().toLocaleDateString()}
         </div>
-        <div style="position:absolute;bottom:18px;left:18px;">
+        <div style="position:absolute;bottom:18px;right:18px;">
           <img src="img/Matrix-icon-2.png" style="max-width:140px;">
         </div>
       `;
@@ -939,32 +950,29 @@ document.addEventListener("DOMContentLoaded", () => {
       document.body.removeChild(container);
     }
 
-    // ─── 手機分享 / 桌機下載 ─────────────────────────────────
+    // ─── 輸出：手機用 Web Share API，桌機直接 save ─────────────
     const fileName = "MATRIX_STORE_Order.pdf";
-    const pdfBlob  = pdf.output("blob");
-    const blobUrl  = URL.createObjectURL(pdfBlob);
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
-    if (navigator.share && navigator.canShare) {
-      const file = new File([pdfBlob], fileName, { type: "application/pdf" });
-      if (navigator.canShare({ files: [file] })) {
-        try {
+    if (isMobile) {
+      // 手機：用 blob + Web Share API（支援 AirDrop / 儲存至檔案）
+      try {
+        const pdfBlob = pdf.output("blob");
+        const file    = new File([pdfBlob], fileName, { type: "application/pdf" });
+        if (navigator.canShare && navigator.canShare({ files: [file] })) {
           await navigator.share({ files: [file], title: "MATRIX Store Order" });
-          URL.revokeObjectURL(blobUrl);
           return;
-        } catch (e) {
-          // 使用者取消或失敗，fallback 下載
         }
+      } catch (e) {
+        // 使用者取消或 share 失敗，fallback 到 datauristring
       }
+      // iOS fallback：用 data URI 在新分頁開啟（可長按存檔）
+      const dataUri = pdf.output("datauristring");
+      window.open(dataUri, "_blank");
+    } else {
+      // 桌機：直接 save（最穩定）
+      pdf.save(fileName);
     }
-
-    const a = document.createElement("a");
-    a.href = blobUrl;
-    a.download = fileName;
-    a.target = "_blank";
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    setTimeout(() => URL.revokeObjectURL(blobUrl), 10000);
   }
 
   // ─── Init ────────────────────────────────────────────────────

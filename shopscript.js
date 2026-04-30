@@ -318,7 +318,28 @@ document.addEventListener("DOMContentLoaded", () => {
   { code:"13-0004", name:"Spacer -48m", category:"WAHSER & SPACER", price:0, weight:200 },
   ];
 
-  productData.forEach(p => p.qty = 0);
+  // MOQ 設定 (最低購買量)
+  const MOQ_MAP = {
+    // SCREW & NUT (bag/pack 銷售)
+    "11-3104": 100, "11-3106": 100, "11-3204": 100, "11-3404": 100,
+    "11-3608": 100, "11-4108": 100, "11-4112": 100, "11-4116": 100,
+    "11-4120": 100, "11-4124": 100, "11-4140": 100, "11-4604": 100,
+    "11-4501": 100, "11-4502": 100, "11-4503": 100,
+    "11-4402": 100, "11-4403": 100,
+    // Quick Connector (20pcs/bag)
+    "11-6000": 20, "11-6050": 20, "11-6070": 20, "11-6120": 20, "11-7050": 20,
+    // Spacer
+    "13-0005": 10, "13-0004": 10,
+    // TT Wheel
+    "TT-TIRE_OR": 2, "TT-TIRE_B": 2,
+    // Bearing Tube
+    "08-0015": 2, "08-0030": 2, "08-0018": 2, "08-0017": 2,
+  };
+
+  productData.forEach(p => {
+    p.qty = 0;
+    p.moq = MOQ_MAP[p.code] || 1;
+  });
 
   // ─── DOM refs ────────────────────────────────────────────────
   const sidebar       = document.getElementById("sidebar-menu");
@@ -453,81 +474,173 @@ document.addEventListener("DOMContentLoaded", () => {
     const sub        = e.target.dataset.sub;
     const cat        = e.target.dataset.cat;
 
-    // 手機版：點有子分類的父項目時 toggle dropdown，不導航
-    if (isMobile && isTopLevel && hasSub && !sub) {
-      const isAlreadyActive = clickedLi.classList.contains("active");
-      sidebar.querySelectorAll("li").forEach(li => li.classList.remove("active"));
-      if (!isAlreadyActive) clickedLi.classList.add("active");
-      return;
-    }
-
-    // 其他：設定 active 並顯示內容
     sidebar.querySelectorAll("li").forEach(li => li.classList.remove("active"));
     clickedLi.classList.add("active");
 
-    // 點子分類時，同時標記父 li active（讓 dropdown 保持展開）
+    // 手機版：點有子分類的父項目 → 直接顯示所有子分類產品，不展開 dropdown
+    if (isMobile && isTopLevel && hasSub && !sub) {
+      showSection(cat, true);
+      return;
+    }
+
+    // 桌機版子分類：同時標記父 li active（保持 dropdown 展開）
     if (sub) {
       const parentLi = clickedLi.parentNode.parentNode;
       if (parentLi && parentLi.tagName === "LI") parentLi.classList.add("active");
     }
 
-    showSection(sub || cat);
+    showSection(sub || cat, false);
   });
 
   // ─── Product section ─────────────────────────────────────────
-  function showSection(key) {
+  function showSection(key, mobileAll = false) {
     content.innerHTML = "";
 
-    const isSub = categoryConfig.some(c => c.sub && c.sub.includes(key));
-    const items = isSub
-      ? productData.filter(p => p.subCategory === key)
-      : productData.filter(p => p.category === key);
+    const catConfig  = categoryConfig.find(c => c.name === key);
+    const hasSub     = catConfig && catConfig.sub && catConfig.sub.length > 0;
+    const isSub      = categoryConfig.some(c => c.sub && c.sub.includes(key));
+
+    let items;
+    if (mobileAll && hasSub) {
+      // 手機模式：直接列出所有子分類的產品，不分組
+      items = productData.filter(p => p.category === key);
+    } else if (isSub) {
+      items = productData.filter(p => p.subCategory === key);
+    } else {
+      items = productData.filter(p => p.category === key);
+    }
 
     const section = document.createElement("div");
     section.className = "product-section";
-    section.innerHTML = `<h2>${key}</h2><div class="product-grid"></div>`;
-    const grid = section.querySelector(".product-grid");
+
+    const header = document.createElement("div");
+    header.className = "section-header";
+    header.innerHTML = `
+      <h2>${key}</h2>
+      <span class="section-count">${items.length} items</span>
+    `;
+    section.appendChild(header);
+
+    const grid = document.createElement("div");
+    grid.className = "product-grid";
+    section.appendChild(grid);
 
     items.forEach(p => {
       const card = document.createElement("div");
-      card.className = "product-card";
-      if (p.eol) card.classList.add("eol");
+      card.className = "product-card" + (p.eol ? " eol" : "");
 
-      card.innerHTML = `
-        <img src="img/${p.code}.png" alt="${p.code}" onerror="this.style.visibility='hidden'">
-        <div class="product-code">${p.code}</div>
-        <div class="product-name">${p.name}</div>
-        <div class="product-price">NT$${formatMoney(p.price)}</div>
-        <div class="quantity-control">
-          <button class="minus">−</button>
-          <input type="number" min="0" value="${p.qty}">
-          <button class="plus">＋</button>
-        </div>
-      `;
+      // Image area
+      const imgWrap = document.createElement("div");
+      imgWrap.className = "card-img-wrap";
+      if (p.eol) {
+        const eolBadge = document.createElement("span");
+        eolBadge.className = "badge-eol";
+        eolBadge.textContent = "EOL";
+        imgWrap.appendChild(eolBadge);
+      }
+      if (p.price === 0 && !p.eol) {
+        const naBadge = document.createElement("span");
+        naBadge.className = "badge-na";
+        naBadge.textContent = "INQUIRE";
+        imgWrap.appendChild(naBadge);
+      }
+      const img = document.createElement("img");
+      img.src = `img/${p.code}.png`;
+      img.alt = p.code;
+      img.onerror = function() { this.style.visibility = "hidden"; };
+      imgWrap.appendChild(img);
+      card.appendChild(imgWrap);
 
+      // Card body
+      const body = document.createElement("div");
+      body.className = "card-body";
+
+      const codeEl = document.createElement("div");
+      codeEl.className = "product-code";
+      codeEl.textContent = p.code;
+
+      const nameEl = document.createElement("div");
+      nameEl.className = "product-name";
+      nameEl.textContent = p.name;
+
+      const priceEl = document.createElement("div");
+      priceEl.className = "product-price" + (p.price === 0 ? " na" : "");
+      priceEl.textContent = p.price === 0 ? "Price on request" : `NT$${formatMoney(p.price)}`;
+
+      const moqEl = document.createElement("div");
+      moqEl.className = "moq-badge";
+      moqEl.innerHTML = `<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 7H4a2 2 0 00-2 2v10a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2z"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg> MOQ: ${p.moq}`;
+
+      // Quantity control — built as real DOM elements so events work
+      const qtyRow = document.createElement("div");
+      qtyRow.className = "qty-row";
+
+      const qtyCtrl = document.createElement("div");
+      qtyCtrl.className = "quantity-control";
+
+      const minusBtn = document.createElement("button");
+      minusBtn.className = "minus";
+      minusBtn.textContent = "−";
+      minusBtn.type = "button";
+
+      const qtyInput = document.createElement("input");
+      qtyInput.type = "number";
+      qtyInput.min = "0";
+      qtyInput.value = p.qty;
+
+      const plusBtn = document.createElement("button");
+      plusBtn.className = "plus";
+      plusBtn.textContent = "+";
+      plusBtn.type = "button";
+
+      qtyCtrl.appendChild(minusBtn);
+      qtyCtrl.appendChild(qtyInput);
+      qtyCtrl.appendChild(plusBtn);
+      qtyRow.appendChild(qtyCtrl);
+
+      body.appendChild(codeEl);
+      body.appendChild(nameEl);
+      body.appendChild(priceEl);
+      body.appendChild(moqEl);
+      body.appendChild(qtyRow);
+      card.appendChild(body);
       grid.appendChild(card);
 
-      const input = card.querySelector("input");
-
-      input.addEventListener("change", () => {
-        let v = Math.floor(Number(input.value));
+      // ── Event handlers ──────────────────────
+      function applyMOQ(val) {
+        let v = Math.floor(Number(val));
         if (isNaN(v) || v < 0) v = 0;
-        input.value = v;
+        if (v > 0 && v < p.moq) v = p.moq; // snap up to MOQ
+        return v;
+      }
+
+      function setQty(v) {
         p.qty = v;
+        qtyInput.value = v;
         updateCart();
+      }
+
+      plusBtn.addEventListener("click", () => {
+        const current = p.qty;
+        if (current === 0) {
+          setQty(p.moq); // first click → jump to MOQ
+        } else {
+          setQty(current + 1);
+        }
       });
 
-      card.querySelector(".minus").onclick = () => {
-        p.qty = Math.max(0, p.qty - 1);
-        input.value = p.qty;
-        updateCart();
-      };
+      minusBtn.addEventListener("click", () => {
+        const current = p.qty;
+        if (current <= p.moq) {
+          setQty(0); // drop to 0 (remove from cart)
+        } else {
+          setQty(current - 1);
+        }
+      });
 
-      card.querySelector(".plus").onclick = () => {
-        p.qty++;
-        input.value = p.qty;
-        updateCart();
-      };
+      qtyInput.addEventListener("change", () => {
+        setQty(applyMOQ(qtyInput.value));
+      });
     });
 
     content.appendChild(section);
@@ -542,7 +655,11 @@ document.addEventListener("DOMContentLoaded", () => {
     selectedList.innerHTML = "";
 
     if (selected.length === 0) {
-      selectedList.innerHTML = `<div style="color:#666;font-size:13px;padding:8px;">No items selected.</div>`;
+      selectedList.innerHTML = `
+        <div class="empty-bag">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+          <span>Your bag is empty</span>
+        </div>`;
     }
 
     selected.forEach(p => {
@@ -553,14 +670,13 @@ document.addEventListener("DOMContentLoaded", () => {
       const row = document.createElement("div");
       row.className = "selected-item";
       row.innerHTML = `
-        <img src="img/${p.code}.png" alt="${p.code}" onerror="this.style.visibility='hidden'">
+        <img class="selected-item-img" src="img/${p.code}.png" alt="${p.code}" onerror="this.style.visibility='hidden'">
         <div>
           <div class="sku">${p.code}</div>
           <div class="name">${p.name}</div>
           <div class="money">
-            Qty: ${p.qty}&nbsp;&nbsp;
-            Unit: NT$${formatMoney(p.price)}<br>
-            Subtotal: NT$${formatMoney(itemSub)}
+            ${p.qty} × NT$${formatMoney(p.price)}
+            &nbsp;=&nbsp;<span class="subtotal">NT$${formatMoney(itemSub)}</span>
           </div>
         </div>
       `;
@@ -852,7 +968,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ─── Init ────────────────────────────────────────────────────
-  showSection("BUNDLE");
+  showSection("BUNDLE", false);
   const firstLink = sidebar.querySelector(`a[data-cat="BUNDLE"]`);
   if (firstLink) firstLink.parentNode.classList.add("active");
   updateCart();

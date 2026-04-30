@@ -87,8 +87,8 @@ document.addEventListener("DOMContentLoaded", () => {
   { code:"MS-009V2", name:"MATRIX Laser Sensor V2", category:"SENSOR", subCategory:"IIC", price:600, weight:200 },
   { code:"MS-017", name:"MATRIX Gesture Sensor", category:"SENSOR", subCategory:"IIC", price:600, weight:200 },
   { code:"BNO055", name:"BNO055 Absolute Orientation IMU", category:"SENSOR", subCategory:"IIC", price:0, weight:200, eol:true },
-  { code:"MS-018V2-JST", name:"BNMATRIX Line Tracer 10CH Pack V2(JST)", category:"SENSOR", subCategory:"IIC", price:600, weight:200 },
-  { code:"MS-018V2-RJ12", name:"BNMATRIX Line Tracer 10CH Pack V2(RJ12)", category:"SENSOR", subCategory:"IIC", price:600, weight:200 },
+  { code:"MS-018V2-JST", name:"MATRIX Line Tracer 10CH Pack V2(JST)", category:"SENSOR", subCategory:"IIC", price:600, weight:200 },
+  { code:"MS-018V2-RJ12", name:"MATRIX Line Tracer 10CH Pack V2(RJ12)", category:"SENSOR", subCategory:"IIC", price:600, weight:200 },
 
   // SENSOR → UART
   { code:"MS-010", name:"M-Vision AI Cam", category:"SENSOR", subCategory:"UART", price:3300, weight:200, eol:true },
@@ -121,7 +121,7 @@ document.addEventListener("DOMContentLoaded", () => {
   { code:"07-0002", name:"Servo Bracket", category:"BRACKET & ACCESSORY", price:0, weight:200, eol:true },
   { code:"07-0009", name:"RC Servo Bracket", category:"BRACKET & ACCESSORY", price:50, weight:200 },
   { code:"07-0005", name:"DC Motor Double Flanged Bracket - 5 x 7 Hole", category:"BRACKET & ACCESSORY", price:50, weight:200 },
-  { code:"07-0010", name:"DC Motor Hub Bracket (EOL)", category:"BRACKET & ACCESSORY", price:0, weight:200 },
+  { code:"07-0010", name:"DC Motor Hub Bracket (EOL)", category:"BRACKET & ACCESSORY", price:0, weight:200, eol:true },
   { code:"07-0011", name:"DC Motor Hub Bracket", category:"BRACKET & ACCESSORY", price:220, weight:200 },
   { code:"07-2331", name:"DC Motor Double Flanged Bracket - 23 x 31 Hole", category:"BRACKET & ACCESSORY", price:400, weight:200 },
   { code:"07-AM3103", name:"DC Motor Double Flanged Bracket – am3103", category:"BRACKET & ACCESSORY", price:0, weight:200, eol:true },
@@ -340,9 +340,9 @@ document.addEventListener("DOMContentLoaded", () => {
   function getSubtotal()    { return getSelected().reduce((s, p) => s + p.price * p.qty, 0); }
   function getTotalWeight() { return getSelected().reduce((s, p) => s + p.weight * p.qty, 0); }
 
-  // DHL Express Easy 2026 費率表 (含燃油附加費及5%營業稅, NT$)
+  // ─── DHL Express Easy 2026 費率表 (含燃油附加費及5%營業稅, NT$) ───
   const DHL_RATES = {
-    zone1: [ // 中國/香港/澳門
+    zone1: [
       { maxWeight:  500, price:  599 },
       { maxWeight: 1500, price: 1649 },
       { maxWeight: 2500, price: 2449 },
@@ -352,7 +352,7 @@ document.addEventListener("DOMContentLoaded", () => {
       { maxWeight:20000, price: 5499 },
       { maxWeight:25000, price: 6499 },
     ],
-    zone2: [ // 日本/韓國
+    zone2: [
       { maxWeight:  500, price:  649 },
       { maxWeight: 1500, price: 1749 },
       { maxWeight: 2500, price: 2549 },
@@ -362,7 +362,7 @@ document.addEventListener("DOMContentLoaded", () => {
       { maxWeight:20000, price: 5999 },
       { maxWeight:25000, price: 6799 },
     ],
-    zone3: [ // 新加坡/馬來西亞/菲律賓/泰國/越南/印尼
+    zone3: [
       { maxWeight:  500, price:  699 },
       { maxWeight: 1500, price: 1849 },
       { maxWeight: 2500, price: 2649 },
@@ -372,7 +372,7 @@ document.addEventListener("DOMContentLoaded", () => {
       { maxWeight:20000, price: 6299 },
       { maxWeight:25000, price: 7199 },
     ],
-    zone4: [ // 亞洲其他地區/澳洲/紐西蘭
+    zone4: [
       { maxWeight:  500, price:  749 },
       { maxWeight: 1500, price: 1949 },
       { maxWeight: 2500, price: 2749 },
@@ -382,7 +382,7 @@ document.addEventListener("DOMContentLoaded", () => {
       { maxWeight:20000, price: 6959 },
       { maxWeight:25000, price: 8199 },
     ],
-    zone5: [ // 歐洲/北美洲
+    zone5: [
       { maxWeight:  500, price:  999 },
       { maxWeight: 1500, price: 2499 },
       { maxWeight: 2500, price: 3399 },
@@ -392,7 +392,7 @@ document.addEventListener("DOMContentLoaded", () => {
       { maxWeight:20000, price:10399 },
       { maxWeight:25000, price:12499 },
     ],
-    zone6: [ // 中南美/非洲/其他地區
+    zone6: [
       { maxWeight:  500, price: 1449 },
       { maxWeight: 1500, price: 3399 },
       { maxWeight: 2500, price: 4199 },
@@ -422,8 +422,8 @@ document.addEventListener("DOMContentLoaded", () => {
   categoryConfig.forEach(cat => {
     const li = document.createElement("li");
     const a  = document.createElement("a");
-    a.textContent  = cat.name;
-    a.dataset.cat  = cat.name;
+    a.textContent = cat.name;
+    a.dataset.cat = cat.name;
     li.appendChild(a);
 
     if (cat.sub) {
@@ -445,10 +445,32 @@ document.addEventListener("DOMContentLoaded", () => {
 
   sidebar.addEventListener("click", e => {
     if (e.target.tagName !== "A") return;
+
+    const clickedLi  = e.target.parentNode;
+    const isMobile   = window.innerWidth <= 768;
+    const isTopLevel = clickedLi.parentNode === sidebar;
+    const hasSub     = clickedLi.querySelector("ul") !== null;
+    const sub        = e.target.dataset.sub;
+    const cat        = e.target.dataset.cat;
+
+    // 手機版：點有子分類的父項目時 toggle dropdown，不導航
+    if (isMobile && isTopLevel && hasSub && !sub) {
+      const isAlreadyActive = clickedLi.classList.contains("active");
+      sidebar.querySelectorAll("li").forEach(li => li.classList.remove("active"));
+      if (!isAlreadyActive) clickedLi.classList.add("active");
+      return;
+    }
+
+    // 其他：設定 active 並顯示內容
     sidebar.querySelectorAll("li").forEach(li => li.classList.remove("active"));
-    e.target.parentNode.classList.add("active");
-    const sub = e.target.dataset.sub;
-    const cat = e.target.dataset.cat;
+    clickedLi.classList.add("active");
+
+    // 點子分類時，同時標記父 li active（讓 dropdown 保持展開）
+    if (sub) {
+      const parentLi = clickedLi.parentNode.parentNode;
+      if (parentLi && parentLi.tagName === "LI") parentLi.classList.add("active");
+    }
+
     showSection(sub || cat);
   });
 
@@ -552,7 +574,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ─── Panel open / close ──────────────────────────────────────
-  function openPanel()  {
+  function openPanel() {
     selectedPanel.classList.add("open");
     cartOverlay.classList.add("open");
     updateCart();
@@ -570,6 +592,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // ─── Export modal ────────────────────────────────────────────
   function showExportModal(cb) {
+    const autoWeight = getTotalWeight();
     const m = document.createElement("div");
     m.style.cssText = `
       position:fixed;top:0;left:0;width:100%;height:100%;
@@ -581,21 +604,23 @@ document.addEventListener("DOMContentLoaded", () => {
       <div style="
         background:#fff;padding:22px;border-radius:10px;
         width:340px;text-align:center;font-family:Microsoft JhengHei;
+        max-height:90vh;overflow-y:auto;
       ">
         <h3 style="margin-bottom:16px;">Export Order</h3>
-        <input id="order-name"    placeholder="Name"             style="width:90%;padding:8px;margin-bottom:10px;display:block;margin-inline:auto;">
+        <input id="order-name" placeholder="Name"
+          style="width:90%;padding:8px;margin-bottom:10px;display:block;margin-inline:auto;">
         <textarea id="order-address" placeholder="Shipping Address"
           style="width:90%;height:70px;padding:8px;margin-bottom:10px;display:block;margin-inline:auto;"></textarea>
 
         <div style="width:90%;margin:0 auto 10px;text-align:left;">
           <label style="font-size:13px;color:#555;display:block;margin-bottom:4px;">Package Weight (g)</label>
-          <input id="order-weight" type="number" min="1" max="25000"
-            value="${getTotalWeight()}"
+          <input id="order-weight" type="number" min="1" max="25000" value="${autoWeight}"
             style="width:100%;padding:8px;box-sizing:border-box;">
           <div style="font-size:11px;color:#888;margin-top:3px;">
-            Auto-calculated: ${getTotalWeight()}g. You may adjust if needed.
+            Auto-calculated: ${autoWeight}g. You may adjust if needed.
           </div>
         </div>
+
         <select id="shipping-method" style="width:90%;padding:8px;margin-bottom:10px;display:block;margin-inline:auto;">
           <option value="pickup">Self Pickup - NT$0</option>
           <option value="taiwan">Taiwan Delivery - NT$150</option>
@@ -634,7 +659,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function getCustomWeight() {
       const v = parseInt(weightInput.value, 10);
-      return (isNaN(v) || v < 1) ? getTotalWeight() : v;
+      return (isNaN(v) || v < 1) ? autoWeight : v;
     }
 
     function refreshPreview() {
@@ -642,7 +667,6 @@ document.addEventListener("DOMContentLoaded", () => {
       const weight = getCustomWeight();
       const zone   = zoneSelect.value;
 
-      // show/hide zone selector
       zoneRow.style.display = (method === "international") ? "block" : "none";
 
       const fee = calcShipping(method, weight, zone);
@@ -670,7 +694,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const order = {
         name:           m.querySelector("#order-name").value.trim(),
         address:        m.querySelector("#order-address").value.trim(),
-        weight:         weight,
+        weight,
         shippingMethod: method,
         shippingZone:   method === "international" ? zoneSelect.options[zoneSelect.selectedIndex].text : "",
         shippingFee:    calcShipping(method, weight, zone),
@@ -694,9 +718,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // ─── PDF Export ──────────────────────────────────────────────
   async function exportStorePDF(order, selected) {
-    const { jsPDF }   = window.jspdf;
-    const pdf         = new jsPDF("p", "mm", "a4");
-    const pageWidth   = pdf.internal.pageSize.getWidth();
+    const { jsPDF }    = window.jspdf;
+    const pdf          = new jsPDF("p", "mm", "a4");
+    const pageWidth    = pdf.internal.pageSize.getWidth();
     const itemsPerPage = 16;
     const totalPages   = Math.ceil(selected.length / itemsPerPage);
     const subtotal     = selected.reduce((s, p) => s + p.price * p.qty, 0);
@@ -799,12 +823,37 @@ document.addEventListener("DOMContentLoaded", () => {
       document.body.removeChild(container);
     }
 
-    pdf.save("MATRIX_STORE_Order.pdf");
+    // ─── 手機分享 / 桌機下載 ─────────────────────────────────
+    const fileName = "MATRIX_STORE_Order.pdf";
+    const pdfBlob  = pdf.output("blob");
+    const blobUrl  = URL.createObjectURL(pdfBlob);
+
+    if (navigator.share && navigator.canShare) {
+      const file = new File([pdfBlob], fileName, { type: "application/pdf" });
+      if (navigator.canShare({ files: [file] })) {
+        try {
+          await navigator.share({ files: [file], title: "MATRIX Store Order" });
+          URL.revokeObjectURL(blobUrl);
+          return;
+        } catch (e) {
+          // 使用者取消或失敗，fallback 下載
+        }
+      }
+    }
+
+    const a = document.createElement("a");
+    a.href = blobUrl;
+    a.download = fileName;
+    a.target = "_blank";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(blobUrl), 10000);
   }
 
   // ─── Init ────────────────────────────────────────────────────
-  showSection("CONTROLLER");
-  const firstLink = sidebar.querySelector(`a[data-cat="CONTROLLER"]`);
+  showSection("BUNDLE");
+  const firstLink = sidebar.querySelector(`a[data-cat="BUNDLE"]`);
   if (firstLink) firstLink.parentNode.classList.add("active");
   updateCart();
 });

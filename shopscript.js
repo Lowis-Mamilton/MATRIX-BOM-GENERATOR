@@ -950,8 +950,59 @@ document.addEventListener("DOMContentLoaded", () => {
       document.body.removeChild(container);
     }
 
-    // ─── 統一用 pdf.save() 下載 ───────────────────────────────
-    pdf.save("MATRIX_STORE_Order.pdf");
+    // ─── 輸出 ────────────────────────────────────────────────
+    const fileName = "MATRIX_STORE_Order.pdf";
+    const pdfArrayBuffer = pdf.output("arraybuffer");
+    const pdfBlob = new Blob([pdfArrayBuffer], { type: "application/pdf" });
+    const pdfFile = new File([pdfBlob], fileName, { type: "application/pdf" });
+
+    // 優先嘗試 Web Share API（iOS Safari 支援，可分享到 LINE / AirDrop）
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          files: [pdfFile],
+          title: "MATRIX Store Order",
+        });
+        return;
+      } catch (e) {
+        if (e.name === "AbortError") {
+          // 使用者主動取消，不做任何事
+          return;
+        }
+        // 其他錯誤（例如 iOS 不支援 file share）→ fallback
+        console.warn("Share failed, falling back:", e);
+      }
+    }
+
+    // Fallback 1：blob URL 下載（Android Chrome、桌機）
+    try {
+      const blobUrl = URL.createObjectURL(pdfBlob);
+      const a = document.createElement("a");
+      a.href = blobUrl;
+      a.download = fileName;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(blobUrl), 10000);
+    } catch (e) {
+      // Fallback 2：最後手段，用 data URI 開新分頁（iOS 長按可存檔）
+      const dataUri = pdf.output("datauristring");
+      const w = window.open();
+      if (w) {
+        w.document.write(`
+          <html><body style="margin:0;background:#000;">
+            <p style="color:#fff;font-family:sans-serif;padding:16px;font-size:14px;">
+              長按下方連結 → 「開啟新分頁」→ 點右上角分享給 LINE
+            </p>
+            <a href="${dataUri}" download="${fileName}"
+               style="display:block;padding:16px;color:#4af;font-size:16px;">
+              點此下載 PDF
+            </a>
+            <iframe src="${dataUri}" style="width:100%;height:80vh;border:none;margin-top:8px;"></iframe>
+          </body></html>
+        `);
+      }
+    }
   }
 
   // ─── Init ────────────────────────────────────────────────────

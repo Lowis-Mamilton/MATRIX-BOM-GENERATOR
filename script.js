@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
     { name: "WHEEL" },
     { name: "SCREW" },
     { name: "NUT" },
-    { name: "WAHSER & SPACER" },
+    { name: "WASHER & SPACER" },
   ];
 
   // 產品資料：category 主分類，subCategory 子分類（需時才用）
@@ -230,7 +230,7 @@ document.addEventListener("DOMContentLoaded", () => {
   { code:"13-0024", name:"Metal Gear - 24 Tooth", category:"GEAR" },
   { code:"13-0040", name:"Metal Gear - 40 Tooth", category:"GEAR" },
   { code:"13-0056", name:"Metal Gear - 56 Tooth", category:"GEAR" },
-  { code:"13-0104", name:"MMetal Gear - 104 Tooth", category:"GEAR" },
+  { code:"13-0104", name:"Metal Gear - 104 Tooth", category:"GEAR" },
 
   // CHAIN KIT
   { code:"25-1X240", name:"Roller Chain 25 x 240 Link", category:"CHAIN KIT" },
@@ -288,7 +288,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // NUT
   { code:"11-4501", name:"M4 Hex Nut", category:"NUT" },
   { code:"11-4502", name:"M4 Hex Nut with Tooth Washer", category:"NUT" },
-  { code:"11-4503", name:"MM4 Hex Nut with Nylon Lock", category:"NUT" },
+  { code:"11-4503", name:"M4 Hex Nut with Nylon Lock", category:"NUT" },
   { code:"11-6000", name:"MATRIX Quick Connector – Battery Box", category:"NUT" },
   { code:"11-6050", name:"MATRIX Quick Connector - 5mm", category:"NUT" },
   { code:"11-6070", name:"MATRIX Quick Connector - 7mm", category:"NUT" },
@@ -296,12 +296,12 @@ document.addEventListener("DOMContentLoaded", () => {
   { code:"11-7050", name:"MATRIX Quick Connector - TB Link", category:"NUT" },
 
   // WASHER / SPACER
-  { code:"11-4402", name:"M4 Nylon Washer", category:"WAHSER & SPACER" },
-  { code:"11-4403", name:"M4 Nylon Shoulder Washer", category:"WAHSER & SPACER" },
-  { code:"09-0003", name:"M4 Standoff Spacer - 16mm", category:"WAHSER & SPACER" },
-  { code:"09-0001", name:"M4 Standoff Spacer - 32mm", category:"WAHSER & SPACER" },
-  { code:"13-0005", name:"Spacer -4mm", category:"WAHSER & SPACER" },
-  { code:"13-0004", name:"Spacer -48m", category:"WAHSER & SPACER" },
+  { code:"11-4402", name:"M4 Nylon Washer", category:"WASHER & SPACER" },
+  { code:"11-4403", name:"M4 Nylon Shoulder Washer", category:"WASHER & SPACER" },
+  { code:"09-0003", name:"M4 Standoff Spacer - 16mm", category:"WASHER & SPACER" },
+  { code:"09-0001", name:"M4 Standoff Spacer - 32mm", category:"WASHER & SPACER" },
+  { code:"13-0005", name:"Spacer -4mm", category:"WASHER & SPACER" },
+  { code:"13-0004", name:"Spacer - 48mm", category:"WASHER & SPACER" },
 ];
 
 
@@ -547,8 +547,12 @@ document.addEventListener("DOMContentLoaded", () => {
     m.querySelector("#export-ok").onclick = () => {
       const name = m.querySelector("#export-name").value.trim();
       const fmt = m.querySelector("#export-format").value;
+      if (!name) {
+        alert("Please enter a name.");
+        return;
+      }
       m.remove();
-      if (name) cb(name, fmt);
+      cb(name, fmt);
     };
   }
 
@@ -682,6 +686,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // ===== Image Buffer helper =====
   async function fetchImageBuffer(url) {
     const res = await fetch(url);
+    if (!res.ok) return null;
     const buf = await res.arrayBuffer();
     return new Uint8Array(buf);
   }
@@ -726,12 +731,9 @@ document.addEventListener("DOMContentLoaded", () => {
               new TableCell({
                 children: [
                   new Paragraph({
-                    children: [
-                      new ImageRun({
-                        data: buffers[i],
-                        transformation: { width: 40, height: 40 },
-                      }),
-                    ],
+                    children: buffers[i]
+                      ? [new ImageRun({ data: buffers[i], transformation: { width: 40, height: 40 } })]
+                      : [new Paragraph("No Img")],
                   }),
                 ],
               }),

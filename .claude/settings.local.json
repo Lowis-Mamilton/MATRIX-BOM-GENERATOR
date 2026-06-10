@@ -4,5 +4,21 @@
       "Skill(update-config)",
       "PowerShell(git *)"
     ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$s = git status --porcelain; if ($s) { git add .; git commit -m 'auto-backup before claude edit' }",
+            "shell": "powershell",
+            "statusMessage": "Creating auto-backup commit...",
+            "timeout": 30
+          }
+        ]
+      }
+    ]
   }
 }

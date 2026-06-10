@@ -707,6 +707,7 @@ document.addEventListener("DOMContentLoaded", () => {
       TableRow,
       TableCell,
       ImageRun,
+      TextRun,
       WidthType,
       HeadingLevel,
     } = docxGlobal;

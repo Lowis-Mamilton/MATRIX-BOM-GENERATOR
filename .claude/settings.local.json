@@ -3,7 +3,9 @@
     "allow": [
       "Skill(update-config)",
       "PowerShell(git *)",
-      "Bash(node *)"
+      "Bash(node *)",
+      "Read(//tmp/**)",
+      "Bash(tar xzf *)"
     ]
   },
   "hooks": {

@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Skill(update-config)",
-      "PowerShell(git *)"
+      "PowerShell(git *)",
+      "Bash(node *)"
     ]
   },
   "hooks": {
@@ -14,8 +15,8 @@
             "type": "command",
             "command": "$s = git status --porcelain; if ($s) { git add .; git commit -m 'auto-backup before claude edit' }",
             "shell": "powershell",
-            "statusMessage": "Creating auto-backup commit...",
-            "timeout": 30
+            "timeout": 30,
+            "statusMessage": "Creating auto-backup commit..."
           }
         ]
       }

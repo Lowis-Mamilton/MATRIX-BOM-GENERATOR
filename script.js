@@ -733,8 +733,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 children: [
                   new Paragraph({
                     children: buffers[i]
-                      ? [new ImageRun({ data: buffers[i], transformation: { width: 40, height: 40 } })]
-                      : [new Paragraph("No Img")],
+                      ? [new ImageRun({ type: "png", data: buffers[i], transformation: { width: 40, height: 40 } })]
+                      : [new TextRun("No Img")],
                   }),
                 ],
               }),

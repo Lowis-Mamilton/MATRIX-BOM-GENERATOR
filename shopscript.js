@@ -354,6 +354,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const cartShipping  = document.getElementById("cart-shipping");
   const cartTotal     = document.getElementById("cart-total");
 
+  // ─── Routing state ──────────────────────────────────────────
+  // Remembers the last category/subcategory shown so we can return to it
+  // from a product detail page or after a hash route falls back to default.
+  let lastCategory  = "BUNDLE";
+  let lastMobileAll = false;
+
   // ─── Helpers ─────────────────────────────────────────────────
   const formatMoney = n => Number(n || 0).toLocaleString("en-US");
 

@@ -1,0 +1,97 @@
+[
+  {
+    "name": "BUNDLE"
+  },
+  {
+    "name": "CONTROLLER"
+  },
+  {
+    "name": "MOTOR CONTROLLER"
+  },
+  {
+    "name": "JOY STICK"
+  },
+  {
+    "name": "BATTERY"
+  },
+  {
+    "name": "SENSOR",
+    "sub": [
+      "ANALOG",
+      "DIGITAL",
+      "IIC",
+      "UART"
+    ]
+  },
+  {
+    "name": "MOTOR",
+    "sub": [
+      "SERVO",
+      "TT",
+      "DC"
+    ]
+  },
+  {
+    "name": "BRACKET & ACCESSORY"
+  },
+  {
+    "name": "L SHAPED BEAM"
+  },
+  {
+    "name": "C SHAPED BEAM"
+  },
+  {
+    "name": "FLAT BEAM"
+  },
+  {
+    "name": "BEAM JOINER"
+  },
+  {
+    "name": "GUSSET PLATE"
+  },
+  {
+    "name": "SPECIAL PLATE"
+  },
+  {
+    "name": "FLANGED PLATE"
+  },
+  {
+    "name": "D SHAFT"
+  },
+  {
+    "name": "JOINER & COLLAR"
+  },
+  {
+    "name": "HUB"
+  },
+  {
+    "name": "BEARING TUBE"
+  },
+  {
+    "name": "GEAR"
+  },
+  {
+    "name": "CHAIN KIT"
+  },
+  {
+    "name": "SYNCHRONOUS WHEEL"
+  },
+  {
+    "name": "LINEAR SLIDE"
+  },
+  {
+    "name": "LEADSCREW"
+  },
+  {
+    "name": "WHEEL"
+  },
+  {
+    "name": "SCREW"
+  },
+  {
+    "name": "NUT"
+  },
+  {
+    "name": "WASHER & SPACER"
+  }
+]

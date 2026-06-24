@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   function getSubtotal()    { return getSelected().reduce((s, p) => s + p.price * p.qty, 0); }
   function getTotalWeight() { return getSelected().reduce((s, p) => s + p.weight * p.qty, 0); }
 
-  // ─── DHL Express Easy 2026 費率表 (含燃油附加費及5%營業稅, NT$) ───
+  // ─── DHL Express Easy 2026 rate table (incl. fuel surcharge + 5% tax, NT$) ───
   const DHL_RATES = {
     zone1: [
       { maxWeight:  500, price:  599 },

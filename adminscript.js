@@ -401,7 +401,7 @@ document.addEventListener("DOMContentLoaded", () => {
         img.addEventListener("click", () => openLightbox(img.src));
 
         const nameSpan = document.createElement("span");
-        nameSpan.className = "photo-filename mono";
+        nameSpan.className = "photo-filename";
         nameSpan.textContent = filename;
 
         const mainBtn = document.createElement("button");

@@ -298,23 +298,132 @@ document.addEventListener("DOMContentLoaded", () => {
     const specsRows = overlay.querySelector("#specs-rows");
     const errorBox = overlay.querySelector("#form-error");
     const imagePreview = overlay.querySelector("#image-preview");
-    const imageInput = form.querySelector("input[name=image]");
+    const mainImageInput = overlay.querySelector("#main-image-input");
+    const addPhotoInput = overlay.querySelector("#add-photo-input");
+    const photoListEl = overlay.querySelector("#photo-list");
+    const codeInput = form.querySelector("input[name=code]");
+
+    let pendingPhotos = existing && existing.photos ? [...existing.photos] : [];
+
+    function getCurrentCode() {
+      return codeInput.value.trim();
+    }
+
+    async function writeImageFile(filename, file) {
+      const handle = await imgDirHandle.getFileHandle(filename, { create: true });
+      const writable = await handle.createWritable();
+      await writable.write(file);
+      await writable.close();
+    }
+
+    async function readImageFile(filename) {
+      const handle = await imgDirHandle.getFileHandle(filename, { create: false });
+      return handle.getFile();
+    }
+
+    function nextPhotoFilename(code) {
+      let n = 2;
+      while (pendingPhotos.includes(`${code}-${n}.png`)) n++;
+      return `${code}-${n}.png`;
+    }
 
     imagePreview.addEventListener("click", () => {
       if (imagePreview.src) openLightbox(imagePreview.src);
     });
     imagePreview.onerror = function () { this.hidden = true; };
 
-    imageInput.addEventListener("change", () => {
-      const file = imageInput.files[0];
+    mainImageInput.addEventListener("change", async () => {
+      const file = mainImageInput.files[0];
       if (!file) return;
-      const reader = new FileReader();
-      reader.onload = () => {
-        imagePreview.src = reader.result;
+      const code = getCurrentCode();
+      if (!code) { showToast("Enter a Code first", "error"); mainImageInput.value = ""; return; }
+      if (file.type !== "image/png") { showToast("Image must be a PNG file", "error"); mainImageInput.value = ""; return; }
+      try {
+        await writeImageFile(`${code}.png`, file);
+        imagePreview.src = URL.createObjectURL(file);
         imagePreview.hidden = false;
-      };
-      reader.readAsDataURL(file);
+        showToast("Main image updated.");
+      } catch (err) {
+        showToast("Failed to write image: " + err.message, "error");
+      }
+      mainImageInput.value = "";
     });
+
+    addPhotoInput.addEventListener("change", async () => {
+      const code = getCurrentCode();
+      if (!code) { showToast("Enter a Code first", "error"); addPhotoInput.value = ""; return; }
+      for (const file of Array.from(addPhotoInput.files)) {
+        if (file.type !== "image/png") { showToast(`${file.name} is not a PNG, skipped`, "error"); continue; }
+        const filename = nextPhotoFilename(code);
+        try {
+          await writeImageFile(filename, file);
+          pendingPhotos.push(filename);
+        } catch (err) {
+          showToast("Failed to write image: " + err.message, "error");
+        }
+      }
+      addPhotoInput.value = "";
+      renderPhotoList();
+    });
+
+    async function setAsMain(filename) {
+      const code = getCurrentCode();
+      if (!code) { showToast("Enter a Code first", "error"); return; }
+      try {
+        let mainFile = null;
+        try { mainFile = await readImageFile(`${code}.png`); } catch { /* no existing main image yet */ }
+        const photoFile = await readImageFile(filename);
+        if (mainFile) await writeImageFile(filename, mainFile);
+        await writeImageFile(`${code}.png`, photoFile);
+        imagePreview.src = URL.createObjectURL(photoFile);
+        imagePreview.hidden = false;
+        showToast(`${filename} is now the main image.`);
+      } catch (err) {
+        showToast("Failed to set main image: " + err.message, "error");
+      }
+    }
+
+    function renderPhotoList() {
+      photoListEl.innerHTML = "";
+      if (!pendingPhotos.length) {
+        photoListEl.innerHTML = `<div class="field-hint">No additional photos yet.</div>`;
+        return;
+      }
+      pendingPhotos.forEach((filename, idx) => {
+        const row = document.createElement("div");
+        row.className = "photo-row";
+
+        const img = document.createElement("img");
+        img.src = `img/${filename}`;
+        img.alt = filename;
+        img.className = "image-preview small";
+        img.onerror = function () { this.style.visibility = "hidden"; };
+        img.addEventListener("click", () => openLightbox(img.src));
+
+        const nameSpan = document.createElement("span");
+        nameSpan.className = "photo-filename mono";
+        nameSpan.textContent = filename;
+
+        const mainBtn = document.createElement("button");
+        mainBtn.type = "button";
+        mainBtn.className = "secondary-btn";
+        mainBtn.textContent = "Set as Main";
+        mainBtn.addEventListener("click", () => setAsMain(filename));
+
+        const removeBtn = document.createElement("button");
+        removeBtn.type = "button";
+        removeBtn.className = "row-btn danger";
+        removeBtn.textContent = "Remove";
+        removeBtn.addEventListener("click", () => {
+          pendingPhotos.splice(idx, 1);
+          renderPhotoList();
+        });
+
+        row.append(img, nameSpan, mainBtn, removeBtn);
+        photoListEl.appendChild(row);
+      });
+    }
+    renderPhotoList();
 
     categories.forEach(c => {
       const opt = document.createElement("option");

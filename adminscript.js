@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (!window.showDirectoryPicker) {
     unsupportedBox.hidden = false;
     connectBtn.disabled = true;
-    connectBtn.title = "此瀏覽器不支援 File System Access API";
+    connectBtn.title = "This browser doesn't support the File System Access API";
   }
 
   // ─── Connect / load ─────────────────────────────────────────────

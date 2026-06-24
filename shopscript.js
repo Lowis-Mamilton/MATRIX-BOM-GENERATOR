@@ -676,6 +676,64 @@ document.addEventListener("DOMContentLoaded", () => {
     content.appendChild(section);
   }
 
+  // ─── Product detail page ──────────────────────────────────────
+  // Renders a single product's detail view (image, price, MOQ, specs
+  // table, qty control) into #content-area, addressed via #item/<code>.
+  function showProductDetail(code) {
+    const p = productData.find(prod => prod.code === code);
+    if (!p) {
+      showSection(lastCategory, lastMobileAll);
+      highlightSidebarFor(lastCategory);
+      return;
+    }
+
+    content.innerHTML = "";
+
+    const specsEntries = p.specs ? Object.entries(p.specs) : [];
+    const specsRows = specsEntries.length
+      ? specsEntries.map(([label, value]) => `<tr><th>${label}</th><td>${value}</td></tr>`).join("")
+      : `<tr><td colspan="2" class="specs-empty">Specs coming soon.</td></tr>`;
+
+    const detail = document.createElement("div");
+    detail.className = "product-detail";
+    detail.innerHTML = `
+      <a href="#" class="detail-back-link">&larr; Back to ${lastCategory}</a>
+      <div class="detail-main">
+        <div class="detail-img-wrap">
+          <img src="img/${p.code}.png" alt="${p.code}" onerror="this.style.visibility='hidden'">
+        </div>
+        <div class="detail-info">
+          <div class="product-code">${p.code}</div>
+          <h1 class="detail-name">${p.name}</h1>
+          <div class="product-price${p.price === 0 ? " na" : ""}">${p.price === 0 ? "Price on request" : `NT$${formatMoney(p.price)}`}</div>
+          <div class="moq-badge"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 7H4a2 2 0 00-2 2v10a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2z"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg> MOQ: ${p.moq}</div>
+          <div class="quantity-control detail-qty">
+            <button type="button" class="minus">−</button>
+            <input type="number" min="0" value="${p.qty}">
+            <button type="button" class="plus">+</button>
+          </div>
+        </div>
+      </div>
+      <table class="specs-table">
+        <tbody>${specsRows}</tbody>
+      </table>
+    `;
+    content.appendChild(detail);
+
+    attachQtyControl(p, {
+      minus: detail.querySelector(".detail-qty .minus"),
+      input: detail.querySelector(".detail-qty input"),
+      plus:  detail.querySelector(".detail-qty .plus"),
+    });
+
+    detail.querySelector(".detail-back-link").addEventListener("click", e => {
+      e.preventDefault();
+      history.replaceState(null, "", location.pathname + location.search);
+      showSection(lastCategory, lastMobileAll);
+      highlightSidebarFor(lastCategory);
+    });
+  }
+
   // ─── Cart update ─────────────────────────────────────────────
   function updateCart() {
     const selected = getSelected();

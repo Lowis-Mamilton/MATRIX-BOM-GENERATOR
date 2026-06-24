@@ -231,9 +231,9 @@ document.addEventListener("DOMContentLoaded", () => {
       const row = document.createElement("div");
       row.className = "spec-row";
       row.innerHTML = `
-        <input type="text" class="spec-label" placeholder="標籤" value="${label || ""}">
-        <input type="text" class="spec-value" placeholder="內容" value="${value || ""}">
-        <button type="button" class="row-btn danger spec-remove">移除</button>
+        <input type="text" class="spec-label" placeholder="Label" value="${label || ""}">
+        <input type="text" class="spec-value" placeholder="Value" value="${value || ""}">
+        <button type="button" class="row-btn danger spec-remove">Remove</button>
       `;
       row.querySelector(".spec-remove").addEventListener("click", () => row.remove());
       specsRows.appendChild(row);

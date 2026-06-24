@@ -4,36 +4,45 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-A static, no-build, no-dependency front-end: **MATRIX Store** — browse a product catalog with pricing/MOQ, view per-product detail pages, set quantities, and export a quotation (PDF) with shipping cost calculated.
+A static, no-build, no-dependency front-end: **MATRIX Store** — browse a product catalog with pricing/MOQ, view per-product detail pages (photo gallery, specs, description, STEP file download), set quantities, and export a quotation (PDF) with shipping cost calculated. A companion **local admin tool** (`admin.html`) lets the site owner add/edit/delete products without touching code.
 
-Files: `index.html` + `shopscript.js` + `shopstyle.css`. There is no package.json, bundler, or test suite. Everything runs directly in the browser; third-party libraries (html2canvas, jsPDF) are loaded via CDN `<script>` tags in `index.html`, not npm.
+Files: `index.html` + `shopscript.js` + `shopstyle.css` (storefront), `admin.html` + `adminscript.js` + `adminstyle.css` (admin tool, reuses `shopstyle.css`'s design tokens), `products.json` + `categories.json` (catalog data, fetched by both). There is no package.json, bundler, or test suite. Third-party libraries (html2canvas, jsPDF) are loaded via CDN `<script>` tags, not npm.
 
 ## Running locally
 
-Open `index.html` directly, or serve the folder with any static server (the repo includes a Live Server VSCode config on port 5501). There is no build step — edits to `shopscript.js`/`shopstyle.css`/`index.html` are reflected on reload.
+**Must be served over http(s)** — both pages `fetch()` `products.json`/`categories.json` (and the storefront's CAD download) at load, which fails under `file://`. Use the repo's Live Server VSCode config (port 5501) or any static server. Double-clicking `index.html` open will show a blank catalog.
 
-## Architecture
+## Catalog data (`products.json` / `categories.json`)
 
-All logic lives in `shopscript.js`, wrapped in a single `DOMContentLoaded` listener with no modules/classes:
+- **`categories.json`** — ordered list of sidebar categories: `[{ "name": "SENSOR", "sub": ["ANALOG", "DIGITAL", "IIC", "UART"] }, ...]`; `sub` is omitted for categories with no subcategories.
+- **`products.json`** — flat array of product objects: `code`, `name`, `category`, optional `subCategory`, `price` (0 = "Price on request"), `weight` (grams), `moq` (minimum order quantity, default 1), optional `eol` flag, optional `description` (string, shown on the detail page), optional `specs` (object of label→value pairs, rendered as a table — shows "Specs coming soon" if absent), optional `photos` (array of extra image filenames for the detail-page gallery beyond the default two).
+- `qty` (cart quantity) is **not** persisted in `products.json` — it's runtime-only state, initialized to `0` in `shopscript.js` after fetch.
+- Both `shopscript.js` and `adminscript.js` read these files; `adminscript.js` is the only thing that writes them (directly to disk via the File System Access API — see below).
 
-1. **`categoryConfig`** — ordered list of sidebar categories, some with a `sub` array of subcategories (e.g. `SENSOR` → `ANALOG/DIGITAL/IIC/UART`, `MOTOR` → `SERVO/TT/DC`).
-2. **`productData`** — flat array of product objects: `code`, `name`, `category`, optional `subCategory`, `price`, `weight`, optional `eol` flag, optional `specs` (object of label→value pairs, rendered on the detail page — left empty until filled in per-product). `qty` (current cart quantity) and `moq` (from `MOQ_MAP`, default 1) are initialized at load.
-3. **Sidebar generation** — built from `categoryConfig` into `<ul id="sidebar-menu">`; clicking a category/subcategory calls `showSection(key, mobileAll)`, which filters `productData` and renders product cards into `#content-area`.
-4. **Routing** — hash-based: `#item/<code>` opens that product's detail page via `showProductDetail(code)`; any other hash (or none) shows the last-viewed category (tracked in `lastCategory`/`lastMobileAll`) via `showSection`. Wired through a single `hashchange` listener (`handleHashRoute`) called once on init. Clicking a product card (outside its qty controls) navigates by setting `location.hash`; sidebar clicks clear the hash quietly (`history.replaceState`, no re-render loop) before calling `showSection` directly.
-5. **Quantity controls** — both the grid card and the detail page wire their +/-/input elements through the shared `attachQtyControl(p, { minus, input, plus })` (handles MOQ snapping and triggers `updateCart()`); quantity state lives directly on each product object (`p.qty`), not a separate cart structure.
-6. **Cart drawer** (`#selected-panel` / `#cart-fab` / `#cart-overlay`) shows currently selected (qty > 0) items with subtotal/weight totals (`getSubtotal`, `getTotalWeight`); shipping is calculated only at export time (`calcShipping`).
-7. **Export modal** (`showExportModal`) collects a name and invokes `exportStorePDF`, which builds an off-DOM HTML container and rasterizes it with `html2canvas` into a `jsPDF` document — all client-side, no server involved.
+## Storefront architecture (`shopscript.js`)
 
-Product images are expected at `img/<code>.png`, matched by product `code`. Missing images degrade gracefully (hidden `<img>` via `onerror`). The detail page shows a second image, `img/PartPhoto.png`, as a shared placeholder slot alongside the per-product image (`attachStepDownload`'s sibling in `showProductDetail`).
+All logic lives in `shopscript.js`, wrapped in a single `async` `DOMContentLoaded` listener with no modules/classes:
 
-## Shipping logic
+1. On load, `fetch()`es `categories.json` and `products.json` in parallel, then initializes `qty = 0` on every product.
+2. **Sidebar generation** — built from `categoryConfig` into `<ul id="sidebar-menu">`; clicking a category/subcategory calls `showSection(key, mobileAll)`, which filters `productData` and renders product cards into `#content-area`.
+3. **Routing** — hash-based: `#item/<code>` opens that product's detail page via `showProductDetail(code)`; any other hash (or none) shows the last-viewed category (tracked in `lastCategory`/`lastMobileAll`) via `showSection`. Wired through a single `hashchange` listener (`handleHashRoute`) called once on init. Clicking a product card (outside its qty controls) navigates by setting `location.hash`; sidebar clicks clear the hash quietly (`history.replaceState`, no re-render loop) before calling `showSection` directly.
+4. **Quantity controls** — both the grid card and the detail page wire their +/-/input elements through the shared `attachQtyControl(p, { minus, input, plus })` (handles MOQ snapping and triggers `updateCart()`); quantity state lives directly on each product object (`p.qty`), not a separate cart structure.
+5. **Detail page** (`showProductDetail`) — a photo gallery (large main image + thumbnail strip built from the product's own `img/<code>.png`, the shared placeholder `img/PartPhoto.png`, and any `p.photos`; clicking a thumbnail swaps the main image), code/name/description/price/MOQ, a specs table, a qty control, and a "Download STEP File" button (`attachStepDownload`, fetches `cad/<code>.step` then falls back to `cad/<code>.STEP`; shows an inline message if neither exists — the `cad/` folder's naming is inconsistent and doesn't match every product code).
+6. **Cart drawer** (`#selected-panel` / `#cart-fab` / `#cart-overlay`) shows currently selected (qty > 0) items with subtotal/weight totals; shipping is calculated only at export time (`calcShipping`, supports `pickup`/`taiwan`/`international` with DHL zone-based tiers via `DHL_RATES`).
+7. **Export modal** (`showExportModal`) collects a name and invokes `exportStorePDF`, which builds an off-DOM HTML container and rasterizes it with `html2canvas` into a `jsPDF` document — all client-side.
 
-`calcShipping(method, weight, zone)` supports `pickup` (free), `taiwan` (flat NT$150), and `international` (DHL zone-based tiers via `calcDHLShipping`, using the `DHL_RATES` table keyed by `zone1`–`zone6` and weight in grams).
+Product images are expected at `img/<code>.png`, matched by product `code`. Missing images degrade gracefully (hidden `<img>` via `onerror`).
 
-## Editing product data
+## Admin tool (`admin.html` / `adminscript.js`)
 
-Category names in `categoryConfig` must match the `category`/`subCategory` strings used in `productData` exactly, since filtering is a straight string comparison. To add specs to a product's detail page, add a `specs: { "Label": "Value", ... }` object to its entry in `productData` — the detail page renders a "Specs coming soon" placeholder for any product without one.
+A **local-only** tool for the site owner — not linked from the storefront, Chrome/Edge only (requires the File System Access API), and must be run via a local server (same Live Server requirement as the storefront).
+
+- "Connect Project Folder" calls `window.showDirectoryPicker({mode:"readwrite"})` once per browser session (no persisted permission across reloads — reconnect each time you open the page) to get write access to the repo root, then grabs file handles for `products.json`/`categories.json` and a directory handle for `img/`.
+- Lists/searches all products in a table; Add/Edit open a form (category/subCategory dropdowns driven by `categories.json`, a repeatable specs label/value row editor, an image file picker that writes straight to `img/<code>.png`).
+- Every save/delete does a **full-file overwrite** of `products.json` (`persistProducts()`) — fine at ~220 entries, no batching needed.
+- A product's `code` is immutable once created (rename = delete + re-add); deleting a product does **not** delete its image file; uploaded images must be `.png` (rejected otherwise).
+- **This tool only edits your local clone.** Changes don't appear on the live GitHub Pages site until you `git commit` + `git push` the updated `products.json`/`img/` files.
 
 ## CAD assets
 
-The `cad/` directory contains STEP files named after product codes, but casing/naming is inconsistent (`.step` vs `.STEP`, and some files have suffixes like ` L`/`-R`, `_New`, `(screw)` that don't match any `productData.code`). The detail page's "Download STEP File" button (`attachStepDownload` in `shopscript.js`) fetches `cad/<code>.step`, falling back to `cad/<code>.STEP`; it shows "CAD file not available for this part" if neither exists. This `fetch` requires the page to be served over http(s) (Live Server / GitHub Pages) — it won't work when `index.html` is opened directly via `file://`.
+The `cad/` directory contains STEP files named after product codes, but casing/naming is inconsistent (`.step` vs `.STEP`, and some files have suffixes like ` L`/`-R`, `_New`, `(screw)` that don't match any product's `code`) — not all products have a matching file.

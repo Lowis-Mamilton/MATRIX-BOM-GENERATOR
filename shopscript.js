@@ -273,7 +273,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     let items;
     if (mobileAll && hasSub) {
-      // 手機模式：直接列出所有子分類的產品，不分組
+      // Mobile mode: list all subcategory products together, ungrouped
       items = productData.filter(p => p.category === key);
     } else if (isSub) {
       items = productData.filter(p => p.subCategory === key);

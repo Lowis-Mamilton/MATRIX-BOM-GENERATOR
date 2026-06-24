@@ -293,6 +293,7 @@ main.main-content::-webkit-scrollbar-thumb { background: var(--border2); border-
   display: flex;
   flex-direction: column;
   position: relative;
+  cursor: pointer;
   transition: box-shadow var(--transition), border-color var(--transition), transform var(--transition);
   box-shadow: var(--shadow-sm);
   overflow: hidden;

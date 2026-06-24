@@ -741,18 +741,30 @@ document.addEventListener("DOMContentLoaded", () => {
       ? specsEntries.map(([label, value]) => `<tr><th>${label}</th><td>${value}</td></tr>`).join("")
       : `<tr><td colspan="2" class="specs-empty">Specs coming soon.</td></tr>`;
 
+    // Gallery images: the product's own photo + the shared placeholder photo,
+    // plus any extra filenames listed in p.photos (e.g. specs: { photos: [...] }).
+    const galleryImages = [
+      { src: `img/${p.code}.png`, alt: p.code },
+      { src: "img/PartPhoto.png", alt: `${p.code} photo` },
+      ...(p.photos || []).map(file => ({ src: `img/${file}`, alt: p.code })),
+    ];
+    const thumbs = galleryImages
+      .map((img, i) => `
+        <button type="button" class="detail-thumb${i === 0 ? " active" : ""}" data-src="${img.src}" data-alt="${img.alt}">
+          <img src="${img.src}" alt="${img.alt}" onerror="this.closest('.detail-thumb').style.display='none'">
+        </button>`)
+      .join("");
+
     const detail = document.createElement("div");
     detail.className = "product-detail";
     detail.innerHTML = `
       <a href="#" class="detail-back-link">&larr; Back to ${lastCategory}</a>
       <div class="detail-main">
         <div class="detail-gallery">
-          <div class="detail-img-wrap">
-            <img src="img/${p.code}.png" alt="${p.code}" onerror="this.style.visibility='hidden'">
+          <div class="detail-img-main">
+            <img src="${galleryImages[0].src}" alt="${galleryImages[0].alt}" onerror="this.style.visibility='hidden'">
           </div>
-          <div class="detail-img-wrap">
-            <img src="img/PartPhoto.png" alt="${p.code} photo" onerror="this.style.visibility='hidden'">
-          </div>
+          <div class="detail-thumbs">${thumbs}</div>
         </div>
         <div class="detail-info">
           <div class="product-code">${p.code}</div>

@@ -910,6 +910,42 @@ main.main-content::-webkit-scrollbar-thumb { background: var(--border2); border-
   margin-top: 8px;
 }
 
+.step-download-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  width: fit-content;
+  margin-top: 4px;
+  padding: 9px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: var(--font);
+  color: var(--navy);
+  background: var(--white);
+  border: 1.5px solid var(--border2);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: border-color var(--transition), color var(--transition);
+}
+
+.step-download-btn:hover {
+  border-color: var(--navy);
+}
+
+.step-download-btn:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.step-status {
+  font-size: 12.5px;
+  min-height: 16px;
+}
+
+.step-status.error {
+  color: var(--red);
+}
+
 .specs-table {
   width: 100%;
   border-collapse: collapse;

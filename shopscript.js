@@ -789,6 +789,17 @@ document.addEventListener("DOMContentLoaded", () => {
     `;
     content.appendChild(detail);
 
+    const mainImg = detail.querySelector(".detail-img-main img");
+    detail.querySelectorAll(".detail-thumb").forEach(thumb => {
+      thumb.addEventListener("click", () => {
+        mainImg.src = thumb.dataset.src;
+        mainImg.alt = thumb.dataset.alt;
+        mainImg.style.visibility = "visible";
+        detail.querySelectorAll(".detail-thumb").forEach(t => t.classList.remove("active"));
+        thumb.classList.add("active");
+      });
+    });
+
     attachQtyControl(p, {
       minus: detail.querySelector(".detail-qty .minus"),
       input: detail.querySelector(".detail-qty input"),

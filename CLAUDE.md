@@ -4,38 +4,35 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-A static, no-build, no-dependency front-end suite with two standalone pages sharing the same patterns:
+A static, no-build, no-dependency front-end: **MATRIX Store** — browse a product catalog with pricing/MOQ, view per-product detail pages, set quantities, and export a quotation (PDF) with shipping cost calculated.
 
-- **`index.html` + `script.js` + `style.css`** — MATRIX BOM Generator: browse a product catalog, set quantities, export a Bill of Materials (PDF / Word / Excel).
-- **`shopping.html` + `shopscript.js` + `shopstyle.css`** — MATRIX Store: a storefront with pricing, MOQ, and shipping-cost calculation, exporting a quotation (PDF only).
-
-There is no package.json, bundler, or test suite. Everything runs directly in the browser; third-party libraries (html2canvas, jsPDF, docx, ExcelJS, FileSaver.js) are loaded via CDN `<script>` tags in the HTML, not npm.
+Files: `index.html` + `shopscript.js` + `shopstyle.css`. There is no package.json, bundler, or test suite. Everything runs directly in the browser; third-party libraries (html2canvas, jsPDF) are loaded via CDN `<script>` tags in `index.html`, not npm.
 
 ## Running locally
 
-Open `index.html` or `shopping.html` directly, or serve the folder with any static server (the repo includes a Live Server VSCode config on port 5501). There is no build step — edits to `.js`/`.css`/`.html` are reflected on reload.
+Open `index.html` directly, or serve the folder with any static server (the repo includes a Live Server VSCode config on port 5501). There is no build step — edits to `shopscript.js`/`shopstyle.css`/`index.html` are reflected on reload.
 
-## Architecture (per page)
+## Architecture
 
-Each page's script follows the same structure, all wrapped in a single `DOMContentLoaded` listener with no modules/classes:
+All logic lives in `shopscript.js`, wrapped in a single `DOMContentLoaded` listener with no modules/classes:
 
 1. **`categoryConfig`** — ordered list of sidebar categories, some with a `sub` array of subcategories (e.g. `SENSOR` → `ANALOG/DIGITAL/IIC/UART`, `MOTOR` → `SERVO/TT/DC`).
-2. **`productData`** — flat array of product objects (`code`, `name`, `category`, optional `subCategory`). In `shopscript.js` each product also carries `price`, `weight`, and an `eol` flag; an `MOQ_MAP` keyed by product `code` sets minimum order quantities (defaults to 1).
-3. **Sidebar generation** — built from `categoryConfig` into `<ul id="sidebar-menu">`; clicking a category/subcategory calls `showSection(key)`, which filters `productData` and renders product cards into `#content-area`.
-4. **Quantity state** lives directly on each product object (`p.qty`), mutated by the `+`/`-`/input controls on each card — there is no separate cart data structure.
-5. **Cart drawer** (`#selected-panel` / `#cart-fab` / `#cart-overlay`) shows currently selected (qty > 0) items; `shopscript.js` additionally computes subtotal/weight/shipping totals here (`getSubtotal`, `getTotalWeight`, `calcShipping`).
-6. **Export modal** (`showExportModal`) collects a name (+ format for the BOM generator) and invokes one of the export functions.
-7. **Export functions** build an off-DOM HTML container, rasterize it with `html2canvas` for PDF, or use `docx`/`ExcelJS` APIs directly for Word/Excel — all client-side, no server involved.
+2. **`productData`** — flat array of product objects: `code`, `name`, `category`, optional `subCategory`, `price`, `weight`, optional `eol` flag, optional `specs` (object of label→value pairs, rendered on the detail page — left empty until filled in per-product). `qty` (current cart quantity) and `moq` (from `MOQ_MAP`, default 1) are initialized at load.
+3. **Sidebar generation** — built from `categoryConfig` into `<ul id="sidebar-menu">`; clicking a category/subcategory calls `showSection(key, mobileAll)`, which filters `productData` and renders product cards into `#content-area`.
+4. **Routing** — hash-based: `#item/<code>` opens that product's detail page via `showProductDetail(code)`; any other hash (or none) shows the last-viewed category (tracked in `lastCategory`/`lastMobileAll`) via `showSection`. Wired through a single `hashchange` listener (`handleHashRoute`) called once on init. Clicking a product card (outside its qty controls) navigates by setting `location.hash`; sidebar clicks clear the hash quietly (`history.replaceState`, no re-render loop) before calling `showSection` directly.
+5. **Quantity controls** — both the grid card and the detail page wire their +/-/input elements through the shared `attachQtyControl(p, { minus, input, plus })` (handles MOQ snapping and triggers `updateCart()`); quantity state lives directly on each product object (`p.qty`), not a separate cart structure.
+6. **Cart drawer** (`#selected-panel` / `#cart-fab` / `#cart-overlay`) shows currently selected (qty > 0) items with subtotal/weight totals (`getSubtotal`, `getTotalWeight`); shipping is calculated only at export time (`calcShipping`).
+7. **Export modal** (`showExportModal`) collects a name and invokes `exportStorePDF`, which builds an off-DOM HTML container and rasterizes it with `html2canvas` into a `jsPDF` document — all client-side, no server involved.
 
-Product images are expected at `img/<code>.png`, matched by product `code`. Missing images degrade gracefully to a "No Img" placeholder in exports.
+Product images are expected at `img/<code>.png`, matched by product `code`. Missing images degrade gracefully (hidden `<img>` via `onerror`).
 
-## Shipping logic (shopscript.js only)
+## Shipping logic
 
 `calcShipping(method, weight, zone)` supports `pickup` (free), `taiwan` (flat NT$150), and `international` (DHL zone-based tiers via `calcDHLShipping`, using the `DHL_RATES` table keyed by `zone1`–`zone6` and weight in grams).
 
 ## Editing product data
 
-When adding/changing a product, keep `script.js` and `shopscript.js` in sync where applicable (the BOM generator's `productData` is a subset of the Store's, without pricing/weight/MOQ fields). Category names in `categoryConfig` must match the `category`/`subCategory` strings used in `productData` exactly, since filtering is a straight string comparison.
+Category names in `categoryConfig` must match the `category`/`subCategory` strings used in `productData` exactly, since filtering is a straight string comparison. To add specs to a product's detail page, add a `specs: { "Label": "Value", ... }` object to its entry in `productData` — the detail page renders a "Specs coming soon" placeholder for any product without one.
 
 ## CAD assets
 

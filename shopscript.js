@@ -6,7 +6,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   productData.forEach(p => { p.qty = 0; });
 
-
   // ─── DOM refs ────────────────────────────────────────────────
   const sidebar       = document.getElementById("sidebar-menu");
   const content       = document.getElementById("content-area");

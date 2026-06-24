@@ -986,5 +986,5 @@ main.main-content::-webkit-scrollbar-thumb { background: var(--border2); border-
 
 @media (max-width: 480px) {
   .detail-main      { flex-direction: column; }
-  .detail-img-wrap  { min-height: 220px; }
+  .detail-img-wrap  { min-height: 180px; }
 }

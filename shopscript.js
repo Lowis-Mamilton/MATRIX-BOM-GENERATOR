@@ -407,12 +407,14 @@ document.addEventListener("DOMContentLoaded", async () => {
       ? specsEntries.map(([label, value]) => `<tr><th>${label}</th><td>${value}</td></tr>`).join("")
       : `<tr><td colspan="2" class="specs-empty">Specs coming soon.</td></tr>`;
 
-    // Gallery images: the product's own photo + the shared placeholder photo,
-    // plus any extra filenames listed in p.photos (e.g. specs: { photos: [...] }).
+    // Gallery images: the product's main photo, plus any extra photos listed
+    // in p.photos. Falls back to the shared placeholder photo only when no
+    // real extra photos have been uploaded yet.
     const galleryImages = [
       { src: `img/${p.code}.png`, alt: p.code },
-      { src: "img/PartPhoto.png", alt: `${p.code} photo` },
-      ...(p.photos || []).map(file => ({ src: `img/${file}`, alt: p.code })),
+      ...(p.photos && p.photos.length
+        ? p.photos.map(file => ({ src: `img/${file}`, alt: p.code }))
+        : [{ src: "img/PartPhoto.png", alt: `${p.code} photo` }]),
     ];
     const thumbs = galleryImages
       .map((img, i) => `

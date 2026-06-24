@@ -1053,9 +1053,20 @@ document.addEventListener("DOMContentLoaded", () => {
     setTimeout(() => URL.revokeObjectURL(blobUrl), 10000);
   }
 
+  // ─── Routing: #item/<code> opens a product detail page, anything
+  // else falls back to the last (or default) category. ──────────
+  function handleHashRoute() {
+    const m = location.hash.match(/^#item\/(.+)$/);
+    if (m) {
+      showProductDetail(decodeURIComponent(m[1]));
+    } else {
+      showSection(lastCategory, lastMobileAll);
+      highlightSidebarFor(lastCategory);
+    }
+  }
+  window.addEventListener("hashchange", handleHashRoute);
+
   // ─── Init ────────────────────────────────────────────────────
-  showSection("BUNDLE", false);
-  const firstLink = sidebar.querySelector(`a[data-cat="BUNDLE"]`);
-  if (firstLink) firstLink.parentNode.classList.add("active");
+  handleHashRoute();
   updateCart();
 });

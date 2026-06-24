@@ -94,7 +94,7 @@ document.addEventListener("DOMContentLoaded", () => {
       catTd.textContent = p.subCategory ? `${p.category} / ${p.subCategory}` : p.category;
 
       const priceTd = document.createElement("td");
-      priceTd.textContent = p.price === 0 ? "詢價" : `NT$${formatMoney(p.price)}`;
+      priceTd.textContent = p.price === 0 ? "Price on request" : `NT$${formatMoney(p.price)}`;
 
       const moqTd = document.createElement("td");
       moqTd.textContent = p.moq;

@@ -36,4 +36,4 @@ Category names in `categoryConfig` must match the `category`/`subCategory` strin
 
 ## CAD assets
 
-The `cad/` directory contains STEP files (`.step`/`.STEP`, inconsistent casing) named after product codes — reference CAD models, not used by the running app itself.
+The `cad/` directory contains STEP files named after product codes, but casing/naming is inconsistent (`.step` vs `.STEP`, and some files have suffixes like ` L`/`-R`, `_New`, `(screw)` that don't match any `productData.code`). The detail page's "Download STEP File" button (`attachStepDownload` in `shopscript.js`) fetches `cad/<code>.step`, falling back to `cad/<code>.STEP`; it shows "CAD file not available for this part" if neither exists. This `fetch` requires the page to be served over http(s) (Live Server / GitHub Pages) — it won't work when `index.html` is opened directly via `file://`.

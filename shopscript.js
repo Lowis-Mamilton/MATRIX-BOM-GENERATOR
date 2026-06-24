@@ -470,8 +470,25 @@ document.addEventListener("DOMContentLoaded", () => {
     sidebar.appendChild(li);
   });
 
+  // Highlights the sidebar entry matching a category/subcategory key
+  // (used when returning from a product detail page or on initial load).
+  function highlightSidebarFor(key) {
+    sidebar.querySelectorAll("li").forEach(li => li.classList.remove("active"));
+    const link = sidebar.querySelector(`a[data-sub="${key}"]`) || sidebar.querySelector(`a[data-cat="${key}"]`);
+    if (!link) return;
+    link.parentNode.classList.add("active");
+    if (link.dataset.sub) {
+      const parentLi = link.parentNode.parentNode.parentNode;
+      if (parentLi && parentLi.tagName === "LI") parentLi.classList.add("active");
+    }
+  }
+
   sidebar.addEventListener("click", e => {
     if (e.target.tagName !== "A") return;
+
+    // Clear any product-detail hash quietly (no hashchange re-render) so
+    // the back button doesn't loop back into the detail page we're leaving.
+    if (location.hash) history.replaceState(null, "", location.pathname + location.search);
 
     const clickedLi  = e.target.parentNode;
     const isMobile   = window.innerWidth <= 768;

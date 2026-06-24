@@ -692,7 +692,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       return m;
     };
 
-    // 載入圖片轉 DataURL，避免 canvas tainted
+    // Load image as a DataURL to avoid a tainted canvas
     function loadImg(src) {
       return new Promise(resolve => {
         const img = new Image();

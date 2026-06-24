@@ -515,9 +515,44 @@ document.addEventListener("DOMContentLoaded", () => {
     showSection(sub || cat, false);
   });
 
+  // ─── Shared quantity control wiring ───────────────────────────
+  // Wires up +/-/input behavior for a product against any set of DOM
+  // elements — used by both the grid card and the detail page so MOQ
+  // snapping and cart updates stay in one place.
+  function attachQtyControl(p, { minus, input, plus }) {
+    function applyMOQ(val) {
+      let v = Math.floor(Number(val));
+      if (isNaN(v) || v < 0) v = 0;
+      if (v > 0 && v < p.moq) v = p.moq; // snap up to MOQ
+      return v;
+    }
+
+    function setQty(v) {
+      p.qty = v;
+      input.value = v;
+      updateCart();
+    }
+
+    plus.addEventListener("click", () => {
+      const current = p.qty;
+      setQty(current === 0 ? p.moq : current + 1); // first click → jump to MOQ
+    });
+
+    minus.addEventListener("click", () => {
+      const current = p.qty;
+      setQty(current <= p.moq ? 0 : current - 1); // drop to 0 (remove from cart)
+    });
+
+    input.addEventListener("change", () => {
+      setQty(applyMOQ(input.value));
+    });
+  }
+
   // ─── Product section ─────────────────────────────────────────
   function showSection(key, mobileAll = false) {
     content.innerHTML = "";
+    lastCategory  = key;
+    lastMobileAll = mobileAll;
 
     const catConfig  = categoryConfig.find(c => c.name === key);
     const hasSub     = catConfig && catConfig.sub && catConfig.sub.length > 0;

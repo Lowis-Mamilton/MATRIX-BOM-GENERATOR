@@ -24,7 +24,7 @@ All logic lives in `shopscript.js`, wrapped in a single `DOMContentLoaded` liste
 6. **Cart drawer** (`#selected-panel` / `#cart-fab` / `#cart-overlay`) shows currently selected (qty > 0) items with subtotal/weight totals (`getSubtotal`, `getTotalWeight`); shipping is calculated only at export time (`calcShipping`).
 7. **Export modal** (`showExportModal`) collects a name and invokes `exportStorePDF`, which builds an off-DOM HTML container and rasterizes it with `html2canvas` into a `jsPDF` document — all client-side, no server involved.
 
-Product images are expected at `img/<code>.png`, matched by product `code`. Missing images degrade gracefully (hidden `<img>` via `onerror`).
+Product images are expected at `img/<code>.png`, matched by product `code`. Missing images degrade gracefully (hidden `<img>` via `onerror`). The detail page shows a second image, `img/PartPhoto.png`, as a shared placeholder slot alongside the per-product image (`attachStepDownload`'s sibling in `showProductDetail`).
 
 ## Shipping logic
 

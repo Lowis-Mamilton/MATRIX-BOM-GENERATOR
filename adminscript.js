@@ -1,16 +1,39 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const connectBtn     = document.getElementById("connect-btn");
-  const connectStatus  = document.getElementById("connect-status");
-  const searchInput    = document.getElementById("search-input");
-  const addBtn         = document.getElementById("add-btn");
-  const tbody          = document.getElementById("product-table-body");
-  const unsupportedBox = document.getElementById("unsupported-banner");
+  const connectBtn      = document.getElementById("connect-btn");
+  const connectStatus   = document.getElementById("connect-status");
+  const searchInput     = document.getElementById("search-input");
+  const categoryFilter  = document.getElementById("category-filter");
+  const sortSelect      = document.getElementById("sort-select");
+  const addBtn          = document.getElementById("add-btn");
+  const tbody           = document.getElementById("product-table-body");
+  const unsupportedBox  = document.getElementById("unsupported-banner");
+  const resultCount     = document.getElementById("result-count");
+  const toastContainer  = document.getElementById("toast-container");
+  const lightboxOverlay = document.getElementById("lightbox-overlay");
+  const lightboxImg     = document.getElementById("lightbox-img");
 
   const formatMoney = n => Number(n || 0).toLocaleString("en-US");
 
   let rootHandle, productsFileHandle, categoriesFileHandle, imgDirHandle;
   let products = [];
   let categories = [];
+
+  // ─── Toast notifications ───────────────────────────────────────
+  function showToast(message, type = "success") {
+    const toast = document.createElement("div");
+    toast.className = `toast ${type}`;
+    toast.textContent = message;
+    toastContainer.appendChild(toast);
+    setTimeout(() => toast.classList.add("toast-out"), 2200);
+    setTimeout(() => toast.remove(), 2600);
+  }
+
+  // ─── Image lightbox (click any thumbnail to enlarge) ───────────
+  function openLightbox(src) {
+    lightboxImg.src = src;
+    lightboxOverlay.hidden = false;
+  }
+  lightboxOverlay.addEventListener("click", () => { lightboxOverlay.hidden = true; });
 
   // ─── Feature detection ─────────────────────────────────────────
   if (!window.showDirectoryPicker) {
@@ -21,23 +44,33 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // ─── Connect / load ─────────────────────────────────────────────
   connectBtn.addEventListener("click", async () => {
+    const originalLabel = connectBtn.textContent;
+    connectBtn.disabled = true;
+    connectBtn.textContent = "Connecting…";
     try {
       rootHandle = await window.showDirectoryPicker({ mode: "readwrite" });
       productsFileHandle   = await rootHandle.getFileHandle("products.json", { create: false });
-      categoriesFileHandle  = await rootHandle.getFileHandle("categories.json", { create: false });
+      categoriesFileHandle = await rootHandle.getFileHandle("categories.json", { create: false });
       imgDirHandle          = await rootHandle.getDirectoryHandle("img", { create: false });
 
       await loadData();
+      populateCategoryFilter();
 
       connectStatus.textContent = `Connected: ${rootHandle.name}`;
       connectBtn.textContent = "Reconnect";
       searchInput.disabled = false;
+      categoryFilter.disabled = false;
+      sortSelect.disabled = false;
       addBtn.disabled = false;
-      renderTable(searchInput.value);
+      applyFilters();
+      showToast(`Connected — ${products.length} parts loaded.`);
     } catch (err) {
+      connectBtn.textContent = originalLabel;
       if (err.name !== "AbortError") {
-        alert("Failed to connect folder: " + err.message);
+        showToast("Failed to connect folder: " + err.message, "error");
       }
+    } finally {
+      connectBtn.disabled = false;
     }
   });
 
@@ -56,14 +89,31 @@ document.addEventListener("DOMContentLoaded", () => {
     await writable.close();
   }
 
-  // ─── Table rendering ────────────────────────────────────────────
-  searchInput.addEventListener("input", () => renderTable(searchInput.value));
+  function populateCategoryFilter() {
+    categoryFilter.innerHTML = `<option value="">All Categories</option>`;
+    categories.forEach(c => {
+      const opt = document.createElement("option");
+      opt.value = c.name;
+      opt.textContent = c.name;
+      categoryFilter.appendChild(opt);
+    });
+  }
 
-  function renderTable(filterText) {
+  // ─── Filtering / sorting / table rendering ─────────────────────
+  searchInput.addEventListener("input", applyFilters);
+  categoryFilter.addEventListener("change", applyFilters);
+  sortSelect.addEventListener("change", applyFilters);
+
+  function applyFilters() {
+    renderTable(searchInput.value, categoryFilter.value, sortSelect.value);
+  }
+
+  function renderTable(filterText, categoryValue, sortValue) {
     const q = (filterText || "").trim().toLowerCase();
     tbody.innerHTML = "";
 
-    const filtered = products.filter(p => {
+    let filtered = products.filter(p => {
+      if (categoryValue && p.category !== categoryValue) return false;
       if (!q) return true;
       return (
         p.code.toLowerCase().includes(q) ||
@@ -72,15 +122,22 @@ document.addEventListener("DOMContentLoaded", () => {
       );
     });
 
+    filtered = sortProducts(filtered, sortValue);
+
+    resultCount.textContent = `Showing ${filtered.length} of ${products.length} parts`;
+
     filtered.forEach(p => {
       const tr = document.createElement("tr");
 
       const imgTd = document.createElement("td");
+      const imgSrc = `img/${p.code}.png`;
       const img = document.createElement("img");
-      img.src = `img/${p.code}.png`;
+      img.src = imgSrc;
       img.alt = p.code;
       img.className = "admin-thumb";
+      img.title = "Click to enlarge";
       img.onerror = function () { this.style.visibility = "hidden"; };
+      img.addEventListener("click", () => openLightbox(imgSrc));
       imgTd.appendChild(img);
 
       const codeTd = document.createElement("td");
@@ -125,12 +182,39 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  function sortProducts(list, sortValue) {
+    const sorted = [...list];
+    switch (sortValue) {
+      case "code":
+        sorted.sort((a, b) => a.code.localeCompare(b.code));
+        break;
+      case "name":
+        sorted.sort((a, b) => a.name.localeCompare(b.name));
+        break;
+      case "price-asc":
+        sorted.sort((a, b) => a.price - b.price);
+        break;
+      case "price-desc":
+        sorted.sort((a, b) => b.price - a.price);
+        break;
+      case "category":
+      default:
+        sorted.sort((a, b) => {
+          const catCompare = a.category.localeCompare(b.category);
+          if (catCompare !== 0) return catCompare;
+          return (a.subCategory || "").localeCompare(b.subCategory || "");
+        });
+    }
+    return sorted;
+  }
+
   // ─── Add / edit form ────────────────────────────────────────────
   addBtn.addEventListener("click", () => openProductForm(null));
 
   function openProductForm(existing) {
     const isEdit = !!existing;
     const specsEntries = existing && existing.specs ? Object.entries(existing.specs) : [];
+    const currentImgSrc = isEdit ? `img/${existing.code}.png` : "";
 
     const overlay = document.createElement("div");
     overlay.className = "admin-modal-overlay";
@@ -140,6 +224,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <form id="product-form">
           <div class="form-row">
             <label>Code</label>
+            <div class="field-hint">Unique part number. Used as the image/file name, so it can't be changed once created.</div>
             <input name="code" type="text" value="${existing ? existing.code : ""}" ${isEdit ? "disabled" : ""} required>
           </div>
           <div class="form-row">
@@ -155,30 +240,38 @@ document.addEventListener("DOMContentLoaded", () => {
             <select name="subCategory"></select>
           </div>
           <div class="form-row">
-            <label>Price</label>
+            <label>Price (NT$)</label>
+            <div class="field-hint">Enter 0 to show "Price on request" instead of a price.</div>
             <input name="price" type="number" min="0" step="1" value="${existing ? existing.price : 0}" required>
           </div>
           <div class="form-row">
-            <label>Weight (g)</label>
+            <label>Weight (grams)</label>
+            <div class="field-hint">Used to calculate shipping cost at checkout.</div>
             <input name="weight" type="number" min="0" step="1" value="${existing ? existing.weight : 200}" required>
           </div>
           <div class="form-row">
             <label>Minimum Order Quantity (MOQ)</label>
+            <div class="field-hint">Customers can only order in multiples of this amount (e.g. screws sold in bags of 100).</div>
             <input name="moq" type="number" min="1" step="1" value="${existing && existing.moq ? existing.moq : 1}">
           </div>
           <div class="form-row checkbox-row">
             <label><input name="eol" type="checkbox" ${existing && existing.eol ? "checked" : ""}> End of Life (EOL)</label>
+            <div class="field-hint">Shows the part as discontinued/greyed out in the storefront.</div>
           </div>
           <div class="form-row">
             <label>Description</label>
+            <div class="field-hint">Shown on the part's detail page, above the specs table.</div>
             <textarea name="description" rows="3">${existing && existing.description ? existing.description : ""}</textarea>
           </div>
           <div class="form-row">
-            <label>Image (PNG, leave blank to keep current)</label>
+            <label>Image</label>
+            <div class="field-hint">PNG only. Leave blank to keep the current image. Click the preview to enlarge.</div>
+            <img id="image-preview" class="image-preview" src="${currentImgSrc}" alt="" ${currentImgSrc ? "" : "hidden"}>
             <input name="image" type="file" accept="image/png">
           </div>
           <div class="form-row">
             <label>Specs</label>
+            <div class="field-hint">Shown as a table on the part's detail page (e.g. Material → Aluminum).</div>
             <div id="specs-rows"></div>
             <button type="button" id="add-spec-row" class="secondary-btn">+ Add Spec Row</button>
           </div>
@@ -198,6 +291,24 @@ document.addEventListener("DOMContentLoaded", () => {
     const subSelect = form.querySelector("select[name=subCategory]");
     const specsRows = overlay.querySelector("#specs-rows");
     const errorBox = overlay.querySelector("#form-error");
+    const imagePreview = overlay.querySelector("#image-preview");
+    const imageInput = form.querySelector("input[name=image]");
+
+    imagePreview.addEventListener("click", () => {
+      if (imagePreview.src) openLightbox(imagePreview.src);
+    });
+    imagePreview.onerror = function () { this.hidden = true; };
+
+    imageInput.addEventListener("change", () => {
+      const file = imageInput.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        imagePreview.src = reader.result;
+        imagePreview.hidden = false;
+      };
+      reader.readAsDataURL(file);
+    });
 
     categories.forEach(c => {
       const opt = document.createElement("option");
@@ -231,8 +342,8 @@ document.addEventListener("DOMContentLoaded", () => {
       const row = document.createElement("div");
       row.className = "spec-row";
       row.innerHTML = `
-        <input type="text" class="spec-label" placeholder="Label" value="${label || ""}">
-        <input type="text" class="spec-value" placeholder="Value" value="${value || ""}">
+        <input type="text" class="spec-label" placeholder="Label (e.g. Material)" value="${label || ""}">
+        <input type="text" class="spec-value" placeholder="Value (e.g. Aluminum)" value="${value || ""}">
         <button type="button" class="row-btn danger spec-remove">Remove</button>
       `;
       row.querySelector(".spec-remove").addEventListener("click", () => row.remove());
@@ -274,9 +385,15 @@ document.addEventListener("DOMContentLoaded", () => {
       });
       if (specsError) { errorBox.textContent = specsError; return; }
 
+      const saveBtn = form.querySelector("button[type=submit]");
+      saveBtn.disabled = true;
+      saveBtn.textContent = "Saving…";
+
       if (imageFile && imageFile.size > 0) {
         if (imageFile.type !== "image/png") {
           errorBox.textContent = "Image must be a PNG file";
+          saveBtn.disabled = false;
+          saveBtn.textContent = "Save";
           return;
         }
         try {
@@ -286,6 +403,8 @@ document.addEventListener("DOMContentLoaded", () => {
           await writable.close();
         } catch (err) {
           errorBox.textContent = "Failed to write image: " + err.message;
+          saveBtn.disabled = false;
+          saveBtn.textContent = "Save";
           return;
         }
       }
@@ -308,11 +427,14 @@ document.addEventListener("DOMContentLoaded", () => {
         await persistProducts();
       } catch (err) {
         errorBox.textContent = "Failed to write products.json: " + err.message;
+        saveBtn.disabled = false;
+        saveBtn.textContent = "Save";
         return;
       }
 
       overlay.remove();
-      renderTable(searchInput.value);
+      applyFilters();
+      showToast(isEdit ? `${code} saved.` : `${code} added.`);
     });
   }
 
@@ -333,9 +455,10 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       await persistProducts();
     } catch (err) {
-      alert("Failed to write products.json: " + err.message);
+      showToast("Failed to write products.json: " + err.message, "error");
       return;
     }
-    renderTable(searchInput.value);
+    applyFilters();
+    showToast(`${code} deleted.`);
   }
 });

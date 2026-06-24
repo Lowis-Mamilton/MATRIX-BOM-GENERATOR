@@ -257,6 +257,30 @@ body {
   margin-bottom: 4px;
 }
 
+.field-hint {
+  font-size: 11.5px;
+  color: var(--text3);
+  margin-bottom: 6px;
+  line-height: 1.4;
+}
+
+.checkbox-row .field-hint {
+  margin-top: 4px;
+}
+
+.image-preview {
+  display: block;
+  max-width: 120px;
+  max-height: 120px;
+  object-fit: contain;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+  padding: 6px;
+  margin-bottom: 8px;
+  cursor: pointer;
+}
+
 .form-row input[type="text"],
 .form-row input[type="number"],
 .form-row input[type="file"],

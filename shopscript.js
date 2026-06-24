@@ -165,13 +165,14 @@ document.addEventListener("DOMContentLoaded", async () => {
     sidebar.querySelectorAll("li").forEach(li => li.classList.remove("active"));
     clickedLi.classList.add("active");
 
-    // 手機版：點有子分類的父項目 → 直接顯示所有子分類產品，不展開 dropdown
+    // Mobile: tapping a parent category with subcategories shows all of
+    // its products directly instead of expanding the dropdown.
     if (isMobile && isTopLevel && hasSub && !sub) {
       showSection(cat, true);
       return;
     }
 
-    // 桌機版子分類：同時標記父 li active（保持 dropdown 展開）
+    // Desktop subcategory: also mark the parent li active (keeps dropdown expanded)
     if (sub) {
       const parentLi = clickedLi.parentNode.parentNode;
       if (parentLi && parentLi.tagName === "LI") parentLi.classList.add("active");

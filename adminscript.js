@@ -264,10 +264,16 @@ document.addEventListener("DOMContentLoaded", () => {
             <textarea name="description" rows="3">${existing && existing.description ? existing.description : ""}</textarea>
           </div>
           <div class="form-row">
-            <label>Image</label>
-            <div class="field-hint">PNG only. Leave blank to keep the current image. Click the preview to enlarge.</div>
+            <label>Main Image</label>
+            <div class="field-hint">PNG only. Shown everywhere — product grid, cart, detail page, exports. Click the preview to enlarge. Written to disk immediately when selected.</div>
             <img id="image-preview" class="image-preview" src="${currentImgSrc}" alt="" ${currentImgSrc ? "" : "hidden"}>
-            <input name="image" type="file" accept="image/png">
+            <input id="main-image-input" type="file" accept="image/png">
+          </div>
+          <div class="form-row">
+            <label>Additional Photos</label>
+            <div class="field-hint">Shown in the photo gallery on the part's detail page. Use "Set as Main" to swap one of these into the main image slot above. Removing a photo here only removes it from the gallery — it does not delete the file.</div>
+            <div id="photo-list"></div>
+            <input id="add-photo-input" type="file" accept="image/png" multiple>
           </div>
           <div class="form-row">
             <label>Specs</label>

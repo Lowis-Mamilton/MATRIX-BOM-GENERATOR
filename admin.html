@@ -26,29 +26,29 @@
   </header>
 
   <div class="admin-banner">
-    本機工具 — 連接你的專案資料夾、編輯零件，改完後執行 <code>git commit</code> + <code>git push</code> 才會發布到正式網站。僅支援 Chrome / Edge，且必須透過 Live Server（或其他 http(s) 伺服器）開啟，不能直接雙擊用 file:// 打開。
+    Local tool — connect your project folder, edit products, then run <code>git commit</code> + <code>git push</code> to publish to the live site. Chrome / Edge only, and must be opened via Live Server (or another http(s) server) — not directly via file://.
   </div>
 
   <div id="unsupported-banner" class="admin-banner error" hidden>
-    你的瀏覽器不支援 File System Access API（僅 Chrome / Edge 支援），無法使用此後台工具。
+    Your browser doesn't support the File System Access API (Chrome / Edge only) — this admin tool can't be used here.
   </div>
 
   <main class="admin-main">
     <div class="admin-toolbar">
-      <button id="connect-btn" class="primary-btn">連接專案資料夾</button>
+      <button id="connect-btn" class="primary-btn">Connect Project Folder</button>
       <span id="connect-status" class="connect-status"></span>
-      <input id="search-input" type="text" placeholder="搜尋編號 / 名稱 / 分類…" class="search-input" disabled>
-      <button id="add-btn" class="primary-btn" disabled>＋ 新增零件</button>
+      <input id="search-input" type="text" placeholder="Search code / name / category…" class="search-input" disabled>
+      <button id="add-btn" class="primary-btn" disabled>+ Add New Part</button>
     </div>
 
     <table class="admin-table">
       <thead>
         <tr>
-          <th>圖片</th>
-          <th>編號</th>
-          <th>名稱</th>
-          <th>分類</th>
-          <th>價格</th>
+          <th>Image</th>
+          <th>Code</th>
+          <th>Name</th>
+          <th>Category</th>
+          <th>Price</th>
           <th>MOQ</th>
           <th>EOL</th>
           <th></th>

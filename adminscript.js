@@ -29,14 +29,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
       await loadData();
 
-      connectStatus.textContent = `已連接：${rootHandle.name}`;
-      connectBtn.textContent = "重新連接";
+      connectStatus.textContent = `Connected: ${rootHandle.name}`;
+      connectBtn.textContent = "Reconnect";
       searchInput.disabled = false;
       addBtn.disabled = false;
       renderTable(searchInput.value);
     } catch (err) {
       if (err.name !== "AbortError") {
-        alert("連接資料夾失敗：" + err.message);
+        alert("Failed to connect folder: " + err.message);
       }
     }
   });

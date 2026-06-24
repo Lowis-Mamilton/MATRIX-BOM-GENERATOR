@@ -936,6 +936,13 @@ main.main-content::-webkit-scrollbar-thumb { background: var(--border2); border-
   line-height: 1.3;
 }
 
+.detail-description {
+  font-size: 13.5px;
+  color: var(--text2);
+  line-height: 1.6;
+  margin: 0;
+}
+
 .detail-info .product-price {
   font-size: 26px;
 }

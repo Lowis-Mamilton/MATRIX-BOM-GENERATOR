@@ -38,8 +38,20 @@
       <button id="connect-btn" class="primary-btn">Connect Project Folder</button>
       <span id="connect-status" class="connect-status"></span>
       <input id="search-input" type="text" placeholder="Search code / name / category…" class="search-input" disabled>
+      <select id="category-filter" class="search-input filter-select" disabled>
+        <option value="">All Categories</option>
+      </select>
+      <select id="sort-select" class="search-input filter-select" disabled>
+        <option value="category">Sort: Category</option>
+        <option value="code">Sort: Code</option>
+        <option value="name">Sort: Name</option>
+        <option value="price-asc">Sort: Price (low → high)</option>
+        <option value="price-desc">Sort: Price (high → low)</option>
+      </select>
       <button id="add-btn" class="primary-btn" disabled>+ Add New Part</button>
     </div>
+
+    <div id="result-count" class="result-count"></div>
 
     <table class="admin-table">
       <thead>
@@ -57,6 +69,11 @@
       <tbody id="product-table-body"></tbody>
     </table>
   </main>
+
+  <div id="toast-container" class="toast-container"></div>
+  <div id="lightbox-overlay" class="lightbox-overlay" hidden>
+    <img id="lightbox-img" src="" alt="">
+  </div>
 
   <script src="adminscript.js"></script>
 </body>

@@ -699,8 +699,13 @@ document.addEventListener("DOMContentLoaded", () => {
     detail.innerHTML = `
       <a href="#" class="detail-back-link">&larr; Back to ${lastCategory}</a>
       <div class="detail-main">
-        <div class="detail-img-wrap">
-          <img src="img/${p.code}.png" alt="${p.code}" onerror="this.style.visibility='hidden'">
+        <div class="detail-gallery">
+          <div class="detail-img-wrap">
+            <img src="img/${p.code}.png" alt="${p.code}" onerror="this.style.visibility='hidden'">
+          </div>
+          <div class="detail-img-wrap">
+            <img src="img/PartPhoto.png" alt="${p.code} photo" onerror="this.style.visibility='hidden'">
+          </div>
         </div>
         <div class="detail-info">
           <div class="product-code">${p.code}</div>
@@ -712,6 +717,11 @@ document.addEventListener("DOMContentLoaded", () => {
             <input type="number" min="0" value="${p.qty}">
             <button type="button" class="plus">+</button>
           </div>
+          <button type="button" class="step-download-btn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download STEP File
+          </button>
+          <div class="step-status"></div>
         </div>
       </div>
       <table class="specs-table">
@@ -724,6 +734,11 @@ document.addEventListener("DOMContentLoaded", () => {
       minus: detail.querySelector(".detail-qty .minus"),
       input: detail.querySelector(".detail-qty input"),
       plus:  detail.querySelector(".detail-qty .plus"),
+    });
+
+    attachStepDownload(p, {
+      button: detail.querySelector(".step-download-btn"),
+      status: detail.querySelector(".step-status"),
     });
 
     detail.querySelector(".detail-back-link").addEventListener("click", e => {

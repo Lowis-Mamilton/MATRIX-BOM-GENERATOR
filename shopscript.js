@@ -792,7 +792,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       document.body.removeChild(container);
     }
 
-    // ─── 下載 ────────────────────────────────────────────────
+    // ─── Download ───────────────────────────────────────────────
     const fileName = "MATRIX_STORE_Order.pdf";
     const pdfBlob = new Blob([pdf.output("arraybuffer")], { type: "application/pdf" });
     const blobUrl = URL.createObjectURL(pdfBlob);

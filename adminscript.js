@@ -106,13 +106,13 @@ document.addEventListener("DOMContentLoaded", () => {
       actionsTd.className = "actions-cell";
 
       const editBtn = document.createElement("button");
-      editBtn.textContent = "編輯";
+      editBtn.textContent = "Edit";
       editBtn.className = "row-btn";
       editBtn.type = "button";
       editBtn.addEventListener("click", () => openProductForm(p));
 
       const delBtn = document.createElement("button");
-      delBtn.textContent = "刪除";
+      delBtn.textContent = "Delete";
       delBtn.className = "row-btn danger";
       delBtn.type = "button";
       delBtn.addEventListener("click", () => deleteProduct(p.code));

@@ -548,6 +548,53 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // ─── CAD (STEP file) download ─────────────────────────────────
+  // Each part's CAD file is expected at cad/<code>.step. Some existing
+  // files in cad/ use a .STEP extension instead, so we try that as a
+  // same-origin fallback before giving up. Requires the page to be
+  // served over http(s) (e.g. Live Server / GitHub Pages) — fetch
+  // cannot read local files when opened directly via file://.
+  function attachStepDownload(p, { button, status }) {
+    if (!button) return;
+
+    async function tryFetch(path) {
+      try {
+        const res = await fetch(path);
+        if (res.ok) return res.blob();
+      } catch {
+        // ignore — likely opened via file:// or genuinely missing
+      }
+      return null;
+    }
+
+    button.addEventListener("click", async () => {
+      button.disabled = true;
+      status.textContent = "";
+      status.className = "step-status";
+
+      const blob =
+        (await tryFetch(`cad/${encodeURIComponent(p.code)}.step`)) ||
+        (await tryFetch(`cad/${encodeURIComponent(p.code)}.STEP`));
+
+      button.disabled = false;
+
+      if (!blob) {
+        status.textContent = "CAD file not available for this part.";
+        status.className = "step-status error";
+        return;
+      }
+
+      const blobUrl = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = blobUrl;
+      a.download = `${p.code}.step`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(blobUrl), 10000);
+    });
+  }
+
   // ─── Product section ─────────────────────────────────────────
   function showSection(key, mobileAll = false) {
     content.innerHTML = "";

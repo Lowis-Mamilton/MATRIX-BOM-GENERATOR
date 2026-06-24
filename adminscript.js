@@ -136,56 +136,56 @@ document.addEventListener("DOMContentLoaded", () => {
     overlay.className = "admin-modal-overlay";
     overlay.innerHTML = `
       <div class="admin-modal">
-        <h2>${isEdit ? "編輯零件" : "新增零件"}</h2>
+        <h2>${isEdit ? "Edit Part" : "Add New Part"}</h2>
         <form id="product-form">
           <div class="form-row">
-            <label>編號 (code)</label>
+            <label>Code</label>
             <input name="code" type="text" value="${existing ? existing.code : ""}" ${isEdit ? "disabled" : ""} required>
           </div>
           <div class="form-row">
-            <label>名稱 (name)</label>
+            <label>Name</label>
             <input name="name" type="text" value="${existing ? existing.name : ""}" required>
           </div>
           <div class="form-row">
-            <label>分類 (category)</label>
+            <label>Category</label>
             <select name="category" required></select>
           </div>
           <div class="form-row" id="subcategory-row" hidden>
-            <label>子分類 (subCategory)</label>
+            <label>Subcategory</label>
             <select name="subCategory"></select>
           </div>
           <div class="form-row">
-            <label>價格 (price)</label>
+            <label>Price</label>
             <input name="price" type="number" min="0" step="1" value="${existing ? existing.price : 0}" required>
           </div>
           <div class="form-row">
-            <label>重量 (weight, g)</label>
+            <label>Weight (g)</label>
             <input name="weight" type="number" min="0" step="1" value="${existing ? existing.weight : 200}" required>
           </div>
           <div class="form-row">
-            <label>最低訂購量 (moq)</label>
+            <label>Minimum Order Quantity (MOQ)</label>
             <input name="moq" type="number" min="1" step="1" value="${existing && existing.moq ? existing.moq : 1}">
           </div>
           <div class="form-row checkbox-row">
-            <label><input name="eol" type="checkbox" ${existing && existing.eol ? "checked" : ""}> 已停產 (EOL)</label>
+            <label><input name="eol" type="checkbox" ${existing && existing.eol ? "checked" : ""}> End of Life (EOL)</label>
           </div>
           <div class="form-row">
-            <label>說明 (description)</label>
+            <label>Description</label>
             <textarea name="description" rows="3">${existing && existing.description ? existing.description : ""}</textarea>
           </div>
           <div class="form-row">
-            <label>圖片 (PNG，留空則不變更)</label>
+            <label>Image (PNG, leave blank to keep current)</label>
             <input name="image" type="file" accept="image/png">
           </div>
           <div class="form-row">
-            <label>規格 (specs)</label>
+            <label>Specs</label>
             <div id="specs-rows"></div>
-            <button type="button" id="add-spec-row" class="secondary-btn">+ 新增規格欄</button>
+            <button type="button" id="add-spec-row" class="secondary-btn">+ Add Spec Row</button>
           </div>
           <div id="form-error" class="form-error"></div>
           <div class="form-actions">
-            <button type="button" id="form-cancel" class="secondary-btn">取消</button>
-            <button type="submit" class="primary-btn">儲存</button>
+            <button type="button" id="form-cancel" class="secondary-btn">Cancel</button>
+            <button type="submit" class="primary-btn">Save</button>
           </div>
         </form>
       </div>

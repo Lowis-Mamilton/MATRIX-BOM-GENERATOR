@@ -386,6 +386,10 @@ body {
   padding: 40px;
 }
 
+.lightbox-overlay[hidden] {
+  display: none;
+}
+
 .lightbox-overlay img {
   max-width: 100%;
   max-height: 100%;

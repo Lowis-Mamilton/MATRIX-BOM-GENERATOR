@@ -503,32 +503,12 @@ document.addEventListener("DOMContentLoaded", () => {
       saveBtn.disabled = true;
       saveBtn.textContent = "Saving…";
 
-      if (imageFile && imageFile.size > 0) {
-        if (imageFile.type !== "image/png") {
-          errorBox.textContent = "Image must be a PNG file";
-          saveBtn.disabled = false;
-          saveBtn.textContent = "Save";
-          return;
-        }
-        try {
-          const imgFileHandle = await imgDirHandle.getFileHandle(`${code}.png`, { create: true });
-          const writable = await imgFileHandle.createWritable();
-          await writable.write(imageFile);
-          await writable.close();
-        } catch (err) {
-          errorBox.textContent = "Failed to write image: " + err.message;
-          saveBtn.disabled = false;
-          saveBtn.textContent = "Save";
-          return;
-        }
-      }
-
       const product = { code, name, category, price, weight, moq };
       if (subCategory) product.subCategory = subCategory;
       if (eol) product.eol = true;
       if (description) product.description = description;
       if (Object.keys(specs).length) product.specs = specs;
-      if (existing && existing.photos) product.photos = existing.photos;
+      if (pendingPhotos.length) product.photos = pendingPhotos;
 
       if (isEdit) {
         const idx = products.findIndex(p => p.code === code);

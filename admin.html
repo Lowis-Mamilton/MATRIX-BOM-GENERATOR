@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MATRIX Store — Admin</title>
+  <link rel="shortcut icon" href="img/Matrix-icon.png" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="shopstyle.css">
+  <link rel="stylesheet" href="adminstyle.css">
+</head>
+<body>
+
+  <header class="admin-header">
+    <div class="header-inner">
+      <div class="logo">
+        <img src="img/Matrix-icon-white.png" alt="MATRIX Logo">
+        <div class="logo-text">
+          <span class="logo-main">MATRIX</span>
+          <span class="logo-sub">CATALOG ADMIN</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="admin-banner">
+    本機工具 — 連接你的專案資料夾、編輯零件，改完後執行 <code>git commit</code> + <code>git push</code> 才會發布到正式網站。僅支援 Chrome / Edge，且必須透過 Live Server（或其他 http(s) 伺服器）開啟，不能直接雙擊用 file:// 打開。
+  </div>
+
+  <div id="unsupported-banner" class="admin-banner error" hidden>
+    你的瀏覽器不支援 File System Access API（僅 Chrome / Edge 支援），無法使用此後台工具。
+  </div>
+
+  <main class="admin-main">
+    <div class="admin-toolbar">
+      <button id="connect-btn" class="primary-btn">連接專案資料夾</button>
+      <span id="connect-status" class="connect-status"></span>
+      <input id="search-input" type="text" placeholder="搜尋編號 / 名稱 / 分類…" class="search-input" disabled>
+      <button id="add-btn" class="primary-btn" disabled>＋ 新增零件</button>
+    </div>
+
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th>圖片</th>
+          <th>編號</th>
+          <th>名稱</th>
+          <th>分類</th>
+          <th>價格</th>
+          <th>MOQ</th>
+          <th>EOL</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="product-table-body"></tbody>
+    </table>
+  </main>
+
+  <script src="adminscript.js"></script>
+</body>
+</html>

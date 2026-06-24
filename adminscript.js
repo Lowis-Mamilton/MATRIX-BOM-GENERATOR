@@ -307,7 +307,7 @@ document.addEventListener("DOMContentLoaded", () => {
       try {
         await persistProducts();
       } catch (err) {
-        errorBox.textContent = "寫入 products.json 失敗：" + err.message;
+        errorBox.textContent = "Failed to write products.json: " + err.message;
         return;
       }
 
@@ -317,23 +317,23 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function validateProduct({ code, name, price, weight }, isEdit) {
-    if (!code) return "請填寫編號";
-    if (/[\\/:*?"<>|]/.test(code)) return "編號不可包含 \\ / : * ? \" < > |";
-    if (!isEdit && products.some(p => p.code === code)) return `編號 ${code} 已存在`;
-    if (!name) return "請填寫名稱";
-    if (isNaN(price) || price < 0) return "價格必須是不小於 0 的數字";
-    if (isNaN(weight) || weight < 0) return "重量必須是不小於 0 的數字";
+    if (!code) return "Code is required";
+    if (/[\\/:*?"<>|]/.test(code)) return "Code cannot contain \\ / : * ? \" < > |";
+    if (!isEdit && products.some(p => p.code === code)) return `Code ${code} already exists`;
+    if (!name) return "Name is required";
+    if (isNaN(price) || price < 0) return "Price must be a number ≥ 0";
+    if (isNaN(weight) || weight < 0) return "Weight must be a number ≥ 0";
     return "";
   }
 
   // ─── Delete ─────────────────────────────────────────────────────
   async function deleteProduct(code) {
-    if (!confirm(`確定要刪除 ${code} 嗎？（圖片檔不會被刪除）`)) return;
+    if (!confirm(`Delete ${code}? (its image file will not be deleted)`)) return;
     products = products.filter(p => p.code !== code);
     try {
       await persistProducts();
     } catch (err) {
-      alert("寫入 products.json 失敗：" + err.message);
+      alert("Failed to write products.json: " + err.message);
       return;
     }
     renderTable(searchInput.value);

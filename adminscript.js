@@ -484,7 +484,6 @@ document.addEventListener("DOMContentLoaded", () => {
       const moq = Number(fd.get("moq")) || 1;
       const eol = fd.get("eol") === "on";
       const description = fd.get("description").trim();
-      const imageFile = fd.get("image");
 
       const error = validateProduct({ code, name, price, weight }, isEdit);
       if (error) { errorBox.textContent = error; return; }

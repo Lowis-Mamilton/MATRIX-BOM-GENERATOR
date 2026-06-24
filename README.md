@@ -1,28 +1,10 @@
 # MATRIX Product Suite
 
-## MATRIX BOM Generator
-
-A tool for buyers and sellers to select products and export a Bill of Materials (BOM).
-
-[MATRIX BOM Generator.]( https://lowis-mamilton.github.io/MATRIX-BOM-GENERATOR/ )
-
-**How to use:**
-1. Browse the product catalog and select items
-2. Adjust quantities as needed
-3. Export your BOM in your preferred format
-
-**Supported export formats:** PDF, Excel, Word
-
-<img width="1919" height="911" alt="BOM Genetator" src="https://github.com/user-attachments/assets/cd1033d0-94a9-4e84-be16-e0f57df0a552" />
-
----
-
 ## MATRIX Store
 
 A product menu that lets internal staff or customers select products and generate a quotation with shipping costs included.
 
-
-[MATRIX Store.]( https://lowis-mamilton.github.io/MATRIX-BOM-GENERATOR/shopping.html )
+[MATRIX Store.]( https://lowis-mamilton.github.io/MATRIX-BOM-GENERATOR/ )
 
 **How to use:**
 1. Browse the product menu and select items

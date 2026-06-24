@@ -5,7 +5,11 @@
       "PowerShell(git *)",
       "Bash(node *)",
       "Read(//tmp/**)",
-      "Bash(tar xzf *)"
+      "Bash(tar xzf *)",
+      "Bash(rm -f C:/LTP/CODE/MATRIX-BOM-GENERATOR/check.mjs)",
+      "Bash(rm -rf /tmp/docxcheck)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)"
     ]
   },
   "hooks": {

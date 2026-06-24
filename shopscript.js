@@ -664,40 +664,12 @@ document.addEventListener("DOMContentLoaded", () => {
       card.appendChild(body);
       grid.appendChild(card);
 
-      // ── Event handlers ──────────────────────
-      function applyMOQ(val) {
-        let v = Math.floor(Number(val));
-        if (isNaN(v) || v < 0) v = 0;
-        if (v > 0 && v < p.moq) v = p.moq; // snap up to MOQ
-        return v;
-      }
+      attachQtyControl(p, { minus: minusBtn, input: qtyInput, plus: plusBtn });
 
-      function setQty(v) {
-        p.qty = v;
-        qtyInput.value = v;
-        updateCart();
-      }
-
-      plusBtn.addEventListener("click", () => {
-        const current = p.qty;
-        if (current === 0) {
-          setQty(p.moq); // first click → jump to MOQ
-        } else {
-          setQty(current + 1);
-        }
-      });
-
-      minusBtn.addEventListener("click", () => {
-        const current = p.qty;
-        if (current <= p.moq) {
-          setQty(0); // drop to 0 (remove from cart)
-        } else {
-          setQty(current - 1);
-        }
-      });
-
-      qtyInput.addEventListener("change", () => {
-        setQty(applyMOQ(qtyInput.value));
+      // Clicking the card (outside the qty controls) opens the detail page.
+      card.addEventListener("click", e => {
+        if (qtyRow.contains(e.target)) return;
+        location.hash = `item/${encodeURIComponent(p.code)}`;
       });
     });
 

@@ -94,6 +94,18 @@ body {
   font-family: var(--font);
 }
 
+.filter-select {
+  flex: 0 0 auto;
+  min-width: 160px;
+  cursor: pointer;
+}
+
+.result-count {
+  font-size: 12.5px;
+  color: var(--text3);
+  margin-bottom: 8px;
+}
+
 .primary-btn {
   padding: 9px 16px;
   background: var(--navy);

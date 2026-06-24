@@ -269,14 +269,14 @@ document.addEventListener("DOMContentLoaded", () => {
         const label = row.querySelector(".spec-label").value.trim();
         const value = row.querySelector(".spec-value").value.trim();
         if (!label && !value) return;
-        if (label && !value) { specsError = `規格「${label}」缺少內容`; return; }
+        if (label && !value) { specsError = `Spec "${label}" is missing a value`; return; }
         specs[label] = value;
       });
       if (specsError) { errorBox.textContent = specsError; return; }
 
       if (imageFile && imageFile.size > 0) {
         if (imageFile.type !== "image/png") {
-          errorBox.textContent = "圖片必須是 PNG 格式";
+          errorBox.textContent = "Image must be a PNG file";
           return;
         }
         try {
@@ -285,7 +285,7 @@ document.addEventListener("DOMContentLoaded", () => {
           await writable.write(imageFile);
           await writable.close();
         } catch (err) {
-          errorBox.textContent = "寫入圖片失敗：" + err.message;
+          errorBox.textContent = "Failed to write image: " + err.message;
           return;
         }
       }

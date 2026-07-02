@@ -11,7 +11,10 @@
       "Bash(git add *)",
       "Bash(git commit -m ' *)",
       "Bash(grep -iE \"\\\\.js$|\\\\.html$\")",
-      "Bash(git ls-tree *)"
+      "Bash(git ls-tree *)",
+      "Skill(run)",
+      "Bash(chromium-cli --help)",
+      "Bash(npx --yes playwright --version)"
     ]
   },
   "hooks": {

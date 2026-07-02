@@ -669,23 +669,33 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     m.querySelector("#export-cancel").onclick = () => m.remove();
     m.querySelector("#export-ok").onclick = () => {
-      const method = methodSelect.value;
-      const zone   = zoneSelect.value;
-      const weight = getCustomWeight();
-      const order = {
-        name:           m.querySelector("#order-name").value.trim(),
-        address:        m.querySelector("#order-address").value.trim(),
-        weight,
-        shippingMethod: method,
-        shippingZone:   method === "international" ? zoneSelect.options[zoneSelect.selectedIndex].text : "",
-        shippingFee:    calcShipping(method, weight, zone),
-      };
-      if (!order.name || !order.address) {
-        alert("Please fill in name and address.");
+      const formats = Array.from(m.querySelectorAll(".export-format:checked")).map(cb => cb.value);
+      if (formats.length === 0) {
+        alert("Please select at least one export format.");
         return;
       }
+      const name = m.querySelector("#order-name").value.trim();
+      if (!name) {
+        alert("Please enter a name.");
+        return;
+      }
+      const order = { name };
+      if (formats.includes("order")) {
+        const method  = methodSelect.value;
+        const zone    = zoneSelect.value;
+        const weight  = getCustomWeight();
+        order.address        = m.querySelector("#order-address").value.trim();
+        order.weight          = weight;
+        order.shippingMethod  = method;
+        order.shippingZone    = method === "international" ? zoneSelect.options[zoneSelect.selectedIndex].text : "";
+        order.shippingFee     = calcShipping(method, weight, zone);
+        if (!order.address) {
+          alert("Please fill in the shipping address for the Order Form.");
+          return;
+        }
+      }
       m.remove();
-      cb(order);
+      cb(order, formats);
     };
   }
 
@@ -694,7 +704,13 @@ document.addEventListener("DOMContentLoaded", async () => {
       alert("Didn't select any item yet.");
       return;
     }
-    showExportModal(order => exportStorePDF(order, getSelected()));
+    showExportModal((order, formats) => {
+      const selected = getSelected();
+      if (formats.includes("order"))   exportStorePDF(order, selected);
+      if (formats.includes("bomPdf"))  exportBomPDF(order.name, selected);
+      if (formats.includes("bomXlsx")) exportBomXlsx(order.name, selected);
+      if (formats.includes("bomDocx")) exportBomDocx(order.name, selected);
+    });
   });
 
   // ─── PDF Export ──────────────────────────────────────────────

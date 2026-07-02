@@ -625,6 +625,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     document.body.appendChild(m);
 
     const orderCheckbox = m.querySelector('.export-format[value="order"]');
+    const formatRadios  = m.querySelectorAll(".export-format");
     const orderFields   = m.querySelector("#order-fields");
     const methodSelect  = m.querySelector("#shipping-method");
     const zoneSelect    = m.querySelector("#shipping-zone");
@@ -635,7 +636,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     function refreshOrderFieldsVisibility() {
       orderFields.style.display = orderCheckbox.checked ? "block" : "none";
     }
-    orderCheckbox.addEventListener("change", refreshOrderFieldsVisibility);
+    formatRadios.forEach(r => r.addEventListener("change", refreshOrderFieldsVisibility));
     refreshOrderFieldsVisibility();
 
     function getCustomWeight() {

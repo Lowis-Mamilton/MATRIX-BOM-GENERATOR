@@ -570,10 +570,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         <div style="width:90%;margin:0 auto 14px;text-align:left;">
           <label style="font-size:13px;color:#555;display:block;margin-bottom:6px;font-weight:bold;">Export Formats</label>
-          <label style="display:block;font-size:13px;margin-bottom:4px;"><input type="checkbox" class="export-format" value="order" checked> Order Form (PDF)</label>
-          <label style="display:block;font-size:13px;margin-bottom:4px;"><input type="checkbox" class="export-format" value="bomPdf"> BOM (PDF)</label>
-          <label style="display:block;font-size:13px;margin-bottom:4px;"><input type="checkbox" class="export-format" value="bomXlsx"> BOM (Excel)</label>
-          <label style="display:block;font-size:13px;"><input type="checkbox" class="export-format" value="bomDocx"> BOM (Word)</label>
+          <label style="display:block;font-size:13px;margin-bottom:4px;"><input type="radio" name="export-format" class="export-format" value="order" checked> Order Form (PDF)</label>
+          <label style="display:block;font-size:13px;margin-bottom:4px;"><input type="radio" name="export-format" class="export-format" value="bomPdf"> BOM (PDF)</label>
+          <label style="display:block;font-size:13px;margin-bottom:4px;"><input type="radio" name="export-format" class="export-format" value="bomXlsx"> BOM (Excel)</label>
+          <label style="display:block;font-size:13px;"><input type="radio" name="export-format" class="export-format" value="bomDocx"> BOM (Word)</label>
         </div>
 
         <input id="order-name" placeholder="Name"

@@ -844,6 +844,207 @@ document.addEventListener("DOMContentLoaded", async () => {
     setTimeout(() => URL.revokeObjectURL(blobUrl), 10000);
   }
 
+  // ─── BOM PDF Export ────────────────────────────────────────────
+  async function exportBomPDF(userName, selected) {
+    const { jsPDF }    = window.jspdf;
+    const pdf          = new jsPDF("p", "mm", "a4");
+    const pageWidth    = pdf.internal.pageSize.getWidth();
+    const itemsPerPage = 18;
+    const totalPages   = Math.ceil(selected.length / itemsPerPage);
+
+    function loadImg(src) {
+      return new Promise(resolve => {
+        const img = new Image();
+        img.onload = () => {
+          try {
+            const c = document.createElement("canvas");
+            c.width = img.width; c.height = img.height;
+            c.getContext("2d").drawImage(img, 0, 0);
+            resolve(c.toDataURL("image/png"));
+          } catch { resolve(""); }
+        };
+        img.onerror = () => resolve("");
+        img.src = src;
+      });
+    }
+
+    for (let page = 0; page < totalPages; page++) {
+      const chunk    = selected.slice(page * itemsPerPage, (page + 1) * itemsPerPage);
+      const dataUrls = await Promise.all(chunk.map(p => loadImg(`img/${p.code}.png`)));
+
+      const container = document.createElement("div");
+      container.style = `
+        position:relative;
+        width:210mm; min-height:297mm;
+        padding:0; margin:0; background:#fff;
+        font-family:"Microsoft JhengHei",sans-serif;
+      `;
+
+      container.innerHTML = `
+        <div style="
+          width:100%;background:#1e4f8a;color:#fff;
+          text-align:center;padding:12px 0;
+          font-size:18px;font-weight:bold;
+        ">MATRIX Bill of Material (Page ${page + 1}/${totalPages})</div>
+        <table style="
+          width:100%;border:1px solid #000;
+          border-collapse:collapse;font-size:12px;
+          margin-top:8px;table-layout:fixed;
+        ">
+          <thead><tr>
+            <th style="border:1px solid #000;padding:6px;width:15%;">IMAGE</th>
+            <th style="border:1px solid #000;padding:6px;width:20%;">SKU</th>
+            <th style="border:1px solid #000;padding:6px;width:50%;">NAME</th>
+            <th style="border:1px solid #000;padding:6px;width:15%;">QTY</th>
+          </tr></thead>
+          <tbody>
+            ${chunk.map((p, i) => `
+              <tr>
+                <td style="border:1px solid #000;padding:6px;text-align:center;">
+                  ${dataUrls[i]
+                    ? `<img src="${dataUrls[i]}" style="max-width:40px;max-height:40px;">`
+                    : `<div style="width:40px;height:40px;display:inline-block;border:1px solid #ccc;font-size:9px;line-height:40px;color:#999;">No Img</div>`}
+                </td>
+                <td style="border:1px solid #000;padding:6px;text-align:center;">${p.code}</td>
+                <td style="border:1px solid #000;padding:6px;">${p.name}</td>
+                <td style="border:1px solid #000;padding:6px;text-align:center;">${p.qty}</td>
+              </tr>
+            `).join("")}
+          </tbody>
+        </table>
+        <div style="position:absolute;bottom:20px;left:20px;font-size:12px;">
+          Name: ${userName}<br>Date: ${new Date().toLocaleDateString()}
+        </div>
+        <div style="position:absolute;bottom:20px;right:20px;">
+          <img src="img/Matrix-icon-2.png" style="max-width:160px;">
+        </div>
+      `;
+
+      document.body.appendChild(container);
+      const canvas   = await html2canvas(container, { scale: 2 });
+      const imgData  = canvas.toDataURL("image/png");
+      const imgProps = pdf.getImageProperties(imgData);
+      const pdfH     = (imgProps.height * pageWidth) / imgProps.width;
+      if (page > 0) pdf.addPage();
+      pdf.addImage(imgData, "PNG", 0, 0, pageWidth, pdfH);
+      document.body.removeChild(container);
+    }
+
+    pdf.save("MATRIX_BOM.pdf");
+  }
+
+  // ─── BOM image-buffer helpers (for DOCX / XLSX embedding) ──────
+  async function fetchImageBuffer(url) {
+    const res = await fetch(url);
+    if (!res.ok) return null;
+    return new Uint8Array(await res.arrayBuffer());
+  }
+
+  async function fetchImageBufferWithSize(url) {
+    const res  = await fetch(url);
+    const blob = await res.blob();
+    const buf  = new Uint8Array(await blob.arrayBuffer());
+    const bmp  = await createImageBitmap(blob);
+    const w = bmp.width, h = bmp.height;
+    bmp.close?.();
+    return { buf, w, h };
+  }
+
+  // ─── BOM Word (DOCX) Export ─────────────────────────────────────
+  async function exportBomDocx(userName, selected) {
+    const docxGlobal = window.docx;
+    if (!docxGlobal) {
+      return alert("Word export library failed to load. Please check your internet connection and try again.");
+    }
+    const {
+      Document, Packer, Paragraph, Table, TableRow, TableCell,
+      ImageRun, TextRun, WidthType, HeadingLevel,
+    } = docxGlobal;
+
+    const buffers = await Promise.all(selected.map(p => fetchImageBuffer(`img/${p.code}.png`)));
+
+    const rows = [
+      new TableRow({
+        children: [
+          new TableCell({ children: [new Paragraph("IMAGE")] }),
+          new TableCell({ children: [new Paragraph("SKU")] }),
+          new TableCell({ children: [new Paragraph("NAME")] }),
+          new TableCell({ children: [new Paragraph("QTY")] }),
+        ],
+      }),
+      ...selected.map((p, i) => new TableRow({
+        children: [
+          new TableCell({
+            children: [new Paragraph({
+              children: buffers[i]
+                ? [new ImageRun({ type: "png", data: buffers[i], transformation: { width: 40, height: 40 } })]
+                : [new TextRun("No Img")],
+            })],
+          }),
+          new TableCell({ children: [new Paragraph(p.code)] }),
+          new TableCell({ children: [new Paragraph(p.name)] }),
+          new TableCell({ children: [new Paragraph(p.qty.toString())] }),
+        ],
+      })),
+    ];
+
+    const table = new Table({ rows, width: { size: 100, type: WidthType.PERCENTAGE } });
+
+    const doc = new Document({
+      sections: [{
+        children: [
+          new Paragraph({ text: "MATRIX Bill of Material", heading: HeadingLevel.HEADING_1 }),
+          new Paragraph(`Name: ${userName}`),
+          new Paragraph(`Date: ${new Date().toLocaleDateString()}`),
+          table,
+        ],
+      }],
+    });
+
+    const blob = await Packer.toBlob(doc);
+    saveAs(blob, "MATRIX_BOM.docx");
+  }
+
+  // ─── BOM Excel (XLSX) Export ────────────────────────────────────
+  async function exportBomXlsx(userName, selected) {
+    if (!window.ExcelJS || typeof saveAs !== "function") {
+      return alert("Excel export library failed to load. Please check your internet connection and try again.");
+    }
+
+    const workbook = new ExcelJS.Workbook();
+    const sheet    = workbook.addWorksheet("BOM");
+
+    sheet.columns = [
+      { header: "IMAGE", key: "image", width: 20 },
+      { header: "SKU",   key: "sku",   width: 20 },
+      { header: "NAME",  key: "name",  width: 50 },
+      { header: "QTY",   key: "qty",   width: 10 },
+    ];
+
+    const MAX_W = 40, MAX_H = 40, PX_TO_PT = 0.75;
+
+    for (let i = 0; i < selected.length; i++) {
+      const p = selected[i];
+      const { buf, w, h } = await fetchImageBufferWithSize(`img/${p.code}.png`);
+      const imageId = workbook.addImage({ buffer: buf, extension: "png" });
+
+      const scale = Math.min(MAX_W / w, MAX_H / h, 1);
+      const drawW = Math.round(w * scale);
+      const drawH = Math.round(h * scale);
+      const rowIndex = i + 2;
+
+      sheet.addRow({ sku: p.code, name: p.name, qty: p.qty });
+      sheet.getRow(rowIndex).height = Math.max(drawH * PX_TO_PT + 4, 18);
+      sheet.addImage(imageId, {
+        tl:  { col: 0, row: rowIndex - 1 },
+        ext: { width: drawW, height: drawH },
+      });
+    }
+
+    const buffer = await workbook.xlsx.writeBuffer();
+    saveAs(new Blob([buffer], { type: "application/octet-stream" }), "MATRIX_BOM.xlsx");
+  }
+
   // ─── Routing: #item/<code> opens a product detail page, anything
   // else falls back to the last (or default) category. ──────────
   function handleHashRoute() {

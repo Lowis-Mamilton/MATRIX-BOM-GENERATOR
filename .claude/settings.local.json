@@ -14,7 +14,11 @@
       "Bash(git ls-tree *)",
       "Skill(run)",
       "Bash(chromium-cli --help)",
-      "Bash(npx --yes playwright --version)"
+      "Bash(npx --yes playwright --version)",
+      "Bash(npm init *)",
+      "Bash(npm install *)",
+      "Bash(taskkill //F //IM python.exe)",
+      "Bash(curl *)"
     ]
   },
   "hooks": {

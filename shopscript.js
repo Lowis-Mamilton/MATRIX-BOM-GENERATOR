@@ -566,56 +566,77 @@ document.addEventListener("DOMContentLoaded", async () => {
         width:340px;text-align:center;font-family:Microsoft JhengHei;
         max-height:90vh;overflow-y:auto;
       ">
-        <h3 style="margin-bottom:16px;">Export Order</h3>
+        <h3 style="margin-bottom:16px;">Export</h3>
+
+        <div style="width:90%;margin:0 auto 14px;text-align:left;">
+          <label style="font-size:13px;color:#555;display:block;margin-bottom:6px;font-weight:bold;">Export Formats</label>
+          <label style="display:block;font-size:13px;margin-bottom:4px;"><input type="checkbox" class="export-format" value="order" checked> Order Form (PDF)</label>
+          <label style="display:block;font-size:13px;margin-bottom:4px;"><input type="checkbox" class="export-format" value="bomPdf"> BOM (PDF)</label>
+          <label style="display:block;font-size:13px;margin-bottom:4px;"><input type="checkbox" class="export-format" value="bomXlsx"> BOM (Excel)</label>
+          <label style="display:block;font-size:13px;"><input type="checkbox" class="export-format" value="bomDocx"> BOM (Word)</label>
+        </div>
+
         <input id="order-name" placeholder="Name"
           style="width:90%;padding:8px;margin-bottom:10px;display:block;margin-inline:auto;">
-        <textarea id="order-address" placeholder="Shipping Address"
-          style="width:90%;height:70px;padding:8px;margin-bottom:10px;display:block;margin-inline:auto;"></textarea>
 
-        <div style="width:90%;margin:0 auto 10px;text-align:left;">
-          <label style="font-size:13px;color:#555;display:block;margin-bottom:4px;">Package Weight (g)</label>
-          <input id="order-weight" type="number" min="1" max="25000" value="${autoWeight}"
-            style="width:100%;padding:8px;box-sizing:border-box;">
-          <div style="font-size:11px;color:#888;margin-top:3px;">
-            Auto-calculated: ${autoWeight}g. You may adjust if needed.
+        <div id="order-fields">
+          <textarea id="order-address" placeholder="Shipping Address"
+            style="width:90%;height:70px;padding:8px;margin-bottom:10px;display:block;margin-inline:auto;"></textarea>
+
+          <div style="width:90%;margin:0 auto 10px;text-align:left;">
+            <label style="font-size:13px;color:#555;display:block;margin-bottom:4px;">Package Weight (g)</label>
+            <input id="order-weight" type="number" min="1" max="25000" value="${autoWeight}"
+              style="width:100%;padding:8px;box-sizing:border-box;">
+            <div style="font-size:11px;color:#888;margin-top:3px;">
+              Auto-calculated: ${autoWeight}g. You may adjust if needed.
+            </div>
           </div>
-        </div>
 
-        <select id="shipping-method" style="width:90%;padding:8px;margin-bottom:10px;display:block;margin-inline:auto;">
-          <option value="pickup">Self Pickup - NT$0</option>
-          <option value="taiwan">Taiwan Delivery - NT$150</option>
-          <option value="international">International Delivery (DHL)</option>
-        </select>
-
-        <div id="zone-row" style="display:none;width:90%;margin:0 auto 10px;">
-          <label style="font-size:13px;color:#555;display:block;margin-bottom:4px;text-align:left;">Destination Region</label>
-          <select id="shipping-zone" style="width:100%;padding:8px;">
-            <option value="zone1">Zone 1 — China / Hong Kong / Macau</option>
-            <option value="zone2">Zone 2 — Japan / South Korea</option>
-            <option value="zone3">Zone 3 — Singapore / Malaysia / Philippines / Thailand / Vietnam / Indonesia</option>
-            <option value="zone4">Zone 4 — Other Asia / Australia / New Zealand</option>
-            <option value="zone5" selected>Zone 5 — Europe / North America</option>
-            <option value="zone6">Zone 6 — Latin America / Africa / Others</option>
+          <select id="shipping-method" style="width:90%;padding:8px;margin-bottom:10px;display:block;margin-inline:auto;">
+            <option value="pickup">Self Pickup - NT$0</option>
+            <option value="taiwan">Taiwan Delivery - NT$150</option>
+            <option value="international">International Delivery (DHL)</option>
           </select>
-          <div style="font-size:11px;color:#888;margin-top:4px;text-align:left;">
-            ※ DHL Express Easy 2026 rate (incl. fuel surcharge &amp; 5% tax). Max 25kg.
+
+          <div id="zone-row" style="display:none;width:90%;margin:0 auto 10px;">
+            <label style="font-size:13px;color:#555;display:block;margin-bottom:4px;text-align:left;">Destination Region</label>
+            <select id="shipping-zone" style="width:100%;padding:8px;">
+              <option value="zone1">Zone 1 — China / Hong Kong / Macau</option>
+              <option value="zone2">Zone 2 — Japan / South Korea</option>
+              <option value="zone3">Zone 3 — Singapore / Malaysia / Philippines / Thailand / Vietnam / Indonesia</option>
+              <option value="zone4">Zone 4 — Other Asia / Australia / New Zealand</option>
+              <option value="zone5" selected>Zone 5 — Europe / North America</option>
+              <option value="zone6">Zone 6 — Latin America / Africa / Others</option>
+            </select>
+            <div style="font-size:11px;color:#888;margin-top:4px;text-align:left;">
+              ※ DHL Express Easy 2026 rate (incl. fuel surcharge &amp; 5% tax). Max 25kg.
+            </div>
+          </div>
+
+          <div id="shipping-preview" style="margin-bottom:14px;font-size:14px;color:#1e4f8a;font-weight:bold;">
+            Shipping: NT$0
           </div>
         </div>
 
-        <div id="shipping-preview" style="margin-bottom:14px;font-size:14px;color:#1e4f8a;font-weight:bold;">
-          Shipping: NT$0
-        </div>
         <button id="export-cancel" style="background:#e74c3c;color:#fff;border:none;padding:8px 16px;border-radius:4px;margin-right:10px;cursor:pointer;">CANCEL</button>
         <button id="export-ok"     style="background:#27ae60;color:#fff;border:none;padding:8px 16px;border-radius:4px;cursor:pointer;">EXPORT</button>
       </div>
     `;
     document.body.appendChild(m);
 
-    const methodSelect = m.querySelector("#shipping-method");
-    const zoneSelect   = m.querySelector("#shipping-zone");
-    const zoneRow      = m.querySelector("#zone-row");
-    const weightInput  = m.querySelector("#order-weight");
-    const preview      = m.querySelector("#shipping-preview");
+    const orderCheckbox = m.querySelector('.export-format[value="order"]');
+    const orderFields   = m.querySelector("#order-fields");
+    const methodSelect  = m.querySelector("#shipping-method");
+    const zoneSelect    = m.querySelector("#shipping-zone");
+    const zoneRow       = m.querySelector("#zone-row");
+    const weightInput   = m.querySelector("#order-weight");
+    const preview       = m.querySelector("#shipping-preview");
+
+    function refreshOrderFieldsVisibility() {
+      orderFields.style.display = orderCheckbox.checked ? "block" : "none";
+    }
+    orderCheckbox.addEventListener("change", refreshOrderFieldsVisibility);
+    refreshOrderFieldsVisibility();
 
     function getCustomWeight() {
       const v = parseInt(weightInput.value, 10);

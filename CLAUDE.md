@@ -12,7 +12,7 @@ Files: `index.html` + `shopscript.js` + `shopstyle.css` (storefront), `admin.htm
 
 **Must be served over http(s)** — both pages `fetch()` `products.json`/`categories.json` (and the storefront's CAD download) at load, which fails under `file://`. Use the repo's Live Server VSCode config (port 5501) or any static server. Double-clicking `index.html` open will show a blank catalog.
 
-`.vscode/settings.json` deliberately puts `products.json`, `categories.json`, `img/`, and `cad/` in Live Server's `ignoreFiles` — otherwise every admin-tool write would hot-reload the page mid-edit. Consequence: after editing catalog data you must reload the storefront by hand.
+`.vscode/settings.json` deliberately puts `products.json`, `categories.json`, `img/`, `cad/` **and `*.crswap`** in Live Server's `ignoreFiles`. The `.crswap` entry is not optional: Chrome's File System Access API writes through a temp file next to the target (`products.json.crswap`), so without it every admin save trips the watcher and reloads `admin.html` mid-write — the folder connection and the open form are lost and the write can be truncated. Live Server must be restarted for changes to this setting to take effect. Consequence of the ignores: after editing catalog data you reload the storefront by hand.
 
 There is no build, lint, or test command — no package.json, no bundler, no test suite. "Testing" a change means loading the served page in a browser and exercising it manually.
 

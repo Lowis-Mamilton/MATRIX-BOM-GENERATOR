@@ -35,9 +35,14 @@ All logic lives in `shopscript.js`, wrapped in a single `async` `DOMContentLoade
 4. **Quantity controls** — both the grid card and the detail page wire their +/-/input elements through the shared `attachQtyControl(p, { minus, input, plus })` (handles MOQ snapping and triggers `updateCart()`); quantity state lives directly on each product object (`p.qty`), not a separate cart structure.
 5. **Detail page** (`showProductDetail`) — a photo gallery (large main image + thumbnail strip built from the product's own `img/<code>.png`, the shared placeholder `img/PartPhoto.png`, and any `p.photos`; clicking a thumbnail swaps the main image), code/name/description/price/MOQ, a specs table, a qty control, and a "Download STEP File" button (`attachStepDownload`, fetches `cad/<code>.step` then falls back to `cad/<code>.STEP`; shows an inline message if neither exists — the `cad/` folder's naming is inconsistent and doesn't match every product code).
 6. **Cart drawer** (`#selected-panel` / `#cart-fab` / `#cart-overlay`) shows currently selected (qty > 0) items with subtotal/weight totals; shipping is calculated only at export time (`calcShipping`, supports `pickup`/`taiwan`/`international` with DHL zone-based tiers via `DHL_RATES`).
-7. **Export modal** (`showExportModal`) collects a name and invokes `exportStorePDF`, which builds an off-DOM HTML container and rasterizes it with `html2canvas` into a `jsPDF` document — all client-side.
+7. **Export** (`showExportModal` → callback) — the modal is built inline as an HTML string with inline styles (it is *not* in `index.html` and not styled by `shopstyle.css`). It collects a name, an export format, and — only when the "Order Form" format is picked (`refreshOrderFieldsVisibility`) — shipping address, package weight (pre-filled from `getTotalWeight()`, editable), shipping method, and DHL zone, with a live fee preview. It hands the callback `(order, formats)`; the callback dispatches to one of four exporters:
+   - `exportStorePDF(order, selected)` — the customer-facing quotation/order form: line items, subtotal, shipping line, total.
+   - `exportBomPDF(name, selected)` — image/SKU/name/qty table, 18 rows per page.
+   - `exportBomXlsx(name, selected)` / `exportBomDocx(name, selected)` — same table via ExcelJS / docx, saved with `FileSaver`'s `saveAs`.
 
-Product images are expected at `img/<code>.png`, matched by product `code`. Missing images degrade gracefully (hidden `<img>` via `onerror`).
+   Both PDF paths work the same way: build an off-DOM `210mm`-wide HTML container, rasterize with `html2canvas`, `addImage` into `jsPDF` — so PDF layout is authored as inline-styled HTML inside `shopscript.js`, not as jsPDF drawing calls. Format selection uses `<input type="radio">` (one format per export) even though the plumbing (`formats` array, `formats.includes(...)`) is written for multi-select — switching to checkboxes is a one-line change.
+
+Product images are expected at `img/<code>.png`, matched by product `code`. Missing images degrade gracefully in the storefront (hidden `<img>` via `onerror`), in `exportBomPDF` ("No Img" cell) and in `exportBomDocx` (`fetchImageBuffer` returns `null` → "No Img" text) — but **not** in `exportBomXlsx`, whose `fetchImageBufferWithSize` has no such guard and will throw on a product with no image file.
 
 ## Admin tool (`admin.html` / `adminscript.js`)
 

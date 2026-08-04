@@ -17,6 +17,40 @@ document.addEventListener("DOMContentLoaded", () => {
   let rootHandle, productsFileHandle, categoriesFileHandle, imgDirHandle;
   let products = [];
   let categories = [];
+  // A folder handle restored from IndexedDB that still needs the user to
+  // re-grant permission (only possible from a click).
+  let pendingHandle = null;
+
+  // ─── Image cache busting ───────────────────────────────────────
+  // The browser caches img/<code>.png by URL, so a freshly written file would
+  // keep showing the old picture. Stamp a version onto files we overwrite.
+  const imgVersions = new Map();
+  const bumpImg  = filename => imgVersions.set(filename, Date.now());
+  const imgSrc   = filename => {
+    const v = imgVersions.get(filename);
+    return v ? `img/${filename}?v=${v}` : `img/${filename}`;
+  };
+
+  // ─── Folder handle persistence ─────────────────────────────────
+  // Directory handles survive a page reload if stored in IndexedDB, so an
+  // accidental refresh no longer forces a full re-pick of the project folder.
+  const IDB_NAME = "matrix-admin", IDB_STORE = "handles", IDB_KEY = "root";
+
+  function idbRequest(mode, action) {
+    return new Promise((resolve, reject) => {
+      const open = indexedDB.open(IDB_NAME, 1);
+      open.onupgradeneeded = () => open.result.createObjectStore(IDB_STORE);
+      open.onerror = () => reject(open.error);
+      open.onsuccess = () => {
+        const db = open.result;
+        const req = action(db.transaction(IDB_STORE, mode).objectStore(IDB_STORE));
+        req.onsuccess = () => { resolve(req.result); db.close(); };
+        req.onerror   = () => { reject(req.error);   db.close(); };
+      };
+    });
+  }
+  const storeRootHandle  = handle => idbRequest("readwrite", s => s.put(handle, IDB_KEY));
+  const loadRootHandle   = ()     => idbRequest("readonly",  s => s.get(IDB_KEY));
 
   // ─── Toast notifications ───────────────────────────────────────
   function showToast(message, type = "success") {

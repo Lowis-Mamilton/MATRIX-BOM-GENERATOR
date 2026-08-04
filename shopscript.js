@@ -463,14 +463,20 @@ document.addEventListener("DOMContentLoaded", async () => {
     content.appendChild(detail);
 
     const mainImg = detail.querySelector(".detail-img-main img");
-    detail.querySelectorAll(".detail-thumb").forEach(thumb => {
+    let galleryIndex = 0;
+    detail.querySelectorAll(".detail-thumb").forEach((thumb, i) => {
       thumb.addEventListener("click", () => {
         mainImg.src = thumb.dataset.src;
         mainImg.alt = thumb.dataset.alt;
         mainImg.style.visibility = "visible";
+        galleryIndex = i;
         detail.querySelectorAll(".detail-thumb").forEach(t => t.classList.remove("active"));
         thumb.classList.add("active");
       });
+    });
+
+    detail.querySelector(".detail-img-main").addEventListener("click", () => {
+      openImageLightbox(galleryImages, galleryIndex);
     });
 
     attachQtyControl(p, {

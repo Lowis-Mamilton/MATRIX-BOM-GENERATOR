@@ -582,6 +582,9 @@ document.addEventListener("DOMContentLoaded", () => {
       if (Object.keys(specs).length) product.specs = specs;
       if (pendingPhotos.length) product.photos = pendingPhotos;
 
+      // Keep a snapshot so a failed write can't leave the table showing a
+      // change that never reached disk.
+      const snapshot = products.slice();
       if (isEdit) {
         const idx = products.findIndex(p => p.code === code);
         products[idx] = product;
@@ -592,6 +595,7 @@ document.addEventListener("DOMContentLoaded", () => {
       try {
         await persistProducts();
       } catch (err) {
+        products = snapshot;
         errorBox.textContent = "Failed to write products.json: " + err.message;
         saveBtn.disabled = false;
         saveBtn.textContent = "Save";

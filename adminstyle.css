@@ -159,6 +159,7 @@ body {
 .admin-table th,
 .admin-table td {
   text-align: left;
+  vertical-align: middle;   /* line the 36px thumbnail up with the text */
   padding: 10px 12px;
   font-size: 13px;
   border-bottom: 1px solid var(--border);

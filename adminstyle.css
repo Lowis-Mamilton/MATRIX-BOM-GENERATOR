@@ -189,10 +189,17 @@ body {
   cursor: pointer;
 }
 
+/* Must stay a real table-cell. `display: flex` here drops the cell out of the
+   table layout: it stops stretching to the row height, so its border-bottom
+   and its buttons sit at a different height from the rest of the row. */
 .actions-cell {
   white-space: nowrap;
-  display: flex;
-  gap: 6px;
+  width: 1%;              /* shrink the column to fit the two buttons */
+  text-align: right;
+}
+
+.actions-cell .row-btn + .row-btn {
+  margin-left: 6px;
 }
 
 .row-btn {

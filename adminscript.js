@@ -448,8 +448,11 @@ document.addEventListener("DOMContentLoaded", () => {
         const photoFile = await readImageFile(filename);
         if (mainFile) await writeImageFile(filename, mainFile);
         await writeImageFile(`${code}.png`, photoFile);
+        bumpImg(`${code}.png`);
+        bumpImg(filename);
         imagePreview.src = URL.createObjectURL(photoFile);
         imagePreview.hidden = false;
+        renderPhotoList();
         showToast(`${filename} is now the main image.`);
       } catch (err) {
         showToast("Failed to set main image: " + err.message, "error");

@@ -547,13 +547,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     function apply() {
       clampPan();
       img.style.transform = `translate(${tx}px, ${ty}px) scale(${scale})`;
-      img.classList.toggle("zoomed", scale > 1);
-      zoomLabel.textContent = `${Math.round(scale * 100)}%`;
+      img.classList.toggle("zoomed", scale > baseScale);
+      zoomLabel.textContent = `${Math.round((scale / baseScale) * 100)}%`;
     }
 
     // Zoom towards a point so whatever is under the cursor/fingers stays put.
     function zoomTo(next, clientX, clientY) {
-      next = Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, next));
+      next = Math.min(baseScale * MAX_ZOOM, Math.max(baseScale, next));
       const rect = img.getBoundingClientRect();
       const cx = clientX === undefined ? rect.left + rect.width  / 2 : clientX;
       const cy = clientY === undefined ? rect.top  + rect.height / 2 : clientY;
@@ -561,19 +561,35 @@ document.addEventListener("DOMContentLoaded", async () => {
       tx -= (cx - (rect.left + rect.width  / 2)) * (ratio - 1);
       ty -= (cy - (rect.top  + rect.height / 2)) * (ratio - 1);
       scale = next;
-      if (scale === MIN_ZOOM) { tx = 0; ty = 0; }
+      if (scale <= baseScale) { tx = 0; ty = 0; }
       apply();
     }
 
-    function reset() { scale = 1; tx = 0; ty = 0; apply(); }
+    // How far the photo can be blown up before it merely fills the stage. The
+    // element keeps its natural size (so pan bounds stay honest) and we scale it.
+    function fitToStage() {
+      const pad = getComputedStyle(stage);
+      const availW = stage.clientWidth  - parseFloat(pad.paddingLeft) - parseFloat(pad.paddingRight);
+      const availH = stage.clientHeight - parseFloat(pad.paddingTop)  - parseFloat(pad.paddingBottom);
+      baseScale = img.offsetWidth && img.offsetHeight
+        ? Math.max(1, Math.min(availW / img.offsetWidth, availH / img.offsetHeight))
+        : 1;
+      reset();
+    }
+
+    function reset() { scale = baseScale; tx = 0; ty = 0; apply(); }
 
     function show(i) {
       index = (i + images.length) % images.length;
       img.src = images[index].src;
       img.alt = images[index].alt;
-      reset();
       if (counter) counter.textContent = `${index + 1} / ${images.length}`;
     }
+
+    // Fit whenever a photo finishes loading or the window changes size.
+    img.addEventListener("load", fitToStage);
+    window.addEventListener("resize", fitToStage);
+    if (img.complete) fitToStage();
 
     stage.addEventListener("wheel", e => {
       e.preventDefault();

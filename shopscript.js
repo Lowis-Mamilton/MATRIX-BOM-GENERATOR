@@ -624,7 +624,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         travelled = Infinity;    // a pinch is never a tap
         return;
       }
-      if (scale > MIN_ZOOM) {
+      if (scale > baseScale) {
         tx += e.clientX - prev.clientX;
         ty += e.clientY - prev.clientY;
         apply();

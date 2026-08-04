@@ -498,6 +498,168 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   }
 
+  // ─── Image lightbox ──────────────────────────────────────────
+  // Full-screen viewer for the detail-page gallery. Opens the photo fitted to
+  // the screen, then zooms further: wheel, pinch, the toolbar buttons or a tap
+  // on the photo. Drag to pan once zoomed in, arrows to change photo.
+  function openImageLightbox(images, startIndex = 0) {
+    const MIN_ZOOM = 1, MAX_ZOOM = 6;
+    let index = startIndex;
+    let scale = 1, tx = 0, ty = 0;
+
+    const box = document.createElement("div");
+    box.className = "lightbox";
+    box.innerHTML = `
+      <button type="button" class="lightbox-close" aria-label="Close">✕</button>
+      ${images.length > 1 ? `
+        <button type="button" class="lightbox-nav prev" aria-label="Previous photo">‹</button>
+        <button type="button" class="lightbox-nav next" aria-label="Next photo">›</button>` : ""}
+      <div class="lightbox-stage">
+        <img class="lightbox-img" src="${images[index].src}" alt="${images[index].alt}" draggable="false">
+      </div>
+      <div class="lightbox-toolbar">
+        <button type="button" class="lightbox-btn zoom-out" aria-label="Zoom out">−</button>
+        <span class="lightbox-zoom">100%</span>
+        <button type="button" class="lightbox-btn zoom-in" aria-label="Zoom in">+</button>
+        <button type="button" class="lightbox-btn reset">Reset</button>
+        ${images.length > 1 ? `<span class="lightbox-counter">${index + 1} / ${images.length}</span>` : ""}
+      </div>
+    `;
+    document.body.appendChild(box);
+    document.body.style.overflow = "hidden";
+
+    const img       = box.querySelector(".lightbox-img");
+    const stage     = box.querySelector(".lightbox-stage");
+    const zoomLabel = box.querySelector(".lightbox-zoom");
+    const counter   = box.querySelector(".lightbox-counter");
+
+    // Keep the photo from being dragged completely off-screen.
+    function clampPan() {
+      const view = stage.getBoundingClientRect();
+      const maxX = Math.max(0, (img.offsetWidth  * scale - view.width)  / 2);
+      const maxY = Math.max(0, (img.offsetHeight * scale - view.height) / 2);
+      tx = Math.min(maxX, Math.max(-maxX, tx));
+      ty = Math.min(maxY, Math.max(-maxY, ty));
+    }
+
+    function apply() {
+      clampPan();
+      img.style.transform = `translate(${tx}px, ${ty}px) scale(${scale})`;
+      img.classList.toggle("zoomed", scale > 1);
+      zoomLabel.textContent = `${Math.round(scale * 100)}%`;
+    }
+
+    // Zoom towards a point so whatever is under the cursor/fingers stays put.
+    function zoomTo(next, clientX, clientY) {
+      next = Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, next));
+      const rect = img.getBoundingClientRect();
+      const cx = clientX === undefined ? rect.left + rect.width  / 2 : clientX;
+      const cy = clientY === undefined ? rect.top  + rect.height / 2 : clientY;
+      const ratio = next / scale;
+      tx -= (cx - (rect.left + rect.width  / 2)) * (ratio - 1);
+      ty -= (cy - (rect.top  + rect.height / 2)) * (ratio - 1);
+      scale = next;
+      if (scale === MIN_ZOOM) { tx = 0; ty = 0; }
+      apply();
+    }
+
+    function reset() { scale = 1; tx = 0; ty = 0; apply(); }
+
+    function show(i) {
+      index = (i + images.length) % images.length;
+      img.src = images[index].src;
+      img.alt = images[index].alt;
+      reset();
+      if (counter) counter.textContent = `${index + 1} / ${images.length}`;
+    }
+
+    stage.addEventListener("wheel", e => {
+      e.preventDefault();
+      zoomTo(scale * (e.deltaY < 0 ? 1.15 : 1 / 1.15), e.clientX, e.clientY);
+    }, { passive: false });
+
+    // Pointer events cover mouse drag, touch drag and two-finger pinch.
+    const pointers = new Map();
+    let pinchStart = 0, pinchScale = 1, travelled = 0;
+
+    img.addEventListener("pointerdown", e => {
+      img.setPointerCapture(e.pointerId);
+      pointers.set(e.pointerId, e);
+      img.classList.add("dragging");
+      travelled = 0;
+      if (pointers.size === 2) {
+        const [a, b] = [...pointers.values()];
+        pinchStart = Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY);
+        pinchScale = scale;
+      }
+    });
+
+    img.addEventListener("pointermove", e => {
+      const prev = pointers.get(e.pointerId);
+      if (!prev) return;
+      pointers.set(e.pointerId, e);
+
+      if (pointers.size === 2 && pinchStart) {
+        const [a, b] = [...pointers.values()];
+        const dist = Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY);
+        zoomTo(pinchScale * (dist / pinchStart), (a.clientX + b.clientX) / 2, (a.clientY + b.clientY) / 2);
+        travelled = Infinity;    // a pinch is never a tap
+        return;
+      }
+      if (scale > MIN_ZOOM) {
+        tx += e.clientX - prev.clientX;
+        ty += e.clientY - prev.clientY;
+        apply();
+      }
+      travelled += Math.abs(e.clientX - prev.clientX) + Math.abs(e.clientY - prev.clientY);
+    });
+
+    function endPointer(e) {
+      pointers.delete(e.pointerId);
+      if (pointers.size < 2) pinchStart = 0;
+      if (!pointers.size) img.classList.remove("dragging");
+    }
+    img.addEventListener("pointerup", e => {
+      endPointer(e);
+      // A tap (rather than a drag) toggles between fit-to-screen and zoomed in.
+      if (travelled < 6) zoomTo(scale > MIN_ZOOM ? MIN_ZOOM : 2.5, e.clientX, e.clientY);
+    });
+    img.addEventListener("pointercancel", endPointer);
+
+    box.querySelector(".zoom-in").addEventListener("click", () => zoomTo(scale * 1.4));
+    box.querySelector(".zoom-out").addEventListener("click", () => zoomTo(scale / 1.4));
+    box.querySelector(".reset").addEventListener("click", reset);
+
+    const prevBtn = box.querySelector(".lightbox-nav.prev");
+    if (prevBtn) {
+      prevBtn.addEventListener("click", () => show(index - 1));
+      box.querySelector(".lightbox-nav.next").addEventListener("click", () => show(index + 1));
+    }
+
+    function close() {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = "";
+      box.remove();
+    }
+    box.querySelector(".lightbox-close").addEventListener("click", close);
+    // Clicking the empty space around the photo closes; the photo itself zooms.
+    box.addEventListener("click", e => {
+      if (e.target === box || e.target === stage) close();
+    });
+
+    function onKey(e) {
+      if (e.key === "Escape")           close();
+      else if (e.key === "ArrowRight")  show(index + 1);
+      else if (e.key === "ArrowLeft")   show(index - 1);
+      else if (e.key === "+" || e.key === "=") zoomTo(scale * 1.4);
+      else if (e.key === "-")           zoomTo(scale / 1.4);
+      else if (e.key === "0")           reset();
+    }
+    document.addEventListener("keydown", onKey);
+
+    apply();
+  }
+
   // ─── Cart update ─────────────────────────────────────────────
   function updateCart() {
     const selected = getSelected();

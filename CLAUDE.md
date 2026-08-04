@@ -49,9 +49,10 @@ Product images are expected at `img/<code>.png`, matched by product `code`. Miss
 A **local-only** tool for the site owner — not linked from the storefront, Chrome/Edge only (requires the File System Access API), and must be run via a local server (same Live Server requirement as the storefront).
 
 - "Connect Project Folder" calls `window.showDirectoryPicker({mode:"readwrite"})` once per browser session (no persisted permission across reloads — reconnect each time you open the page) to get write access to the repo root, then grabs file handles for `products.json`/`categories.json` and a directory handle for `img/`.
-- Lists/searches all products in a table; Add/Edit open a form (category/subCategory dropdowns driven by `categories.json`, a repeatable specs label/value row editor, an image file picker that writes straight to `img/<code>.png`).
+- Lists/searches/sorts all products in a table; Add/Edit open a form (category/subCategory dropdowns driven by `categories.json`, a repeatable specs label/value row editor, and a photo manager).
+- **Photo manager** — the main image picker writes straight to `img/<code>.png`; extra photos are written as `img/<code>-2.png`, `-3.png`, … (`nextPhotoFilename`) and the filenames accumulate in the product's `photos` array (the same array the storefront gallery reads). "Set as Main" *swaps the two files on disk* (photo ↔ `<code>.png`) rather than reordering the array. Image writes happen immediately on file pick — before you press Save — so a cancelled edit can still leave new files in `img/`.
 - Every save/delete does a **full-file overwrite** of `products.json` (`persistProducts()`) — fine at ~220 entries, no batching needed.
-- A product's `code` is immutable once created (rename = delete + re-add); deleting a product does **not** delete its image file; uploaded images must be `.png` (rejected otherwise).
+- A product's `code` is immutable once created (rename = delete + re-add); the code must be filled in before any image can be picked (filenames derive from it). Deleting a product, or removing a photo from the list, does **not** delete the file from `img/`. Uploaded images must be `.png` (rejected otherwise).
 - **This tool only edits your local clone.** Changes don't appear on the live GitHub Pages site until you `git commit` + `git push` the updated `products.json`/`img/` files.
 
 ## CAD assets

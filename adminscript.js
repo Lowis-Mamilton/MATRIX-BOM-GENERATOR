@@ -202,14 +202,14 @@ document.addEventListener("DOMContentLoaded", () => {
       const tr = document.createElement("tr");
 
       const imgTd = document.createElement("td");
-      const imgSrc = `img/${p.code}.png`;
+      const thumbSrc = imgSrc(`${p.code}.png`);
       const img = document.createElement("img");
-      img.src = imgSrc;
+      img.src = thumbSrc;
       img.alt = p.code;
       img.className = "admin-thumb";
       img.title = "Click to enlarge";
       img.onerror = function () { this.style.visibility = "hidden"; };
-      img.addEventListener("click", () => openLightbox(imgSrc));
+      img.addEventListener("click", () => openLightbox(thumbSrc));
       imgTd.appendChild(img);
 
       const codeTd = document.createElement("td");

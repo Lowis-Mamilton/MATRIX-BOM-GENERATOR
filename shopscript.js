@@ -640,7 +640,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     img.addEventListener("pointerup", e => {
       endPointer(e);
       // A tap (rather than a drag) toggles between fit-to-screen and zoomed in.
-      if (travelled < 6) zoomTo(scale > MIN_ZOOM ? MIN_ZOOM : 2.5, e.clientX, e.clientY);
+      if (travelled < 6) zoomTo(scale > baseScale ? baseScale : baseScale * 2.5, e.clientX, e.clientY);
     });
     img.addEventListener("pointercancel", endPointer);
 

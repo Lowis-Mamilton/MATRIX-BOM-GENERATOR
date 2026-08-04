@@ -412,6 +412,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (file.type !== "image/png") { showToast("Image must be a PNG file", "error"); mainImageInput.value = ""; return; }
       try {
         await writeImageFile(`${code}.png`, file);
+        bumpImg(`${code}.png`);
         imagePreview.src = URL.createObjectURL(file);
         imagePreview.hidden = false;
         showToast("Main image updated.");

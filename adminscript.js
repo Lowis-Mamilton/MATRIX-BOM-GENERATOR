@@ -492,6 +492,7 @@ document.addEventListener("DOMContentLoaded", () => {
         removeBtn.textContent = "Remove";
         removeBtn.addEventListener("click", () => {
           pendingPhotos.splice(idx, 1);
+          dirty = true;
           renderPhotoList();
         });
 

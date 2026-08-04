@@ -470,7 +470,7 @@ document.addEventListener("DOMContentLoaded", () => {
         row.className = "photo-row";
 
         const img = document.createElement("img");
-        img.src = `img/${filename}`;
+        img.src = imgSrc(filename);
         img.alt = filename;
         img.className = "image-preview small";
         img.onerror = function () { this.style.visibility = "hidden"; };

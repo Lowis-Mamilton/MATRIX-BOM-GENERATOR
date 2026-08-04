@@ -1,10 +1,16 @@
 {
     "liveServer.settings.port": 5501,
+    // Files the admin tool writes to. If Live Server watches these, saving in
+    // admin.html reloads the page mid-write: the folder connection and the open
+    // form are lost, and the write can be cut short.
+    // *.crswap is Chrome's File System Access API temp file — it is created next
+    // to the target file on every write, so it must be ignored too.
     "liveServer.settings.ignoreFiles": [
-        ".vscode/**",
-        "img/**",
-        "cad/**",
-        "products.json",
-        "categories.json"
+        "**/.vscode/**",
+        "**/img/**",
+        "**/cad/**",
+        "**/*.crswap",
+        "**/products.json",
+        "**/categories.json"
     ]
 }

@@ -153,6 +153,9 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   async function persistProducts() {
+    if (!productsFileHandle) {
+      throw new Error("not connected to the project folder — click Reconnect first");
+    }
     const writable = await productsFileHandle.createWritable();
     await writable.write(JSON.stringify(products, null, 2));
     await writable.close();

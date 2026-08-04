@@ -631,7 +631,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      overlay.remove();
+      closeForm(false);
       applyFilters();
       showToast(isEdit ? `${code} saved.` : `${code} added.`);
     });

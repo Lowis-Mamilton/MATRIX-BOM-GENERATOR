@@ -1028,8 +1028,167 @@ main.main-content::-webkit-scrollbar-thumb { background: var(--border2); border-
   text-align: center;
 }
 
+/* ═══════════════════════════════════════════
+   IMAGE LIGHTBOX
+   ═══════════════════════════════════════════ */
+
+.detail-zoom-hint {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 9px;
+  border-radius: 100px;
+  background: rgba(15, 32, 68, 0.72);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  opacity: 0;
+  transition: opacity var(--transition);
+  pointer-events: none;
+}
+
+.detail-img-main:hover .detail-zoom-hint { opacity: 1; }
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 1500;
+  background: rgba(9, 18, 38, 0.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: lightbox-in 0.16s ease-out;
+}
+
+@keyframes lightbox-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.lightbox-stage {
+  width: 100%;
+  height: 100%;
+  padding: 64px 20px 92px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.lightbox-img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  transform-origin: center center;
+  transition: transform 0.14s ease-out;
+  cursor: zoom-in;
+  user-select: none;
+  -webkit-user-drag: none;
+  touch-action: none;      /* we handle pinch/drag ourselves */
+}
+
+.lightbox-img.zoomed   { cursor: grab; }
+.lightbox-img.dragging { transition: none; cursor: grabbing; }
+
+.lightbox-close,
+.lightbox-nav,
+.lightbox-btn {
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  cursor: pointer;
+  font-family: var(--font);
+  transition: background var(--transition), border-color var(--transition);
+}
+
+.lightbox-close:hover,
+.lightbox-nav:hover,
+.lightbox-btn:hover {
+  background: rgba(255, 255, 255, 0.22);
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 16px;
+  right: 18px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  font-size: 16px;
+  line-height: 1;
+}
+
+.lightbox-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 42px;
+  height: 62px;
+  border-radius: var(--radius);
+  font-size: 30px;
+  line-height: 1;
+}
+
+.lightbox-nav.prev { left: 16px; }
+.lightbox-nav.next { right: 16px; }
+
+.lightbox-toolbar {
+  position: absolute;
+  bottom: 22px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 100px;
+  background: rgba(15, 32, 68, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.lightbox-btn {
+  min-width: 34px;
+  height: 34px;
+  padding: 0 12px;
+  border-radius: 100px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.lightbox-btn.reset { font-size: 12px; }
+
+.lightbox-zoom,
+.lightbox-counter {
+  min-width: 52px;
+  text-align: center;
+  color: #fff;
+  font-family: var(--mono);
+  font-size: 12px;
+}
+
+.lightbox-counter {
+  padding-left: 10px;
+  margin-left: 2px;
+  border-left: 1px solid rgba(255, 255, 255, 0.2);
+}
+
 @media (max-width: 480px) {
   .detail-main      { flex-direction: column; }
   .detail-img-main  { min-height: 220px; }
   .detail-thumb     { width: 52px; height: 52px; }
+
+  .detail-zoom-hint  { opacity: 1; }   /* no hover on touch — always show it */
+  .lightbox-stage    { padding: 56px 8px 84px; }
+  .lightbox-nav      { width: 34px; height: 52px; font-size: 24px; }
+  .lightbox-nav.prev { left: 6px; }
+  .lightbox-nav.next { right: 6px; }
+  .lightbox-toolbar  { bottom: 14px; gap: 5px; padding: 6px 9px; }
+  .lightbox-btn      { min-width: 30px; height: 30px; padding: 0 9px; }
+  .lightbox-zoom,
+  .lightbox-counter  { min-width: 42px; font-size: 11px; }
 }

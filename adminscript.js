@@ -77,26 +77,42 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ─── Connect / load ─────────────────────────────────────────────
+  // Opens the three handles the tool writes through and unlocks the UI.
+  async function connectTo(handle) {
+    productsFileHandle   = await handle.getFileHandle("products.json", { create: false });
+    categoriesFileHandle = await handle.getFileHandle("categories.json", { create: false });
+    imgDirHandle         = await handle.getDirectoryHandle("img", { create: false });
+    rootHandle = handle;
+    pendingHandle = null;
+
+    await loadData();
+    populateCategoryFilter();
+
+    connectStatus.textContent = `Connected: ${rootHandle.name}`;
+    connectBtn.textContent = "Reconnect";
+    searchInput.disabled = false;
+    categoryFilter.disabled = false;
+    sortSelect.disabled = false;
+    addBtn.disabled = false;
+    applyFilters();
+  }
+
   connectBtn.addEventListener("click", async () => {
     const originalLabel = connectBtn.textContent;
     connectBtn.disabled = true;
     connectBtn.textContent = "Connecting…";
     try {
-      rootHandle = await window.showDirectoryPicker({ mode: "readwrite" });
-      productsFileHandle   = await rootHandle.getFileHandle("products.json", { create: false });
-      categoriesFileHandle = await rootHandle.getFileHandle("categories.json", { create: false });
-      imgDirHandle          = await rootHandle.getDirectoryHandle("img", { create: false });
+      // Resume the remembered folder if there is one (one click, no picker).
+      // Once connected, "Reconnect" always means "pick a different folder".
+      let handle = null;
+      if (!rootHandle && pendingHandle) {
+        const perm = await pendingHandle.requestPermission({ mode: "readwrite" });
+        if (perm === "granted") handle = pendingHandle;
+      }
+      if (!handle) handle = await window.showDirectoryPicker({ mode: "readwrite" });
 
-      await loadData();
-      populateCategoryFilter();
-
-      connectStatus.textContent = `Connected: ${rootHandle.name}`;
-      connectBtn.textContent = "Reconnect";
-      searchInput.disabled = false;
-      categoryFilter.disabled = false;
-      sortSelect.disabled = false;
-      addBtn.disabled = false;
-      applyFilters();
+      await connectTo(handle);
+      storeRootHandle(handle).catch(() => { /* remembering is best-effort */ });
       showToast(`Connected — ${products.length} parts loaded.`);
     } catch (err) {
       connectBtn.textContent = originalLabel;
@@ -107,6 +123,25 @@ document.addEventListener("DOMContentLoaded", () => {
       connectBtn.disabled = false;
     }
   });
+
+  // Try to pick the connection back up after a reload.
+  (async function restoreConnection() {
+    if (!window.showDirectoryPicker) return;
+    let handle;
+    try { handle = await loadRootHandle(); } catch { return; }
+    if (!handle) return;
+
+    if (await handle.queryPermission({ mode: "readwrite" }) === "granted") {
+      try {
+        await connectTo(handle);
+        showToast(`Reconnected to ${handle.name} — ${products.length} parts loaded.`);
+        return;
+      } catch { /* folder moved or renamed — fall through to a manual pick */ }
+    }
+    pendingHandle = handle;
+    connectBtn.textContent = "Reconnect";
+    connectStatus.textContent = `Last used: ${handle.name} — click Reconnect to continue.`;
+  })();
 
   async function loadData() {
     const [productsFile, categoriesFile] = await Promise.all([

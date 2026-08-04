@@ -539,8 +539,37 @@ document.addEventListener("DOMContentLoaded", () => {
     specsEntries.forEach(([label, value]) => addSpecRow(label, value));
     overlay.querySelector("#add-spec-row").addEventListener("click", () => addSpecRow("", ""));
 
-    overlay.querySelector("#form-cancel").addEventListener("click", () => overlay.remove());
-    overlay.addEventListener("click", e => { if (e.target === overlay) overlay.remove(); });
+    // ─── Closing the form ───────────────────────────────────────
+    // Anything that can throw away typed-in work asks first. The backdrop also
+    // has to check mousedown: selecting text in a field and releasing the mouse
+    // outside the dialog reports the overlay as the click target, which used to
+    // wipe the whole form.
+    let dirty = false;
+    form.addEventListener("input", () => { dirty = true; });
+
+    function closeForm(needsConfirm) {
+      if (needsConfirm && dirty && !confirm("Discard your changes to this part?")) return;
+      document.removeEventListener("keydown", onKeydown);
+      window.removeEventListener("beforeunload", onBeforeUnload);
+      overlay.remove();
+    }
+    function onKeydown(e) {
+      if (e.key === "Escape") closeForm(true);
+    }
+    function onBeforeUnload(e) {
+      if (!dirty) return;
+      e.preventDefault();      // a reload mid-edit (e.g. Live Server) must ask first
+      e.returnValue = "";
+    }
+    document.addEventListener("keydown", onKeydown);
+    window.addEventListener("beforeunload", onBeforeUnload);
+
+    let backdropMouseDown = false;
+    overlay.addEventListener("mousedown", e => { backdropMouseDown = e.target === overlay; });
+    overlay.addEventListener("click", e => {
+      if (e.target === overlay && backdropMouseDown) closeForm(true);
+    });
+    overlay.querySelector("#form-cancel").addEventListener("click", () => closeForm(false));
 
     form.addEventListener("submit", async e => {
       e.preventDefault();

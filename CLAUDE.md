@@ -21,7 +21,7 @@ The storefront is deployed as-is via GitHub Pages (`https://lowis-mamilton.githu
 ## Catalog data (`products.json` / `categories.json`)
 
 - **`categories.json`** — ordered list of sidebar categories: `[{ "name": "SENSOR", "sub": ["ANALOG", "DIGITAL", "IIC", "UART"] }, ...]`; `sub` is omitted for categories with no subcategories.
-- **`products.json`** — flat array of product objects: `code`, `name`, `category`, optional `subCategory`, `price` (0 = "Price on request"), `weight` (grams), `moq` (minimum order quantity, default 1), optional `eol` flag, optional `description` (string, shown on the detail page), optional `specs` (object of label→value pairs, rendered as a table — shows "Specs coming soon" if absent), optional `photos` (array of extra image filenames for the detail-page gallery beyond the default two).
+- **`products.json`** — flat array of product objects: `code`, `name`, `category`, optional `subCategory`, `price` (0 = "Price on request"), `weight` (grams), `moq` (minimum order quantity, default 1), optional `eol` flag, optional `description` (string, shown on the detail page), optional `specs` (object of label→value pairs, rendered as a table — shows "Specs coming soon" if absent), optional `photos` (array of extra image filenames for the detail-page gallery beyond the default two — the admin tool names these `<code>-2.png`, `<code>-3.png`, …).
 - `qty` (cart quantity) is **not** persisted in `products.json` — it's runtime-only state, initialized to `0` in `shopscript.js` after fetch.
 - Both `shopscript.js` and `adminscript.js` read these files; `adminscript.js` is the only thing that writes them (directly to disk via the File System Access API — see below).
 

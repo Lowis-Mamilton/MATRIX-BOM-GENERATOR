@@ -4,9 +4,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-A static, no-build, no-dependency front-end: **MATRIX Store** — browse a product catalog with pricing/MOQ, view per-product detail pages (photo gallery, specs, description, STEP file download), set quantities, and export a quotation (PDF) with shipping cost calculated. A companion **local admin tool** (`admin.html`) lets the site owner add/edit/delete products without touching code.
+A static, no-build, no-dependency front-end: **MATRIX Store** — browse a product catalog with pricing/MOQ, view per-product detail pages (photo gallery, specs, description, STEP file download), set quantities, and export either a quotation/order form (PDF, shipping calculated) or a BOM (PDF / Excel / Word). A companion **local admin tool** (`admin.html`) lets the site owner add/edit/delete products without touching code.
 
-Files: `index.html` + `shopscript.js` + `shopstyle.css` (storefront), `admin.html` + `adminscript.js` + `adminstyle.css` (admin tool, reuses `shopstyle.css`'s design tokens), `products.json` + `categories.json` (catalog data, fetched by both). There is no package.json, bundler, or test suite. Third-party libraries (html2canvas, jsPDF) are loaded via CDN `<script>` tags, not npm.
+Files: `index.html` + `shopscript.js` + `shopstyle.css` (storefront), `admin.html` + `adminscript.js` + `adminstyle.css` (admin tool, reuses `shopstyle.css`'s design tokens), `products.json` + `categories.json` (catalog data, fetched by both). There is no package.json, bundler, or test suite. Third-party libraries (html2canvas, jsPDF, docx, ExcelJS, FileSaver) are loaded via CDN `<script>` tags in `index.html`, not npm — every export path depends on the CDN being reachable.
 
 ## Running locally
 

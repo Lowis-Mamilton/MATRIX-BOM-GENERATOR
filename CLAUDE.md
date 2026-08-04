@@ -57,4 +57,6 @@ A **local-only** tool for the site owner — not linked from the storefront, Chr
 
 ## CAD assets
 
-The `cad/` directory contains STEP files named after product codes, but casing/naming is inconsistent (`.step` vs `.STEP`, and some files have suffixes like ` L`/`-R`, `_New`, `(screw)` that don't match any product's `code`) — not all products have a matching file.
+The `cad/` directory contains ~180 STEP files named after product codes, but casing/naming is inconsistent (`.step` vs `.STEP`, and some files have suffixes like ` L`/`-R`, `_New`, `(screw)` that don't match any product's `code`) — not all products have a matching file.
+
+`cad.zip` (~37 MB) is committed at the repo root alongside the extracted `cad/` folder and is not referenced by any code. There is no `.gitignore`, so everything in the working tree is tracked.

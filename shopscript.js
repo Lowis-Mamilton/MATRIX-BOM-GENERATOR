@@ -503,9 +503,11 @@ document.addEventListener("DOMContentLoaded", async () => {
   // the screen, then zooms further: wheel, pinch, the toolbar buttons or a tap
   // on the photo. Drag to pan once zoomed in, arrows to change photo.
   function openImageLightbox(images, startIndex = 0) {
-    const MIN_ZOOM = 1, MAX_ZOOM = 6;
+    const MAX_ZOOM = 6;          // multiples of the fitted size
     let index = startIndex;
-    let scale = 1, tx = 0, ty = 0;
+    // baseScale = the "fits the screen" size, which is what 100% means to the
+    // viewer. Catalog photos are only ~520px wide, so this scales them up.
+    let baseScale = 1, scale = 1, tx = 0, ty = 0;
 
     const box = document.createElement("div");
     box.className = "lightbox";

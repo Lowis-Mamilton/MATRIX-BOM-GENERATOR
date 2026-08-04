@@ -870,6 +870,8 @@ main.main-content::-webkit-scrollbar-thumb { background: var(--border2); border-
 }
 
 .detail-img-main {
+  position: relative;
+  cursor: zoom-in;
   min-height: 320px;
   background: #f8fafc;
   border: 1px solid var(--border);

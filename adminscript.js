@@ -621,10 +621,12 @@ document.addEventListener("DOMContentLoaded", () => {
   // ─── Delete ─────────────────────────────────────────────────────
   async function deleteProduct(code) {
     if (!confirm(`Delete ${code}? (its image file will not be deleted)`)) return;
+    const snapshot = products.slice();
     products = products.filter(p => p.code !== code);
     try {
       await persistProducts();
     } catch (err) {
+      products = snapshot;
       showToast("Failed to write products.json: " + err.message, "error");
       return;
     }

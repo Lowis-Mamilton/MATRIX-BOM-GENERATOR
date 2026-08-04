@@ -656,6 +656,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     function close() {
       document.removeEventListener("keydown", onKey);
+      window.removeEventListener("resize", fitToStage);
       document.body.style.overflow = "";
       box.remove();
     }

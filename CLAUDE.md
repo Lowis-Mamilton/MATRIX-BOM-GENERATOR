@@ -12,6 +12,8 @@ Files: `index.html` + `shopscript.js` + `shopstyle.css` (storefront), `admin.htm
 
 **Must be served over http(s)** — both pages `fetch()` `products.json`/`categories.json` (and the storefront's CAD download) at load, which fails under `file://`. Use the repo's Live Server VSCode config (port 5501) or any static server. Double-clicking `index.html` open will show a blank catalog.
 
+`.vscode/settings.json` deliberately puts `products.json`, `categories.json`, `img/`, and `cad/` in Live Server's `ignoreFiles` — otherwise every admin-tool write would hot-reload the page mid-edit. Consequence: after editing catalog data you must reload the storefront by hand.
+
 There is no build, lint, or test command — no package.json, no bundler, no test suite. "Testing" a change means loading the served page in a browser and exercising it manually.
 
 The storefront is deployed as-is via GitHub Pages (`https://lowis-mamilton.github.io/MATRIX-BOM-GENERATOR/`) — pushing to `main` is the deploy step; there's no CI/build pipeline in between.

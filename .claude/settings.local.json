@@ -18,7 +18,8 @@
       "Bash(npm init *)",
       "Bash(npm install *)",
       "Bash(taskkill //F //IM python.exe)",
-      "Bash(curl *)"
+      "Bash(curl *)",
+      "Bash(grep -n \"^\\\\s*\\\\\\(async \\\\\\)\\\\?function \\\\|^\\\\s*const [A-Za-z_]* = \\\\\\(async \\\\\\)\\\\?\\(\\\\|=> {$\" shopscript.js)"
     ]
   },
   "hooks": {

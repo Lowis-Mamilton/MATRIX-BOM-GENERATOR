@@ -22,7 +22,8 @@
       "Bash(grep -n \"^\\\\s*\\\\\\(async \\\\\\)\\\\?function \\\\|^\\\\s*const [A-Za-z_]* = \\\\\\(async \\\\\\)\\\\?\\(\\\\|=> {$\" shopscript.js)",
       "Bash(git check-ignore *)",
       "Bash(grep -n '\\\\\\\\\"' products.json)",
-      "Bash(echo \"exit=$?\")"
+      "Bash(echo \"exit=$?\")",
+      "Bash(sort -t: -k2)"
     ]
   },
   "hooks": {

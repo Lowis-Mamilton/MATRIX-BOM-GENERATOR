@@ -29,7 +29,12 @@
     "category": "BUNDLE",
     "price": 22000,
     "weight": 200,
-    "moq": 1
+    "moq": 1,
+    "photos": [
+      "MAMR120-2.png",
+      "MAMR120-3.png",
+      "MAMR120-4.png"
+    ]
   },
   {
     "code": "MR0001V2",

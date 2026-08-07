@@ -1,0 +1,1427 @@
+/* ═══════════════════════════════════════════════════════════════════
+   MATRIX STORE — v2  ·  glass panels over a lit engineering grid
+
+   Pairs with store-v2.html. Both v2 files are additive: index.html,
+   shopstyle.css and shopscript.js are never edited.
+
+   ── Contract with shopscript.js ──────────────────────────────────
+   The script builds the grid, detail page, lightbox and cart rows in
+   JavaScript with FIXED class names. Everything it can emit must be
+   styled here or it renders unstyled. State classes it toggles:
+     .active (sidebar li, detail thumb)   .open (#selected-panel, #cart-overlay)
+     .eol / .na (card, price)             .zoomed / .dragging (lightbox img)
+     .error (step status)
+   `--text3` is a CONTRACT TOKEN: shopscript.js:712 injects
+   style="color:var(--text3)" inline for price-on-request cart rows.
+   Renaming it makes that text vanish.
+
+   ── backdrop-filter budget ───────────────────────────────────────
+   Real blur is expensive and only *visible* when something detailed
+   sits behind the element. It is therefore limited to six pieces of
+   fixed chrome (see BLUR SURFACES below). Product cards use "fake
+   glass" — translucent fill + hairline + sheen, no blur. Never put
+   backdrop-filter on a descendant of .main-content: it is the only
+   scroll container, and a blurred child re-samples every scroll tick.
+   ═══════════════════════════════════════════════════════════════════ */
+
+:root {
+  /* Base + atmosphere */
+  --bg-base:      #0e0a1f;
+  --grad-a:       #150e2e;
+  --grad-b:       #0e0a1f;
+  --grad-c:       #0b1230;
+  --glow-violet:  rgba(124, 58, 237, 0.55);
+  --glow-blue:    rgba(37, 99, 235, 0.50);
+  --glow-magenta: rgba(219, 39, 119, 0.24);
+  --grid-line:    rgba(148, 163, 255, 0.07);
+  --grid-major:   rgba(148, 163, 255, 0.11);
+
+  /* Glass surfaces — white tint over the dark field */
+  --glass-1:    rgba(255, 255, 255, 0.055);   /* header, sidebar          */
+  --glass-2:    rgba(255, 255, 255, 0.085);   /* cards, cart rows         */
+  --glass-3:    rgba(255, 255, 255, 0.135);   /* hover, inputs, raised    */
+  --glass-deep: rgba(22, 16, 46, 0.78);       /* drawer, modal — needs opacity for text */
+  --plate:      linear-gradient(180deg, rgba(255,255,255,0.96), rgba(232,236,248,0.90));
+
+  /* Strokes + light. --hairline is iOS's 0.5pt separator; --stroke is the
+     heavier edge that gives a glass panel its lit rim. */
+  --stroke:    rgba(255, 255, 255, 0.13);
+  --stroke-2:  rgba(255, 255, 255, 0.24);
+  --hairline:  rgba(255, 255, 255, 0.13);
+  --sheen:     inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  --ring:      0 0 0 3px rgba(10, 132, 255, 0.55);
+
+  /* Text — checked against glass-2 over the gradient */
+  --text:      #f5f3fc;
+  --text2:     rgba(255, 255, 255, 0.76);
+  --text3:     #a9a3c9;                        /* CONTRACT — see banner  */
+  --text-dim:  rgba(255, 255, 255, 0.46);
+  --on-plate:  #141026;                        /* ink on the light plate */
+
+  /* Accents — iOS dark-mode system colours. systemOrange keeps the CTA the
+     same hue family v1 used, so the brand reads continuous. */
+  --accent:    #BF5AF2;                        /* systemPurple           */
+  --accent-2:  #0A84FF;                        /* systemBlue             */
+  --cta:       #FF9F0A;                        /* systemOrange           */
+  --cta-hi:    #FFB340;
+  --danger:    #FF453A;                        /* systemRed              */
+
+  /* Blur budget */
+  --blur-lg: 24px;
+  --blur-md: 16px;
+  --blur-sm: 6px;
+  --sat:     saturate(140%);
+
+  /* Depth */
+  --sh-1: 0 1px 2px rgba(6,3,20,0.30), 0 4px 14px rgba(6,3,20,0.22);
+  --sh-2: 0 10px 32px rgba(6,3,20,0.40);
+  --sh-3: 0 26px 70px rgba(6,3,20,0.58);
+  --glow-cta: 0 6px 24px rgba(249,115,22,0.42);
+
+  /* Geometry */
+  --r-xs: 8px;  --r-sm: 12px;  --r: 16px;  --r-lg: 22px;  --r-pill: 999px;
+
+  /* Apple devices resolve -apple-system to SF Pro; everywhere else Inter is
+     the closest available match. DM Mono stays for part numbers — an
+     identifier should look like an identifier. */
+  --font: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', system-ui, sans-serif;
+  --mono: ui-monospace, 'SF Mono', 'DM Mono', monospace;
+
+  --transition: 0.18s cubic-bezier(0.4,0,0.2,1);
+  --transition-slow: 0.5s cubic-bezier(0.32,0.72,0,1);   /* iOS sheet curve */
+  --spring: 0.34s cubic-bezier(0.32,0.72,0,1);
+}
+
+/* ═══ RESET / SHELL ═══════════════════════════════════════════════ */
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  background: var(--bg-base);      /* base colour lives here so body can be
+                                      transparent and body::before can sit at z-index:-1 */
+  color-scheme: dark;              /* native selects + number spinners go dark */
+}
+
+body {
+  font-family: var(--font);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: transparent;
+  color: var(--text);
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  height: 100dvh;                  /* iOS: stop the bottom being cropped by the URL bar */
+  overflow: hidden;
+}
+
+/* Atmosphere: three glows over a diagonal ramp. Fixed, so scrolling the
+   catalogue never repaints it. Blob sizes are in rem, not vh — a vh unit
+   would repaint the whole field every time a mobile URL bar collapses. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background:
+    radial-gradient(70rem 70rem at 10% -12%,  var(--glow-violet),  transparent 62%),
+    radial-gradient(58rem 58rem at 92% 6%,    var(--glow-blue),    transparent 64%),
+    radial-gradient(50rem 50rem at 72% 104%,  var(--glow-magenta), transparent 60%),
+    linear-gradient(158deg, var(--grad-a) 0%, var(--grad-b) 55%, var(--grad-c) 100%);
+}
+
+/* The signature: an engineering grid, minor 28px / major 140px — the hole
+   pitch these parts are built around. It also does two jobs for the design:
+   it breaks up gradient banding on 8-bit panels, and it gives the frosted
+   chrome something with real detail to refract, which is the only reason
+   blurred glass reads as glass rather than as flat grey. */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(0deg,   var(--grid-major) 0 1px, transparent 1px 140px),
+    repeating-linear-gradient(90deg,  var(--grid-major) 0 1px, transparent 1px 140px),
+    repeating-linear-gradient(0deg,   var(--grid-line)  0 1px, transparent 1px 28px),
+    repeating-linear-gradient(90deg,  var(--grid-line)  0 1px, transparent 1px 28px);
+  -webkit-mask-image: radial-gradient(120% 100% at 50% 0%, #000 30%, transparent 92%);
+          mask-image: radial-gradient(120% 100% at 50% 0%, #000 30%, transparent 92%);
+}
+
+.wrapper {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+
+main.main-content {
+  flex: 1;
+  padding: 28px 32px 48px;
+  overflow-y: auto;
+  overscroll-behavior: none;       /* rubber-banding must not expose the flat base */
+  scrollbar-width: thin;
+  scrollbar-color: var(--stroke-2) transparent;
+}
+
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--stroke-2); border-radius: var(--r-pill); }
+::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.36); }
+
+::selection { background: rgba(167,139,250,0.36); color: #fff; }
+
+:focus-visible {
+  outline: none;
+  box-shadow: var(--ring);
+  border-radius: var(--r-xs);
+}
+
+/* ═══ BLUR SURFACES ═══════════════════════════════════════════════
+   The entire real-blur budget, in one place. Nothing else in this
+   file may declare backdrop-filter (the export modal override at the
+   end is the one documented exception).                            */
+header,
+.sidebar,
+#selected-panel,
+.lightbox-toolbar,
+.lightbox-close,
+.lightbox-nav {
+  -webkit-backdrop-filter: blur(var(--blur-md)) var(--sat);
+          backdrop-filter: blur(var(--blur-md)) var(--sat);
+}
+
+#selected-panel {
+  -webkit-backdrop-filter: blur(var(--blur-lg)) var(--sat);
+          backdrop-filter: blur(var(--blur-lg)) var(--sat);
+}
+
+#cart-overlay {
+  -webkit-backdrop-filter: blur(var(--blur-sm));
+          backdrop-filter: blur(var(--blur-sm));
+}
+
+/* ═══ HEADER ══════════════════════════════════════════════════════ */
+
+/* Translucent nav bar: a hairline is all that divides it from the content */
+header {
+  position: relative;
+  z-index: 200;
+  flex-shrink: 0;
+  background: var(--glass-1);
+  border-bottom: 0.5px solid var(--hairline);
+  box-shadow: var(--sheen);
+}
+
+.header-inner {
+  height: 64px;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.logo { display: flex; align-items: center; gap: 11px; }
+.logo img { height: 34px; width: auto; }
+
+.logo-text { display: flex; flex-direction: column; line-height: 1.1; }
+
+.logo-main {
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: #fff;
+}
+
+.logo-sub {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.26em;
+  color: var(--accent);
+}
+
+.header-right { display: flex; align-items: center; gap: 18px; }
+
+.header-tagline {
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: var(--text-dim);
+}
+
+.export-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 18px;
+  font-family: var(--font);
+  font-size: 13px;
+  font-weight: 600;
+  color: #1b0d02;
+  background: linear-gradient(180deg, var(--cta-hi), var(--cta));
+  border: none;
+  border-radius: var(--r-pill);
+  cursor: pointer;
+  box-shadow: var(--glow-cta), var(--sheen);
+  transition: transform var(--transition), box-shadow var(--transition), filter var(--transition);
+}
+
+.export-btn:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.06);
+  box-shadow: 0 10px 30px rgba(249,115,22,0.5), var(--sheen);
+}
+
+.export-btn:active { transform: scale(0.955); transition-duration: 0.08s; }
+
+/* ═══ SIDEBAR ═════════════════════════════════════════════════════ */
+
+.sidebar {
+  width: 216px;
+  flex-shrink: 0;
+  z-index: 100;
+  background: var(--glass-1);
+  border-right: 1px solid var(--stroke);
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-bottom: 24px;
+}
+
+.sidebar-label {
+  padding: 20px 18px 8px;
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.22em;
+  color: var(--text-dim);
+}
+
+#sidebar-menu { list-style: none; }
+
+#sidebar-menu > li { position: relative; }
+
+#sidebar-menu > li > a {
+  display: block;
+  margin: 1px 10px;
+  padding: 9px 12px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text2);
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: var(--r-sm);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: background var(--transition), color var(--transition);
+}
+
+#sidebar-menu > li > a:hover {
+  background: var(--glass-2);
+  color: var(--text);
+}
+
+#sidebar-menu > li.active > a {
+  background: var(--glass-3);
+  color: #fff;
+  font-weight: 600;
+  box-shadow: var(--sheen);
+}
+
+/* Subcategories are permanently expanded — shopscript.js has no accordion,
+   so do not style these as if they collapse. */
+#sidebar-menu li ul {
+  list-style: none;
+  margin: 2px 10px 6px 22px;
+  padding-left: 10px;
+  border-left: 1px solid var(--stroke);
+}
+
+#sidebar-menu li ul li a {
+  display: block;
+  padding: 6px 10px;
+  font-size: 12px;
+  color: var(--text-dim);
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: var(--r-xs);
+  transition: background var(--transition), color var(--transition);
+}
+
+#sidebar-menu li ul li a:hover { background: var(--glass-2); color: var(--text2); }
+
+#sidebar-menu li ul li.active a {
+  background: var(--glass-3);
+  color: #fff;
+  font-weight: 600;
+}
+
+/* ═══ SECTION HEADER ══════════════════════════════════════════════ */
+
+.product-section { animation: fadeUp 0.34s cubic-bezier(0.2,0,0.2,1); }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* iOS Large Title: oversized, tightly tracked, no rule under it — the size
+   difference alone is the hierarchy. */
+.section-header {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.section-header h2 {
+  font-size: 34px;
+  font-weight: 700;
+  letter-spacing: -0.022em;
+  line-height: 1.1;
+  color: #fff;
+}
+
+.section-count {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text3);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ═══ PRODUCT GRID ════════════════════════════════════════════════ */
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 18px;
+}
+
+.product-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--glass-2);
+  border: 1px solid var(--stroke);
+  border-radius: var(--r-lg);
+  box-shadow: var(--sh-1), var(--sheen);
+  cursor: pointer;
+  contain: layout paint;           /* bound invalidation across ~40 cards */
+  transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
+  /* NO backdrop-filter here — see the budget note at the top of the file. */
+}
+
+.product-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--stroke-2);
+  box-shadow: var(--sh-2), var(--sheen);
+}
+
+/* iOS press feedback: the whole tile shrinks under the finger */
+.product-card:active {
+  transform: scale(0.975);
+  transition-duration: 0.08s;
+}
+
+/* The photo well.
+   Catalogue PNGs are transparent-background parts, median 90px wide, and
+   include both black motors and white plastic. On dark glass the black ones
+   disappear and the white ones glare, so every product image sits on an
+   inset light plate. Inset with a margin, not full-bleed: a white block
+   running into the card's edge reads as a rendering fault. */
+.card-img-wrap {
+  position: relative;
+  margin: 10px 10px 0;
+  height: 148px;
+  padding: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--plate);
+  border: 1px solid rgba(255,255,255,0.5);
+  border-radius: 14px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 2px 10px rgba(6,3,20,0.28);
+}
+
+/* Cap only — never scale up. Most parts are well under 128px natively
+   and stretching them to fill turns the catalogue to mush. */
+.card-img-wrap img {
+  max-width: 110px;
+  max-height: 110px;
+  object-fit: contain;
+}
+
+.badge-eol,
+.badge-na {
+  position: absolute;
+  top: 10px;
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  padding: 3px 8px;
+  border-radius: var(--r-pill);
+}
+
+.badge-eol {
+  right: 10px;
+  color: #fff;
+  background: #b91c1c;
+}
+
+.badge-na {
+  left: 10px;
+  color: #3b3357;
+  background: rgba(20,16,38,0.10);
+  border: 1px solid rgba(20,16,38,0.18);
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: 14px;
+}
+
+.product-code {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--accent-2);
+}
+
+.product-name {
+  font-size: 13.5px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.35;
+  color: var(--text);
+}
+
+/* Prices move to the UI face with tabular figures — iOS sets numbers in SF,
+   not in a mono face. Part codes stay mono; they're identifiers. */
+.product-price {
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  color: #fff;
+}
+
+.product-price.na {
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--text3);
+}
+
+.moq-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  width: fit-content;
+  padding: 3px 9px;
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text3);
+  background: var(--glass-2);
+  border: 1px solid var(--stroke);
+  border-radius: var(--r-pill);
+}
+
+/* End of life: dim the goods, not the words. A blanket opacity on the whole
+   card drags the text under AA on this background. */
+.product-card.eol .card-img-wrap { filter: grayscale(0.75); }
+.product-card.eol .card-body     { opacity: 0.72; }
+.product-card.eol .badge-eol     { opacity: 1; }
+
+/* ═══ QUANTITY CONTROL ════════════════════════════════════════════ */
+
+.qty-row { margin-top: 3px; }
+
+/* Shaped after UIStepper: one capsule, segments divided by hairlines rather
+   than by gaps, each segment lighting up on press. */
+.quantity-control {
+  display: flex;
+  align-items: stretch;
+  width: fit-content;
+  overflow: hidden;
+  background: var(--glass-2);
+  border: 1px solid var(--stroke);
+  border-radius: var(--r-pill);
+  box-shadow: var(--sheen);
+}
+
+.quantity-control:focus-within {
+  border-color: var(--accent-2);
+  box-shadow: 0 0 0 3px rgba(10,132,255,0.30);
+}
+
+.quantity-control button {
+  width: 38px;
+  height: 34px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font);
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--text);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: background 0.12s ease;
+}
+
+.quantity-control button:hover  { background: rgba(255,255,255,0.08); }
+.quantity-control button:active { background: rgba(255,255,255,0.18); }
+
+.quantity-control input {
+  width: 44px;
+  height: 34px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: #fff;
+  background: transparent;
+  border: none;
+  border-left: 0.5px solid var(--hairline);
+  border-right: 0.5px solid var(--hairline);
+  outline: none;
+  -moz-appearance: textfield;
+}
+
+.quantity-control input::-webkit-outer-spin-button,
+.quantity-control input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* ═══ CART FAB ════════════════════════════════════════════════════ */
+
+#cart-fab {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  width: 58px;
+  height: 58px;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  background: linear-gradient(160deg, #4c1d95, #1e3a8a);
+  border: 1px solid var(--stroke-2);
+  border-radius: 20px;
+  cursor: pointer;
+  box-shadow: var(--sh-3), var(--sheen);
+  transition: transform var(--transition), box-shadow var(--transition);
+  /* no overflow:hidden — it would clip #cart-count */
+}
+
+#cart-fab:hover {
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 22px 50px rgba(76,29,149,0.55), var(--sheen);
+}
+
+#cart-count {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  color: #1b0d02;
+  background: var(--cta);
+  border-radius: var(--r-pill);
+  box-shadow: 0 2px 10px rgba(249,115,22,0.5);
+}
+
+/* ═══ CART OVERLAY + DRAWER ═══════════════════════════════════════ */
+
+#cart-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  background: rgba(6,3,20,0.55);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s;
+}
+
+#cart-overlay.open { opacity: 1; pointer-events: auto; }
+
+/* Slides on transform, not `right`: a 400px blurred panel animating a layout
+   property relayouts and re-samples its backdrop every frame. */
+/* Presented like an iOS sheet: rounded on the leading edge, arriving on the
+   sheet easing curve rather than a linear slide. */
+#selected-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 400px;
+  height: 100%;
+  z-index: 1200;
+  display: flex;
+  flex-direction: column;
+  background: var(--glass-deep);
+  border-left: 0.5px solid var(--stroke);
+  border-radius: var(--r-lg) 0 0 var(--r-lg);
+  box-shadow: var(--sh-3);
+  transform: translateX(102%);
+  transition: transform var(--transition-slow);
+  will-change: transform;
+}
+
+#selected-panel.open { transform: none; }
+
+.panel-header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px 22px 18px;
+  border-bottom: 0.5px solid var(--hairline);
+}
+
+/* The grabber every iOS sheet wears */
+.panel-header::before {
+  content: "";
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 36px;
+  height: 5px;
+  border-radius: var(--r-pill);
+  background: rgba(255,255,255,0.22);
+}
+
+.panel-title { letter-spacing: -0.01em; }
+
+.panel-title {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: #fff;
+}
+
+#panel-close {
+  width: 32px;
+  height: 32px;
+  font-size: 13px;
+  color: var(--text2);
+  background: var(--glass-2);
+  border: 1px solid var(--stroke);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background var(--transition), color var(--transition);
+}
+
+#panel-close:hover { background: var(--glass-3); color: #fff; }
+
+#selected-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;                          /* rows butt together — see grouped list below */
+}
+
+.empty-bag {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 48px 20px;
+  color: var(--text-dim);
+  font-size: 13px;
+}
+
+.empty-bag svg { opacity: 0.45; }
+
+/* iOS grouped inset list: the rows form one continuous rounded card, divided
+   by hairlines that start where the text starts, not at the card edge. */
+.selected-item {
+  position: relative;
+  display: flex;
+  gap: 12px;
+  padding: 11px;
+  background: var(--glass-2);
+}
+
+.selected-item:first-child {
+  border-radius: var(--r) var(--r) 0 0;
+  box-shadow: var(--sheen);
+}
+
+.selected-item:last-child { border-radius: 0 0 var(--r) var(--r); }
+
+.selected-item:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  left: 75px;                      /* aligns with the SKU, past the thumbnail */
+  right: 0;
+  bottom: 0;
+  height: 0.5px;
+  background: var(--hairline);
+}
+
+/* Unclassed wrapper div that shopscript.js emits around the text column */
+.selected-item > div { min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+
+.selected-item-img {
+  width: 52px;
+  height: 52px;
+  flex-shrink: 0;
+  padding: 5px;
+  object-fit: contain;
+  background: var(--plate);
+  border-radius: var(--r-xs);
+}
+
+.selected-item .sku {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.05em;
+  color: var(--accent-2);
+}
+
+.selected-item .name {
+  font-size: 12.5px;
+  color: var(--text);
+  line-height: 1.35;
+}
+
+.selected-item .money {
+  font-size: 12.5px;
+  font-variant-numeric: tabular-nums;
+  color: var(--text3);
+}
+
+.selected-item .subtotal { color: #fff; font-weight: 600; }
+
+.cart-summary {
+  flex-shrink: 0;
+  padding: 18px 22px 22px;
+  border-top: 1px solid var(--stroke);
+  background: rgba(10,6,26,0.35);
+}
+
+.summary-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 5px 0;
+  font-size: 13px;
+  color: var(--text2);
+}
+
+.summary-row.muted { color: var(--text-dim); font-size: 12px; }
+
+.summary-row .val {
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  color: #fff;
+}
+
+.summary-divider {
+  height: 0.5px;
+  margin: 10px 0;
+  background: var(--hairline);
+}
+
+.summary-row.total-row {
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: #fff;
+}
+
+.summary-row.total-row .val {
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: var(--cta-hi);
+}
+
+/* ═══ PRODUCT DETAIL ══════════════════════════════════════════════ */
+
+.product-detail { animation: fadeUp 0.34s cubic-bezier(0.2,0,0.2,1); }
+
+.detail-back-link {
+  display: inline-block;
+  margin-bottom: 20px;
+  font-size: 13px;
+  color: var(--text2);
+  text-decoration: none;
+  transition: color var(--transition);
+}
+
+.detail-back-link:hover { color: var(--accent); }
+
+.detail-main {
+  display: flex;
+  gap: 34px;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+}
+
+.detail-gallery {
+  flex: 0 1 340px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.detail-img-main {
+  position: relative;
+  cursor: zoom-in;
+  min-height: 320px;
+  padding: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--plate);
+  border: 1px solid rgba(255,255,255,0.5);
+  border-radius: var(--r-lg);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), var(--sh-2);
+}
+
+.detail-img-main img {
+  max-width: 100%;
+  max-height: 280px;
+  object-fit: contain;
+}
+
+/* Sits on the light plate now, so it inverts from v1's light-on-dark pill */
+.detail-zoom-hint {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  white-space: nowrap;
+  font-size: 11px;
+  font-weight: 500;
+  color: #fff;
+  background: rgba(20,16,38,0.78);
+  border-radius: var(--r-pill);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition);
+}
+
+.detail-img-main:hover .detail-zoom-hint { opacity: 1; }
+
+.detail-thumbs { display: flex; flex-wrap: wrap; gap: 10px; }
+
+.detail-thumb {
+  width: 66px;
+  height: 66px;
+  padding: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--plate);
+  border: 1px solid rgba(255,255,255,0.45);
+  border-radius: var(--r-sm);
+  cursor: pointer;
+  /* constant border + ring, so switching thumbs never shifts layout */
+  transition: box-shadow var(--transition), transform var(--transition);
+}
+
+.detail-thumb:hover { transform: translateY(-2px); }
+
+.detail-thumb img { max-width: 100%; max-height: 100%; object-fit: contain; }
+
+.detail-thumb.active { box-shadow: 0 0 0 2px var(--accent); }
+
+.detail-info {
+  flex: 1 1 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+
+.detail-name {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.022em;
+  line-height: 1.18;
+  color: #fff;
+}
+
+.detail-description {
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: var(--text2);
+}
+
+.detail-info .product-price { font-size: 28px; }
+
+.detail-qty { margin-top: 6px; }
+
+.step-download-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  width: fit-content;
+  margin-top: 6px;
+  padding: 10px 18px;
+  font-family: var(--font);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  background: var(--glass-2);
+  border: 1px solid var(--stroke-2);
+  border-radius: var(--r-pill);
+  cursor: pointer;
+  box-shadow: var(--sheen);
+  transition: background var(--transition), color var(--transition);
+}
+
+.step-download-btn:hover { background: var(--glass-3); color: #fff; }
+.step-download-btn:disabled { opacity: 0.55; cursor: default; }
+
+.step-status { font-size: 12.5px; min-height: 16px; color: var(--text3); }
+.step-status.error { color: var(--danger); }
+
+/* border-collapse:collapse would drop the radius; separate + per-cell rules
+   keeps the rounded glass panel intact. */
+.specs-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: var(--glass-2);
+  border: 1px solid var(--stroke);
+  border-radius: var(--r);
+  overflow: hidden;
+  box-shadow: var(--sheen);
+}
+
+.specs-table th,
+.specs-table td {
+  text-align: left;
+  padding: 12px 16px;
+  font-size: 13.5px;
+  letter-spacing: -0.01em;
+  border-bottom: 0.5px solid var(--hairline);
+}
+
+.specs-table tr:last-child th,
+.specs-table tr:last-child td { border-bottom: none; }
+
+/* Label column reads as an iOS list label: secondary colour, no fill */
+.specs-table th {
+  width: 35%;
+  font-weight: 400;
+  color: var(--text3);
+}
+
+.specs-table td { color: var(--text); }
+
+.specs-empty {
+  color: var(--text-dim);
+  font-style: italic;
+  text-align: center;
+}
+
+/* ═══ LIGHTBOX ════════════════════════════════════════════════════ */
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 1500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(6,3,20,0.94);
+  animation: lightbox-in 0.16s ease-out;
+}
+
+@keyframes lightbox-in { from { opacity: 0; } to { opacity: 1; } }
+
+.lightbox-stage {
+  width: 100%;
+  height: 100%;
+  padding: 64px 20px 92px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Background only. clampPan() derives the pan bounds from offsetWidth*scale,
+   so adding padding/border/margin here would desync the drag limits. */
+.lightbox-img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  background: rgba(255,255,255,0.94);
+  border-radius: var(--r-sm);
+  transform-origin: center center;
+  transition: transform 0.14s ease-out;
+  cursor: zoom-in;
+  user-select: none;
+  -webkit-user-drag: none;
+  touch-action: none;
+}
+
+.lightbox-img.zoomed   { cursor: grab; }
+.lightbox-img.dragging { transition: none; cursor: grabbing; }
+
+.lightbox-close,
+.lightbox-nav,
+.lightbox-btn {
+  color: #fff;
+  background: var(--glass-2);
+  border: 1px solid var(--stroke);
+  cursor: pointer;
+  font-family: var(--font);
+  transition: background var(--transition), border-color var(--transition);
+}
+
+.lightbox-close:hover,
+.lightbox-nav:hover,
+.lightbox-btn:hover { background: var(--glass-3); border-color: var(--stroke-2); }
+
+.lightbox-close {
+  position: absolute;
+  top: 18px;
+  right: 20px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 15px;
+  line-height: 1;
+}
+
+.lightbox-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 64px;
+  border-radius: var(--r);
+  font-size: 28px;
+  line-height: 1;
+}
+
+.lightbox-nav.prev { left: 18px; }
+.lightbox-nav.next { right: 18px; }
+
+.lightbox-toolbar {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: rgba(22,16,46,0.72);
+  border: 1px solid var(--stroke);
+  border-radius: var(--r-pill);
+  box-shadow: var(--sh-2), var(--sheen);
+}
+
+.lightbox-btn {
+  min-width: 36px;
+  height: 36px;
+  padding: 0 13px;
+  border-radius: var(--r-pill);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.lightbox-btn.reset { font-size: 12px; }
+
+.lightbox-zoom,
+.lightbox-counter {
+  min-width: 54px;
+  text-align: center;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text2);
+}
+
+.lightbox-counter {
+  padding-left: 11px;
+  margin-left: 2px;
+  border-left: 1px solid var(--stroke);
+}
+
+/* ═══ EXPORT MODAL OVERRIDE ═══════════════════════════════════════
+   FRAGILE — coupled to showExportModal() in shopscript.js (~line 745).
+   That modal is built with inline styles and its root has no class or
+   id, so it can only be reached structurally and only beaten with
+   !important. Presentational rules ONLY: never add layout here.
+   If shopscript.js changes and these stop matching, the modal simply
+   reverts to its v1 white styling and keeps working. :has() is
+   unsupported on Firefox <121 — same harmless fallback.             */
+
+body > div:has(#export-ok) {
+  background: rgba(6,3,20,0.60) !important;
+  -webkit-backdrop-filter: blur(var(--blur-lg)) var(--sat);
+          backdrop-filter: blur(var(--blur-lg)) var(--sat);
+}
+
+body > div:has(#export-ok) > div {
+  background: var(--glass-deep) !important;
+  font-family: var(--font) !important;
+  color: var(--text);
+  border: 1px solid var(--stroke);
+  border-radius: var(--r-lg) !important;
+  box-shadow: var(--sh-3), var(--sheen);
+  -webkit-backdrop-filter: blur(var(--blur-lg)) var(--sat);
+          backdrop-filter: blur(var(--blur-lg)) var(--sat);
+}
+
+body > div:has(#export-ok) h3 { color: #fff; letter-spacing: 0.01em; }
+
+body > div:has(#export-ok) label { color: var(--text2) !important; }
+
+body > div:has(#export-ok) input[type="text"],
+body > div:has(#export-ok) input[type="number"],
+body > div:has(#export-ok) textarea,
+body > div:has(#export-ok) select {
+  color: #fff;
+  background: rgba(10,6,26,0.55);
+  border: 1px solid var(--stroke);
+  border-radius: var(--r-sm);
+  font-family: var(--font);
+}
+
+body > div:has(#export-ok) input::placeholder,
+body > div:has(#export-ok) textarea::placeholder { color: var(--text-dim); }
+
+body > div:has(#export-ok) .export-format { accent-color: var(--accent); }
+
+body > div:has(#export-ok) #shipping-preview { color: var(--accent-2) !important; }
+
+body > div:has(#export-ok) #export-ok {
+  background: linear-gradient(180deg, var(--cta-hi), var(--cta)) !important;
+  color: #1b0d02 !important;
+  border-radius: var(--r-pill) !important;
+  padding: 9px 20px !important;
+  font-weight: 600;
+}
+
+body > div:has(#export-ok) #export-cancel {
+  background: var(--glass-2) !important;
+  color: var(--text2) !important;
+  border: 1px solid var(--stroke) !important;
+  border-radius: var(--r-pill) !important;
+  padding: 9px 20px !important;
+}
+
+/* ═══ RESPONSIVE ══════════════════════════════════════════════════
+   All breakpoints live here, in descending order, so the cascade is
+   predictable. Note 768px is not a free choice: shopscript.js branches
+   on window.innerWidth <= 768 for its mobile category behaviour.     */
+
+@media (max-width: 1024px) {
+  :root { --blur-md: 12px; --blur-lg: 18px; }
+  .sidebar       { width: 184px; }
+  .product-grid  { grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 14px; }
+  #selected-panel{ width: 380px; }
+  main.main-content { padding: 22px 22px 40px; }
+}
+
+@media (max-width: 768px) {
+  :root { --blur-md: 10px; --blur-lg: 14px; }
+
+  .header-inner   { height: 56px; padding: 0 14px; }
+  .header-tagline { display: none; }
+  .logo-sub       { display: none; }
+  .logo-main      { font-size: 17px; }
+  .logo img       { height: 30px; }
+  .export-btn     { padding: 8px 15px; font-size: 12.5px; }
+
+  .wrapper { flex-direction: column; }
+
+  /* Sidebar becomes a horizontal rail of pills. It scrolls its own backdrop,
+     so the blur comes off here and an opaque fill takes over. */
+  .sidebar {
+    width: 100%;
+    flex-shrink: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 10px 0;
+    background: rgba(20,14,44,0.85);
+    border-right: none;
+    border-bottom: 0.5px solid var(--hairline);
+    -webkit-backdrop-filter: none;
+            backdrop-filter: none;
+  }
+
+  .sidebar-label { display: none; }
+
+  /* the recessed track the segments sit in */
+  #sidebar-menu {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    gap: 2px;
+    padding: 3px;
+    margin: 0 12px;
+    width: max-content;
+    min-width: calc(100% - 24px);
+    background: rgba(0,0,0,0.24);
+    border-radius: 11px;
+  }
+
+  #sidebar-menu > li { flex-shrink: 0; }
+
+  /* Reads as an iOS segmented control: one recessed track, the selected
+     segment lifted out of it on a light fill. */
+  #sidebar-menu > li > a {
+    margin: 0;
+    padding: 7px 14px;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    border-radius: 9px;
+    background: transparent;
+    border: none;
+  }
+
+  #sidebar-menu > li.active > a {
+    background: rgba(255,255,255,0.18);
+    color: #fff;
+    font-weight: 600;
+    box-shadow: 0 1px 3px rgba(6,3,20,0.35), var(--sheen);
+  }
+
+  /* Tapping a parent shows ALL its products — there is no accordion to open */
+  #sidebar-menu li ul { display: none !important; }
+
+  main.main-content { padding: 16px 12px 40px; }
+
+  .section-header    { margin-bottom: 14px; padding-bottom: 10px; }
+  .section-header h2 { font-size: 19px; }
+
+  .product-grid  { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .product-card  { border-radius: var(--r); }
+  .card-img-wrap { height: 108px; padding: 12px; margin: 8px 8px 0; }
+  .card-img-wrap img { max-width: 80px; max-height: 80px; }
+  .card-body     { padding: 11px; gap: 5px; }
+  .product-code  { font-size: 10px; }
+  .product-name  { font-size: 11.5px; }
+  .product-price { font-size: 16px; }
+  .product-price.na { font-size: 12px; }
+  .moq-badge     { font-size: 9.5px; padding: 2px 7px; }
+
+  /* Fingers, not cursors — and the control must stay inside .qty-row, whose
+     bounds shopscript.js uses to decide a tap is not a navigation. */
+  .qty-row { width: 100%; }
+  .quantity-control { width: 100%; justify-content: space-between; }
+  .quantity-control button { width: 34px; height: 34px; }
+  .quantity-control input  { flex: 1; width: auto; height: 34px; }
+
+  #selected-panel { width: 100%; }
+  .panel-header   { padding: 16px 18px; }
+  .cart-summary   { padding: 16px 18px 20px; }
+  #cart-fab       { width: 52px; height: 52px; right: 16px; bottom: 16px; }
+}
+
+@media (max-width: 480px) {
+  .detail-main     { flex-direction: column; gap: 22px; }
+  .detail-img-main { min-height: 220px; padding: 20px; }
+  .detail-name     { font-size: 20px; }
+  .detail-thumb    { width: 56px; height: 56px; }
+
+  .detail-zoom-hint { opacity: 1; }        /* no hover on touch */
+
+  .specs-table th { width: 42%; }
+  .specs-table th,
+  .specs-table td { font-size: 12.5px; padding: 10px 12px; }
+
+  .lightbox-stage    { padding: 56px 8px 84px; }
+  .lightbox-nav      { width: 36px; height: 54px; font-size: 23px; }
+  .lightbox-nav.prev { left: 6px; }
+  .lightbox-nav.next { right: 6px; }
+  .lightbox-toolbar  { bottom: 14px; gap: 5px; padding: 6px 9px; }
+  .lightbox-btn      { min-width: 32px; height: 32px; padding: 0 10px; }
+  .lightbox-zoom,
+  .lightbox-counter  { min-width: 44px; font-size: 11px; }
+}
+
+@media (max-width: 380px) {
+  .product-grid  { gap: 8px; }
+  .card-img-wrap { height: 96px; }
+  .card-body     { padding: 9px; }
+  .product-price { font-size: 15px; }
+
+  /* v1 tried `.export-btn svg ~ *` here, which matches element siblings —
+     the label is a bare text node, so nothing was ever hidden. */
+  .export-btn { font-size: 0; gap: 0; padding: 9px 12px; }
+}
+
+/* ═══ PREFERENCES / CAPABILITY FALLBACKS ══════════════════════════ */
+
+@media (hover: none) {
+  .product-card:hover { transform: none; }
+  .detail-thumb:hover { transform: none; }
+  .export-btn:hover   { transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* No blur available (or the viewer asked for less transparency): raise the
+   surface alphas so text keeps its contrast. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  :root {
+    --glass-1: rgba(28,20,58,0.86);
+    --glass-2: rgba(255,255,255,0.10);
+    --glass-deep: rgba(16,11,34,0.96);
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  :root {
+    --glass-1: rgba(28,20,58,0.92);
+    --glass-2: rgba(46,36,84,0.92);
+    --glass-3: rgba(60,48,104,0.95);
+    --glass-deep: rgba(16,11,34,0.98);
+    --blur-lg: 0px; --blur-md: 0px; --blur-sm: 0px;
+  }
+  body::after { display: none; }
+}
+
+@media print {
+  body::before, body::after,
+  #cart-fab, #cart-overlay, #selected-panel, .sidebar, .export-btn { display: none !important; }
+  html, body { background: #fff; color: #000; height: auto; overflow: visible; }
+  header { background: none; border-bottom: 1px solid #000; }
+  .product-card, .specs-table, .card-img-wrap {
+    background: #fff; border: 1px solid #999; box-shadow: none;
+  }
+  .product-name, .product-price, .detail-name, .specs-table td { color: #000; }
+}

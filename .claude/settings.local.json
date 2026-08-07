@@ -27,21 +27,5 @@
       "Bash(grep -v \".sample$\")",
       "Bash(git config *)"
     ]
-  },
-  "hooks": {
-    "PreToolUse": [
-      {
-        "matcher": "Edit|Write",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "$s = git status --porcelain; if ($s) { git add .; git commit -m 'auto-backup before claude edit' }",
-            "shell": "powershell",
-            "timeout": 30,
-            "statusMessage": "Creating auto-backup commit..."
-          }
-        ]
-      }
-    ]
   }
 }

@@ -12,5 +12,12 @@
         "**/*.crswap",
         "**/products.json",
         "**/categories.json"
-    ]
+    ],
+    "python.analysis.extraPaths": [
+        "C:\\Users\\yjz11\\.kendryte\\k230_canmv_stubs\\ccb5ce5bc04880294c1235494fe9ce4a4cde6a13"
+    ],
+    "python.analysis.stubPath": "C:\\Users\\yjz11\\.kendryte\\k230_canmv_pylance\\deb704945781c338\\typings",
+    "python.analysis.diagnosticSeverityOverrides": {
+        "reportMissingModuleSource": "none"
+    }
 }

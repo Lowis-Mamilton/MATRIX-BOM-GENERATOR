@@ -134,14 +134,6 @@
     "moq": 1
   },
   {
-    "code": "NEW14-0003",
-    "name": "MATRIX Motor Controller - 12V",
-    "category": "MOTOR CONTROLLER",
-    "price": 0,
-    "weight": 200,
-    "moq": 1
-  },
-  {
     "code": "14-0003",
     "name": "MATRIX Motor Controller - 9V",
     "category": "MOTOR CONTROLLER",
@@ -1832,5 +1824,13 @@
     "price": 0,
     "weight": 200,
     "moq": 10
+  },
+  {
+    "code": "MMX12-000",
+    "name": "MATRIX Motor Controller - 12V Set",
+    "category": "MOTOR CONTROLLER",
+    "price": 3000,
+    "weight": 200,
+    "moq": 1
   }
 ]

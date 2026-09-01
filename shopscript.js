@@ -261,6 +261,22 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   }
 
+  // ─── Image fallback ──────────────────────────────────────────
+  // Not every part has an img/<code>.png yet (newly listed SKUs from the
+  // order form). Swap in the shared MATRIX placeholder instead of leaving
+  // an empty box; only hide the <img> if the placeholder is missing too.
+  // Stateless so it stays correct when the same <img> is re-pointed at
+  // another photo (the detail gallery swaps mainImg.src on thumb clicks).
+  const PLACEHOLDER_IMG = "img/PartPhoto.png";
+  function fallbackToPlaceholder() {
+    if (this.getAttribute("src") === PLACEHOLDER_IMG) {
+      this.style.visibility = "hidden"; // placeholder itself is missing
+      return;
+    }
+    this.style.visibility = "";
+    this.src = PLACEHOLDER_IMG;
+  }
+
   // ─── Product section ─────────────────────────────────────────
   function showSection(key, mobileAll = false) {
     content.innerHTML = "";
@@ -318,7 +334,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       const img = document.createElement("img");
       img.src = `img/${p.code}.png`;
       img.alt = p.code;
-      img.onerror = function() { this.style.visibility = "hidden"; };
+      img.onerror = fallbackToPlaceholder;
       imgWrap.appendChild(img);
       card.appendChild(imgWrap);
 
@@ -430,7 +446,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       <div class="detail-main">
         <div class="detail-gallery">
           <div class="detail-img-main">
-            <img src="${galleryImages[0].src}" alt="${galleryImages[0].alt}" onerror="this.style.visibility='hidden'">
+            <img src="${galleryImages[0].src}" alt="${galleryImages[0].alt}">
             <span class="detail-zoom-hint">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
               Click to enlarge
@@ -463,6 +479,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     content.appendChild(detail);
 
     const mainImg = detail.querySelector(".detail-img-main img");
+    mainImg.onerror = fallbackToPlaceholder;
+    if (mainImg.complete && mainImg.naturalWidth === 0) fallbackToPlaceholder.call(mainImg);
     let galleryIndex = 0;
     detail.querySelectorAll(".detail-thumb").forEach((thumb, i) => {
       thumb.addEventListener("click", () => {
@@ -703,7 +721,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       const row = document.createElement("div");
       row.className = "selected-item";
       row.innerHTML = `
-        <img class="selected-item-img" src="img/${p.code}.png" alt="${p.code}" onerror="this.style.visibility='hidden'">
+        <img class="selected-item-img" src="img/${p.code}.png" alt="${p.code}">
         <div>
           <div class="sku">${p.code}</div>
           <div class="name">${p.name}</div>
@@ -715,6 +733,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           </div>
         </div>
       `;
+      row.querySelector(".selected-item-img").onerror = fallbackToPlaceholder;
       selectedList.appendChild(row);
     });
 
@@ -1133,10 +1152,16 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   async function fetchImageBufferWithSize(url) {
-    const res  = await fetch(url);
+    const res = await fetch(url);
+    if (!res.ok) return null;
     const blob = await res.blob();
     const buf  = new Uint8Array(await blob.arrayBuffer());
-    const bmp  = await createImageBitmap(blob);
+    let bmp;
+    try {
+      bmp = await createImageBitmap(blob);
+    } catch {
+      return null; // fetched something that isn't a decodable image
+    }
     const w = bmp.width, h = bmp.height;
     bmp.close?.();
     return { buf, w, h };
@@ -1217,13 +1242,23 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     for (let i = 0; i < selected.length; i++) {
       const p = selected[i];
-      const { buf, w, h } = await fetchImageBufferWithSize(`img/${p.code}.png`);
+      const img = await fetchImageBufferWithSize(`img/${p.code}.png`);
+      const rowIndex = i + 2;
+
+      // Parts without an img/<code>.png get a "No Img" cell, matching the
+      // PDF and DOCX exporters, instead of aborting the whole export.
+      if (!img) {
+        sheet.addRow({ image: "No Img", sku: p.code, name: p.name, qty: p.qty });
+        sheet.getRow(rowIndex).height = 18;
+        continue;
+      }
+
+      const { buf, w, h } = img;
       const imageId = workbook.addImage({ buffer: buf, extension: "png" });
 
       const scale = Math.min(MAX_W / w, MAX_H / h, 1);
       const drawW = Math.round(w * scale);
       const drawH = Math.round(h * scale);
-      const rowIndex = i + 2;
 
       sheet.addRow({ sku: p.code, name: p.name, qty: p.qty });
       sheet.getRow(rowIndex).height = Math.max(drawH * PX_TO_PT + 4, 18);

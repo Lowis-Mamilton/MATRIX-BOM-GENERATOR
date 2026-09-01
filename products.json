@@ -5,7 +5,16 @@
     "category": "BUNDLE",
     "price": 20000,
     "weight": 200,
-    "moq": 1
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "WRO 創新套件V2",
+      "Sensor Modules": "Color ×2, Grayscale ×1, Laser ×2, Miniature Switch ×2, Temperature &amp; Humidity ×1, PIR Motion ×1, Potentiometer ×1, Water Level ×1, Soil Moisture ×1, Gesture ×1, Temperature ×1",
+      "Motion Modules": "TT Encoder Motor (metal gear) ×2, TT Motor (metal gear) ×2, Micro Servo (metal gear) ×2",
+      "Quick Connectors": "Black 5mm ×80, White 7mm ×60, Blue 12mm ×40",
+      "Highlights": "Rapid prototyping and ideation toolkit — concept development, science fairs and project work",
+      "Competitions": "WRO Future Innovators, MARC Rising Pioneers (creative category)",
+      "Notes": "18650 batteries and charger not included"
+    }
   },
   {
     "code": "MA300",
@@ -13,7 +22,12 @@
     "category": "BUNDLE",
     "price": 11000,
     "weight": 200,
-    "moq": 1
+    "moq": 1,
+    "eol": true,
+    "specs": {
+      "Chinese Name": "Matrix R4 機器人套件組",
+      "Notes": "18650 batteries and charger not included"
+    }
   },
   {
     "code": "MA321",
@@ -21,7 +35,16 @@
     "category": "BUNDLE",
     "price": 10000,
     "weight": 200,
-    "moq": 1
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "MATRIX R4 任務賽事核心套組",
+      "Sensor Modules": "10-Channel Line Tracer ×1, Color ×1",
+      "Motion Modules": "TT Encoder Motor (metal gear) ×2, RC Servo (metal gear) ×1, Micro Servo (metal gear) ×1",
+      "Quick Connectors": "ML ×40, Battery Box ×4, Black 5mm ×40, White 7mm ×40, Blue 12mm ×40",
+      "Highlights": "Core competition kit — autonomous and remote-controlled robots",
+      "Competitions": "WRO RoboMission, MARC LOM, MARC Task Master (mission category)",
+      "Notes": "18650 batteries and charger not included"
+    }
   },
   {
     "code": "MAMR120",
@@ -30,6 +53,15 @@
     "price": 22000,
     "weight": 200,
     "moq": 1,
+    "specs": {
+      "Chinese Name": "AMR移動平台套組",
+      "Sensor Modules": "CAN Bus module",
+      "Motion Modules": "12V DC Encoder Motor ×3",
+      "Structural Modules": "2mm steel parts",
+      "Highlights": "For medium and large robots — learning two- and three-wheel drive mobile platforms",
+      "Competitions": "Skills competitions, life-technology contests, FTC entry-level mobility control",
+      "Notes": "Main controller not included; requires a separate controller (R4 or Raspberry Pi)"
+    },
     "photos": [
       "MAMR120-2.png",
       "MAMR120-3.png",
@@ -42,7 +74,16 @@
     "category": "BUNDLE",
     "price": 6500,
     "weight": 200,
-    "moq": 1
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "MATRIX Mini 基礎套組V2",
+      "Sensor Modules": "Color ×1, Laser ×1, Joystick (MJ2) ×1",
+      "Motion Modules": "TT Motor (metal gear) ×2",
+      "Quick Connectors": "Black 5mm ×50, White 7mm ×20, Blue 12mm ×20",
+      "Highlights": "Entry-level robotics teaching kit — remote-controlled robots",
+      "Competitions": "WRO RoboStarter, MARC LOM (league category)",
+      "Notes": "18650 batteries and charger not included"
+    }
   },
   {
     "code": "MR3000",
@@ -50,7 +91,12 @@
     "category": "BUNDLE",
     "price": 6000,
     "weight": 200,
-    "moq": 1
+    "moq": 1,
+    "eol": true,
+    "specs": {
+      "Chinese Name": "MATRIX Mini 創新套組",
+      "Notes": "18650 batteries and charger not included"
+    }
   },
   {
     "code": "MR120",
@@ -58,7 +104,12 @@
     "category": "BUNDLE",
     "price": 8000,
     "weight": 200,
-    "moq": 1
+    "moq": 1,
+    "eol": true,
+    "specs": {
+      "Chinese Name": "基礎自走車套件 2.0",
+      "Notes": "18650 batteries and charger not included"
+    }
   },
   {
     "code": "MX120",
@@ -66,15 +117,23 @@
     "category": "BUNDLE",
     "price": 6000,
     "weight": 200,
-    "moq": 1
+    "moq": 1,
+    "description": "An expansion pack for life-technology and mechanism-design teaching and for competitions such as MARC LOM and WRO. Contains a range of structural parts plus two MRC-MG15-180 servos.",
+    "specs": {
+      "Chinese Name": "MX120擴充包",
+      "Notes": "18650 batteries and charger not included; requires a core kit"
+    }
   },
   {
     "code": "WSC-2026",
-    "name": "2026 WSC 競賽套組",
+    "name": "2026 WSC Competition Set",
     "category": "BUNDLE",
     "price": 45000,
     "weight": 200,
-    "moq": 1
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "2026 WSC 套件組"
+    }
   },
   {
     "code": "KNR-RS021910",
@@ -82,7 +141,3470 @@
     "category": "BUNDLE",
     "price": 70000,
     "weight": 200,
-    "moq": 1
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "KNR 機器人套件組"
+    }
+  },
+  {
+    "code": "MR-000 V2-4",
+    "name": "MATRIX Mini Controller Set (V2.4)",
+    "category": "CONTROLLER",
+    "price": 1450,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "MATRIX Mini Controller Set (V2.4)"
+    }
+  },
+  {
+    "code": "MA-000 V1",
+    "name": "MATRIX R4 Controller Set",
+    "category": "CONTROLLER",
+    "price": 6000,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "MATRIX R4 Controller Set"
+    }
+  },
+  {
+    "code": "KNR-MBS0214",
+    "name": "KNRm Controller, S/W, Cable",
+    "category": "CONTROLLER",
+    "price": 49493,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "KNRm 控制器"
+    }
+  },
+  {
+    "code": "MJ2",
+    "name": "MATRIX JOYSTICK II",
+    "category": "JOY STICK",
+    "price": 1500,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "MATRIX 搖桿",
+      "Wireless": "2.4GHz wireless communication for a stable remote-control link.",
+      "Power": "Powered by 2 × AAA batteries.",
+      "Pairing": "Pairs with its dedicated wireless receiver; controllers are normally pre-paired at the factory.",
+      "Recommended Mode": "The MJ2 supports analog mode (default) and digital mode.",
+      "Important": "Keep the controller in the default analog mode for correct thumbstick readings. Switching to digital mode can cause erratic signal output.",
+      "Notes": "Includes adapter board and cable"
+    }
+  },
+  {
+    "code": "18650-HD",
+    "name": "18650 Battery Box",
+    "category": "BATTERY",
+    "price": 65,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "2節18650電池盒(含蓋)",
+      "Notes": "1 battery box"
+    }
+  },
+  {
+    "code": "MS-003V2-4PIN",
+    "name": "MATRIX Gray Scale Sensor V2 Pack (Dupont 4P)",
+    "category": "SENSOR",
+    "subCategory": "ANALOG",
+    "price": 250,
+    "weight": 200,
+    "moq": 1,
+    "eol": true,
+    "specs": {
+      "Chinese Name": "MATRIX 灰階感測器包 (杜邦)",
+      "Connector": "4PIN"
+    }
+  },
+  {
+    "code": "MS-003V2-JST",
+    "name": "MATRIX Gray Scale Sensor V2 Pack (JST)",
+    "category": "SENSOR",
+    "subCategory": "ANALOG",
+    "price": 250,
+    "weight": 200,
+    "moq": 1,
+    "eol": true,
+    "specs": {
+      "Chinese Name": "MATRIX 灰階感測器包 (JST)",
+      "Connector": "JST"
+    }
+  },
+  {
+    "code": "MS-003V3-JST",
+    "name": "MATRIX Gray Scale Sensor V3 Pack (JST)",
+    "category": "SENSOR",
+    "subCategory": "ANALOG",
+    "price": 150,
+    "weight": 200,
+    "moq": 1,
+    "description": "Supports 3.3V–5V operating voltage. Ultra-compact infrared sensor module. The digital output threshold is adjustable via the trimmer. Provides both analog (AOUT) and digital (DOUT) outputs. Recommended sensing distance is 5–20mm; adjust in practice according to lighting conditions.",
+    "specs": {
+      "Chinese Name": "MATRIX 灰階感測器包 (JST)",
+      "Connector": "JST"
+    }
+  },
+  {
+    "code": "MS-003V3-RJ12",
+    "name": "MATRIX Grayscale Sensor V3(RJ12)",
+    "category": "SENSOR",
+    "subCategory": "ANALOG",
+    "price": 150,
+    "weight": 200,
+    "moq": 1,
+    "description": "Supports 3.3V–5V operating voltage. Ultra-compact infrared sensor module. The digital output threshold is adjustable via the trimmer. Provides both analog (AOUT) and digital (DOUT) outputs. Recommended sensing distance is 5–20mm; adjust in practice according to lighting conditions.",
+    "specs": {
+      "Chinese Name": "MATRIX 灰階感測器包 V3(杜邦)",
+      "Connector": "RJ12"
+    }
+  },
+  {
+    "code": "MS-013-JST",
+    "name": "MATRIX Potentiometer Sensor(JST)",
+    "category": "SENSOR",
+    "subCategory": "ANALOG",
+    "price": 200,
+    "weight": 200,
+    "moq": 1,
+    "description": "Supports 3.3V–5V operating voltage. Analog output (AOUT) ranging from 0V to VCC. Rotation range of 0° to 300°. High resolution, with output voltage varying linearly with rotation angle.",
+    "specs": {
+      "Chinese Name": "MATRIX 電位器感測器(JST)",
+      "Connector": "JST"
+    }
+  },
+  {
+    "code": "MS-013-RJ12",
+    "name": "MATRIX Potentiometer Sensor(RJ12)",
+    "category": "SENSOR",
+    "subCategory": "ANALOG",
+    "price": 200,
+    "weight": 200,
+    "moq": 1,
+    "description": "Supports 3.3V–5V operating voltage. Analog output (AOUT) ranging from 0V to VCC. Rotation range of 0° to 300°. High resolution, with output voltage varying linearly with rotation angle.",
+    "specs": {
+      "Chinese Name": "MATRIX 電位器感測器(RJ12)",
+      "Connector": "RJ12"
+    }
+  },
+  {
+    "code": "MS-014-JST",
+    "name": "MATRIX Water Level Sensor(JST)",
+    "category": "SENSOR",
+    "subCategory": "ANALOG",
+    "price": 150,
+    "weight": 200,
+    "moq": 1,
+    "description": "Supports 3.3V–5V operating voltage. Analog output (AOUT) varies with water level. Simple to use, suited to entry-level learning and general water-level detection. Rust-resistant PCB for prolonged immersion (but must not be fully submerged).",
+    "specs": {
+      "Chinese Name": "MATRIX 水深感測器(JST)",
+      "Connector": "JST"
+    }
+  },
+  {
+    "code": "MS-014-RJ12",
+    "name": "MATRIX Water Level Sensor(RJ12)",
+    "category": "SENSOR",
+    "subCategory": "ANALOG",
+    "price": 150,
+    "weight": 200,
+    "moq": 1,
+    "description": "Supports 3.3V–5V operating voltage. Analog output (AOUT) varies with water level. Simple to use, suited to entry-level learning and general water-level detection. Rust-resistant PCB for prolonged immersion (but must not be fully submerged).",
+    "specs": {
+      "Chinese Name": "MATRIX 水深感測器(RJ12)",
+      "Connector": "RJ12"
+    }
+  },
+  {
+    "code": "MS-016-JST",
+    "name": "MATRIX Soil Moisture Sensor(JST)",
+    "category": "SENSOR",
+    "subCategory": "ANALOG",
+    "price": 200,
+    "weight": 200,
+    "moq": 1,
+    "description": "Supports 3.3V–5V operating voltage. Analog output (AOUT) varies with soil moisture. Simple design and easy to install, suitable for all soil types. A practical sensing component for teaching and project work.",
+    "specs": {
+      "Chinese Name": "MATRIX 土壤感測器(JST)",
+      "Connector": "JST"
+    }
+  },
+  {
+    "code": "MS-016-RJ12",
+    "name": "MATRIX Soil Moisture Sensor(RJ12)",
+    "category": "SENSOR",
+    "subCategory": "ANALOG",
+    "price": 200,
+    "weight": 200,
+    "moq": 1,
+    "description": "Supports 3.3V–5V operating voltage. Analog output (AOUT) varies with soil moisture. Simple design and easy to install, suitable for all soil types. A practical sensing component for teaching and project work.",
+    "specs": {
+      "Chinese Name": "MATRIX 土壤感測器(RJ12)",
+      "Connector": "RJ12"
+    }
+  },
+  {
+    "code": "MS-004V2-4PIN",
+    "name": "MATRIX Miniature Switch V2 Pack (Dupont 4P)",
+    "category": "SENSOR",
+    "subCategory": "DIGITAL",
+    "price": 250,
+    "weight": 200,
+    "moq": 1,
+    "eol": true,
+    "specs": {
+      "Chinese Name": "MATRIX 微動開關 V2包 (杜邦)",
+      "Connector": "4PIN"
+    }
+  },
+  {
+    "code": "MS-004V2-JST",
+    "name": "MATRIX Miniature Switch V2 Pack (JST)",
+    "category": "SENSOR",
+    "subCategory": "DIGITAL",
+    "price": 250,
+    "weight": 200,
+    "moq": 1,
+    "eol": true,
+    "specs": {
+      "Chinese Name": "MATRIX 微動開關 V2包 (JST)",
+      "Connector": "JST"
+    }
+  },
+  {
+    "code": "MS-004V3-JST",
+    "name": "MATRIX Miniature Switch V3 (JST)",
+    "category": "SENSOR",
+    "subCategory": "DIGITAL",
+    "price": 250,
+    "weight": 200,
+    "moq": 1,
+    "description": "Digital output (HIGH / LOW) with only two states: pressed and not pressed. Built-in spring return mechanism restores the switch automatically after pressing. Compact and easy to mount, suited to applications with limited space. The digital output keeps control logic simple: HIGH (1) when pressed, LOW (0) when released.",
+    "specs": {
+      "Chinese Name": "MATRIX 微動開關 V3 ( JST)",
+      "Connector": "JST"
+    }
+  },
+  {
+    "code": "MS-004V3-RJ12",
+    "name": "MATRIX Miniature Switch V3 (RJ12)",
+    "category": "SENSOR",
+    "subCategory": "DIGITAL",
+    "price": 250,
+    "weight": 200,
+    "moq": 1,
+    "description": "Digital output (HIGH / LOW) with only two states: pressed and not pressed. Built-in spring return mechanism restores the switch automatically after pressing. Compact and easy to mount, suited to applications with limited space. The digital output keeps control logic simple: HIGH (1) when pressed, LOW (0) when released.",
+    "specs": {
+      "Chinese Name": "MATRIX 微動開關 V3 (RJ12)",
+      "Connector": "RJ12"
+    }
+  },
+  {
+    "code": "MS-011-JST",
+    "name": "MATRIX Temperature and Humidity Sensor(JST)",
+    "category": "SENSOR",
+    "subCategory": "DIGITAL",
+    "price": 200,
+    "weight": 200,
+    "moq": 1,
+    "description": "Supports 3.3V–5V operating voltage. Measures both temperature and relative humidity. Dual-parameter output (temperature + humidity) over a single digital pin. Stable accuracy, suitable for general environmental monitoring. Built-in signal filtering and temperature compensation give strong noise immunity.",
+    "specs": {
+      "Chinese Name": "MATRIX 溫濕度感測器(JST)",
+      "Connector": "JST",
+      "Temperature Range": "0 – 50°C, ±2°C accuracy",
+      "Humidity Range": "20 – 90% RH, ±5% RH accuracy"
+    }
+  },
+  {
+    "code": "MS-011-RJ12",
+    "name": "MATRIX Temperature and Humidity Sensor(RJ12)",
+    "category": "SENSOR",
+    "subCategory": "DIGITAL",
+    "price": 200,
+    "weight": 200,
+    "moq": 1,
+    "description": "Supports 3.3V–5V operating voltage. Measures both temperature and relative humidity. Dual-parameter output (temperature + humidity) over a single digital pin. Stable accuracy, suitable for general environmental monitoring. Built-in signal filtering and temperature compensation give strong noise immunity.",
+    "specs": {
+      "Chinese Name": "MATRIX 溫濕度感測器(RJ12)",
+      "Connector": "RJ12",
+      "Temperature Range": "0 – 50°C, ±2°C accuracy",
+      "Humidity Range": "20 – 90% RH, ±5% RH accuracy"
+    }
+  },
+  {
+    "code": "MS-012-JST",
+    "name": "MATRIX PIR Motion Sensor(JST)",
+    "category": "SENSOR",
+    "subCategory": "DIGITAL",
+    "price": 200,
+    "weight": 200,
+    "moq": 1,
+    "description": "Passive infrared sensing — emits no signal, so it is energy-efficient and stable. Built-in digital output for easy connection to a controller. Sensing range up to 7 meters with a detection angle of about 100 degrees. Suitable for automatic lighting, security systems and smart-home applications.",
+    "specs": {
+      "Chinese Name": "MATRIX 人體感測器(JST)",
+      "Connector": "JST"
+    }
+  },
+  {
+    "code": "MS-012-RJ12",
+    "name": "MATRIX PIR Motion Sensor(RJ12)",
+    "category": "SENSOR",
+    "subCategory": "DIGITAL",
+    "price": 200,
+    "weight": 200,
+    "moq": 1,
+    "description": "Passive infrared sensing — emits no signal, so it is energy-efficient and stable. Built-in digital output for easy connection to a controller. Sensing range up to 7 meters with a detection angle of about 100 degrees. Suitable for automatic lighting, security systems and smart-home applications.",
+    "specs": {
+      "Chinese Name": "MATRIX 人體感測器(RJ12)",
+      "Connector": "RJ12"
+    }
+  },
+  {
+    "code": "MS-015-JST",
+    "name": "MATRIX One Wire Temperature Sensor(JST)",
+    "category": "SENSOR",
+    "subCategory": "DIGITAL",
+    "price": 200,
+    "weight": 200,
+    "moq": 1,
+    "description": "Supports 3.3V–5V operating voltage. High-precision temperature measurement (9–12 bit selectable resolution). Low-power design, suitable for long-term monitoring. Waterproof probe for damp or sealed environments. Communicates over 1-Wire, so wiring is simple (one digital line + GND).",
+    "specs": {
+      "Chinese Name": "MATRIX 轉接版帶DS18B20感測器 (JST)",
+      "Connector": "JST"
+    }
+  },
+  {
+    "code": "MS-015-RJ12",
+    "name": "MATRIX One Wire Temperature Sensor(RJ12)",
+    "category": "SENSOR",
+    "subCategory": "DIGITAL",
+    "price": 200,
+    "weight": 200,
+    "moq": 1,
+    "description": "Supports 3.3V–5V operating voltage. High-precision temperature measurement (9–12 bit selectable resolution). Low-power design, suitable for long-term monitoring. Waterproof probe for damp or sealed environments. Communicates over 1-Wire, so wiring is simple (one digital line + GND).",
+    "specs": {
+      "Chinese Name": "MATRIX 轉接版帶DS18B21感測器 (RJ12)",
+      "Connector": "RJ12"
+    }
+  },
+  {
+    "code": "MS-002V2-4PIN",
+    "name": "MATRIX Color Sensor Pack (Dupont 4P)",
+    "category": "SENSOR",
+    "subCategory": "IIC",
+    "price": 650,
+    "weight": 200,
+    "moq": 1,
+    "description": "Supports 3.3V–5V operating voltage. Outputs RGB, CMYK and Grayscale formats. Built-in 14-color automatic classification (Color Number). Gamma correction brings results closer to human perception. Automatic or PWM-dimmed fill light adapts to different lighting conditions. I²C interface at 100–400kHz. RGB values range from 0 to 255, representing per-channel light intensity. Recommended measuring distance is about 5–10 mm; greater distances can cause unstable readings or ambient-light interference.",
+    "specs": {
+      "Chinese Name": "MATRIX 顏色感測器包 (杜邦)",
+      "Connector": "4PIN"
+    }
+  },
+  {
+    "code": "MS-002V2-JST",
+    "name": "MATRIX Color Sensor Pack (JST)",
+    "category": "SENSOR",
+    "subCategory": "IIC",
+    "price": 650,
+    "weight": 200,
+    "moq": 1,
+    "description": "Supports 3.3V–5V operating voltage. Outputs RGB, CMYK and Grayscale formats. Built-in 14-color automatic classification (Color Number). Gamma correction brings results closer to human perception. Automatic or PWM-dimmed fill light adapts to different lighting conditions. I²C interface at 100–400kHz. RGB values range from 0 to 255, representing per-channel light intensity. Recommended measuring distance is about 5–10 mm; greater distances can cause unstable readings or ambient-light interference.",
+    "specs": {
+      "Chinese Name": "MATRIX 顏色感測器包 (JST)",
+      "Connector": "JST"
+    }
+  },
+  {
+    "code": "MS-002V2-RJ12",
+    "name": "MATRIX Color Sensor Pack (RJ12)",
+    "category": "SENSOR",
+    "subCategory": "IIC",
+    "price": 650,
+    "weight": 200,
+    "moq": 1,
+    "description": "Supports 3.3V–5V operating voltage. Outputs RGB, CMYK and Grayscale formats. Built-in 14-color automatic classification (Color Number). Gamma correction brings results closer to human perception. Automatic or PWM-dimmed fill light adapts to different lighting conditions. I²C interface at 100–400kHz. RGB values range from 0 to 255, representing per-channel light intensity. Recommended measuring distance is about 5–10 mm; greater distances can cause unstable readings or ambient-light interference.",
+    "specs": {
+      "Chinese Name": "MATRIX 顏色感測器包 (RJ12)",
+      "Connector": "RJ12"
+    }
+  },
+  {
+    "code": "MS-002V3-JST",
+    "name": "MATRIX Color Sensor Pack V3 (JST)",
+    "category": "SENSOR",
+    "subCategory": "IIC",
+    "price": 600,
+    "weight": 200,
+    "moq": 1,
+    "description": "Four-channel RGB + Clear (brightness) sensing. An infrared filter improves color recognition accuracy. Adjustable analog gain and integration time. Built-in automatic fill light adapts to different lighting environments. I²C interface, supports 3.3V–5V systems. RGB values range from 0 to 255, representing per-channel light intensity. Recommended measuring distance is about 5–10 mm; greater distances can cause unstable readings or ambient-light interference.",
+    "specs": {
+      "Chinese Name": "MATRIX 顏色感測器包 V3(JST)",
+      "Connector": "JST"
+    }
+  },
+  {
+    "code": "MS-002V3-RJ2",
+    "name": "MATRIX Color Sensor Pack V3(RJ12)",
+    "category": "SENSOR",
+    "subCategory": "IIC",
+    "price": 600,
+    "weight": 200,
+    "moq": 1,
+    "description": "Four-channel RGB + Clear (brightness) sensing. An infrared filter improves color recognition accuracy. Adjustable analog gain and integration time. Built-in automatic fill light adapts to different lighting environments. I²C interface, supports 3.3V–5V systems. RGB values range from 0 to 255, representing per-channel light intensity. Recommended measuring distance is about 5–10 mm; greater distances can cause unstable readings or ambient-light interference.",
+    "specs": {
+      "Chinese Name": "MATRIX 顏色感測器包 V3(RJ12)",
+      "Connector": "RJ12"
+    }
+  },
+  {
+    "code": "MS-009-4PIN",
+    "name": "MATRIX Laser Sensor Pack (Dupont 4P)",
+    "category": "SENSOR",
+    "subCategory": "IIC",
+    "price": 650,
+    "weight": 200,
+    "moq": 1,
+    "description": "Absolute distance measurement from 21 to 1999 mm with 1mm accuracy. Fixed 50Hz sampling rate (up to 50 readings per second). Returns distance as a 16-bit value (high and low bytes). Timeout detection flags out-of-range or abnormal conditions. I²C interface, supports 3.3V–5V systems.",
+    "specs": {
+      "Chinese Name": "MATRIX 雷射感測器包 (杜邦)",
+      "Connector": "4PIN"
+    }
+  },
+  {
+    "code": "MS-009-JST",
+    "name": "MATRIX Laser Sensor Pack (JST)",
+    "category": "SENSOR",
+    "subCategory": "IIC",
+    "price": 650,
+    "weight": 200,
+    "moq": 1,
+    "description": "Absolute distance measurement from 21 to 1999 mm with 1mm accuracy. Fixed 50Hz sampling rate (up to 50 readings per second). Returns distance as a 16-bit value (high and low bytes). Timeout detection flags out-of-range or abnormal conditions. I²C interface, supports 3.3V–5V systems.",
+    "specs": {
+      "Chinese Name": "MATRIX 雷射感測器包 (JST)",
+      "Connector": "JST"
+    }
+  },
+  {
+    "code": "MS-009-RJ12",
+    "name": "MATRIX Laser Sensor Pack (RJ12)",
+    "category": "SENSOR",
+    "subCategory": "IIC",
+    "price": 650,
+    "weight": 200,
+    "moq": 1,
+    "description": "Absolute distance measurement from 21 to 1999 mm with 1mm accuracy. Fixed 50Hz sampling rate (up to 50 readings per second). Returns distance as a 16-bit value (high and low bytes). Timeout detection flags out-of-range or abnormal conditions. I²C interface, supports 3.3V–5V systems.",
+    "specs": {
+      "Chinese Name": "MATRIX 雷射感測器包 (RJ12)",
+      "Connector": "RJ12"
+    }
+  },
+  {
+    "code": "MS-009V2-JST",
+    "name": "MATRIX Laser Sensor V2(JST)",
+    "category": "SENSOR",
+    "subCategory": "IIC",
+    "price": 600,
+    "weight": 200,
+    "moq": 1,
+    "description": "Uses a VL53L0X ToF sensor chip with a 50–1200mm measuring range. 1mm resolution, high accuracy and fast response. Built-in 940nm infrared laser emitter, certified as a Class 1 laser device. Compact module package suits embedded and space-constrained designs. I²C interface, supports 3.3V–5V system voltage.",
+    "specs": {
+      "Chinese Name": "MATRIX 雷射感測器 V2(JST)",
+      "Connector": "JST"
+    }
+  },
+  {
+    "code": "MS-009V2-RJ12",
+    "name": "MATRIX Laser Sensor V2(RJ12)",
+    "category": "SENSOR",
+    "subCategory": "IIC",
+    "price": 600,
+    "weight": 200,
+    "moq": 1,
+    "description": "Uses a VL53L0X ToF sensor chip with a 50–1200mm measuring range. 1mm resolution, high accuracy and fast response. Built-in 940nm infrared laser emitter, certified as a Class 1 laser device. Compact module package suits embedded and space-constrained designs. I²C interface, supports 3.3V–5V system voltage.",
+    "specs": {
+      "Chinese Name": "MATRIX 雷射感測器 V2(RJ12)",
+      "Connector": "RJ12"
+    }
+  },
+  {
+    "code": "MS-017-JST",
+    "name": "MATRIX Gesture Sensor(JST)",
+    "category": "SENSOR",
+    "subCategory": "IIC",
+    "price": 600,
+    "weight": 200,
+    "moq": 1,
+    "description": "Recognizes 9 basic gestures (swipes up, down, left and right, clockwise and counter-clockwise rotation, and more). Contactless detection at a range of about 5–15 cm. Works reliably even in low light. Fast response for real-time gesture recognition. I²C interface, compatible with MATRIX controllers. Supports 3.3V–5V operating voltage; simple wiring and easy to integrate.",
+    "specs": {
+      "Chinese Name": "MATRIX 手勢感測器(JST)",
+      "Connector": "JST"
+    }
+  },
+  {
+    "code": "MS-017-RJ12",
+    "name": "MATRIX Gesture Sensor(RJ12)",
+    "category": "SENSOR",
+    "subCategory": "IIC",
+    "price": 600,
+    "weight": 200,
+    "moq": 1,
+    "description": "Recognizes 9 basic gestures (swipes up, down, left and right, clockwise and counter-clockwise rotation, and more). Contactless detection at a range of about 5–15 cm. Works reliably even in low light. Fast response for real-time gesture recognition. I²C interface, compatible with MATRIX controllers. Supports 3.3V–5V operating voltage; simple wiring and easy to integrate.",
+    "specs": {
+      "Chinese Name": "MATRIX 手勢感測器(RJ12)",
+      "Connector": "RJ12"
+    }
+  },
+  {
+    "code": "MS-018V2-JST",
+    "name": "MATRIX Line Tracer 10CH Pack V2(JST)",
+    "category": "SENSOR",
+    "subCategory": "IIC",
+    "price": 600,
+    "weight": 200,
+    "moq": 1,
+    "description": "A 10-sensor array gives finer line tracking than a conventional line-following module. The built-in algorithm automatically identifies left turns, right turns, T-junctions and crossroads. Calculates line width and records the last sensor position before the line was lost. Designed for low power consumption and reliable detection in dim lighting. A built-in CAL calibration button and blue indicator LED let you zero the module to the playing field without writing any code. Supports 3.3V–5V operating voltage; simple wiring and easy to integrate.",
+    "specs": {
+      "Chinese Name": "MATRIX 陣列循線感測器V2(JST)",
+      "Connector": "JST"
+    }
+  },
+  {
+    "code": "MS-018V2-RJ12",
+    "name": "MATRIX Line Tracer 10CH Pack (RJ12)",
+    "category": "SENSOR",
+    "subCategory": "IIC",
+    "price": 600,
+    "weight": 200,
+    "moq": 1,
+    "description": "A 10-sensor array gives finer line tracking than a conventional line-following module. The built-in algorithm automatically identifies left turns, right turns, T-junctions and crossroads. Calculates line width and records the last sensor position before the line was lost. Designed for low power consumption and reliable detection in dim lighting. A built-in CAL calibration button and blue indicator LED let you zero the module to the playing field without writing any code. Supports 3.3V–5V operating voltage; simple wiring and easy to integrate.",
+    "specs": {
+      "Chinese Name": "MATRIX 陣列循線感測器V2(RJ12)",
+      "Connector": "RJ12"
+    }
+  },
+  {
+    "code": "MS-010V2-JST",
+    "name": "M-Vision Cam with Type-C Cable Pack V2(JST)",
+    "category": "SENSOR",
+    "subCategory": "UART",
+    "price": 3300,
+    "weight": 200,
+    "moq": 1,
+    "description": "M-Vision Cam is a smart camera module with on-board image processing — it analyzes images and returns results on its own, with no external computer required. Its built-in microcontroller runs a range of recognition tasks, including simple face detection and QR code scanning and decoding.",
+    "specs": {
+      "Chinese Name": "M-Vision 鏡頭包 V2(JST)",
+      "Connector": "JST",
+      "Color Blob Detection": "Locates a specific color and tracks its position",
+      "Line Detection": "Detects black lines or edges on the ground for line following",
+      "Shape Recognition": "Detects common shapes such as circles and rectangles",
+      "AprilTag Recognition": "Reads visual tag IDs accurately"
+    }
+  },
+  {
+    "code": "MS-010V2-RJ12",
+    "name": "M-Vision Cam with Type-C Cable Pack V2(RJ12)",
+    "category": "SENSOR",
+    "subCategory": "UART",
+    "price": 3300,
+    "weight": 200,
+    "moq": 1,
+    "description": "M-Vision Cam is a smart camera module with on-board image processing — it analyzes images and returns results on its own, with no external computer required. Its built-in microcontroller runs a range of recognition tasks, including simple face detection and QR code scanning and decoding.",
+    "specs": {
+      "Chinese Name": "M-Vision 鏡頭包 V2(RJ12)",
+      "Connector": "RJ12",
+      "Color Blob Detection": "Locates a specific color and tracks its position",
+      "Line Detection": "Detects black lines or edges on the ground for line following",
+      "Shape Recognition": "Detects common shapes such as circles and rectangles",
+      "AprilTag Recognition": "Reads visual tag IDs accurately"
+    }
+  },
+  {
+    "code": "MMRC-MG90S",
+    "name": "MATRIX Micro Servo with metal gear box",
+    "category": "MOTOR",
+    "subCategory": "SERVO",
+    "price": 200,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "MATRIX 金屬齒輪微型伺服馬達 (單 顆）",
+      "Operating Voltage": "4.8V–6V",
+      "No-Load Speed": "0.12 sec/60° · 0.09 sec/60°",
+      "Stall Current": "750 mA ±10% · 860 mA ±10%",
+      "Stall Torque": "1.8 kg·cm · 2.0 kg·cm",
+      "No-Load Current": "90 mA",
+      "Operating Angle": "180°",
+      "Notes": "Single motor"
+    }
+  },
+  {
+    "code": "MMRC-MG90S-BK",
+    "name": "MATRIX Micro Servo with metal gear box & Bracket & Horn",
+    "category": "MOTOR",
+    "subCategory": "SERVO",
+    "price": 350,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "MATRIX 金屬齒輪微型伺服馬達附支 架、舵盤",
+      "Operating Voltage": "4.8V–6V",
+      "No-Load Speed": "0.12 sec/60° · 0.09 sec/60°",
+      "Stall Current": "750 mA ±10% · 860 mA ±10%",
+      "Stall Torque": "1.8 kg·cm · 2.0 kg·cm",
+      "No-Load Current": "90 mA",
+      "Operating Angle": "180°",
+      "Notes": "Includes motor bracket and servo horn"
+    }
+  },
+  {
+    "code": "MRC-MG15-180",
+    "name": "MATRIX RC Servo with metal gear box",
+    "category": "MOTOR",
+    "subCategory": "SERVO",
+    "price": 800,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "MATRIX 金屬齒輪伺服馬達 (單顆）",
+      "Operating Voltage": "5V–8.4V",
+      "Operating Speed": "0.15–0.18 sec/60°",
+      "No-Load Current": "300–480 mA",
+      "Stall Torque": "25–26.5 kg·cm",
+      "Operating Angle": "180°",
+      "Notes": "Single motor"
+    }
+  },
+  {
+    "code": "MRC-MG15-180-BK",
+    "name": "MATRIX RC Servo with metal gear box & Brackets & Horn",
+    "category": "MOTOR",
+    "subCategory": "SERVO",
+    "price": 850,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "MATRIX 金屬齒輪伺服馬達附支架、 舵盤",
+      "Operating Voltage": "5V–8.4V",
+      "Operating Speed": "0.15–0.18 sec/60°",
+      "No-Load Current": "300–480 mA",
+      "Stall Torque": "25–26.5 kg·cm",
+      "Operating Angle": "180°",
+      "Notes": "Includes motor bracket and servo horn"
+    }
+  },
+  {
+    "code": "MRC-MG996R",
+    "name": "MATRIX RC Servo with metal gear box",
+    "category": "MOTOR",
+    "subCategory": "SERVO",
+    "price": 400,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "MATRIX 金屬齒輪伺服馬達 (單顆）",
+      "Operating Voltage": "4.8V–6V",
+      "No-Load Speed": "0.18 sec/60° · 0.15 sec/60°",
+      "Stall Current": "160 mA ±10% · 170 mA ±10%",
+      "Stall Torque": "9 kg·cm · 13 kg·cm",
+      "No-Load Current": "1100 mA ±10% · 1300 mA ±10%",
+      "Operating Angle": "360°",
+      "Notes": "Single motor"
+    }
+  },
+  {
+    "code": "MRC-TB2-180-2P",
+    "name": "MATRIX RC Servo with Technic Brick Form 2-Pack",
+    "category": "MOTOR",
+    "subCategory": "SERVO",
+    "price": 1150,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "MATRIX 科技磚伺服馬達2入組",
+      "Operating Voltage": "6.0–9.0V (rated 7.4V)",
+      "No-Load Speed": "110±10rpm at 7.4V",
+      "Stall Current": "7.4V ≦1.0A",
+      "No-Load Current": "≦150aM at 7.4V",
+      "Notes": "Sold as a set of 2"
+    }
+  },
+  {
+    "code": "METT-MG001",
+    "name": "MATRIX TT Encoder Motor with metal gear box",
+    "category": "MOTOR",
+    "subCategory": "TT",
+    "price": 600,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "MATRIX TT 金屬齒輪編碼器馬達",
+      "Working Voltage": "3V–12V",
+      "No-Load Speed": "213 RPM (at 6V)",
+      "Gear Ratio": "1:90",
+      "Notes": "Single motor"
+    }
+  },
+  {
+    "code": "METT-MG001-BK",
+    "name": "MATRIX TT Encoder Motor with metal gear box & Brackets (1 Pair)",
+    "category": "MOTOR",
+    "subCategory": "TT",
+    "price": 1300,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "MATRIX TT 金屬齒輪編碼器馬達附 支架 (左右一組)",
+      "Working Voltage": "3V–12V",
+      "No-Load Speed": "213 RPM (at 6V)",
+      "Gear Ratio": "1:90",
+      "Notes": "Set of 2 motors with brackets"
+    }
+  },
+  {
+    "code": "MTT-MG001",
+    "name": "MATRIX TT Motor with metal gear box",
+    "category": "MOTOR",
+    "subCategory": "TT",
+    "price": 400,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "MATRIX TT 金屬齒輪馬達 (單顆）",
+      "Rated Voltage": "DC 4.5V; current ≦0.3A",
+      "No-Load Speed": "130 RPM ±10%",
+      "Working Voltage Range": "DC 3V–6V; gear ratio 1:55",
+      "Notes": "Single motor"
+    }
+  },
+  {
+    "code": "MTT-MG001-BK",
+    "name": "MATRIX TT Motor with metal gear box & Brackets (1 Pair)",
+    "category": "MOTOR",
+    "subCategory": "TT",
+    "price": 900,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "MATRIX TT 金屬齒輪馬達附支架 (左 右一組)",
+      "Rated Voltage": "DC 4.5V; current ≦0.3A",
+      "No-Load Speed": "130 RPM ±10%",
+      "Working Voltage Range": "DC 3V–6V; gear ratio 1:55",
+      "Notes": "Set of 2 motors with brackets"
+    }
+  },
+  {
+    "code": "MTT-SG001",
+    "name": "MATRIX TT Motor",
+    "category": "MOTOR",
+    "subCategory": "TT",
+    "price": 200,
+    "weight": 200,
+    "moq": 1,
+    "description": "The dual-shaft motor has a shaft on both sides of the body, so an encoder disc can be fitted — a single-shaft motor cannot take one.",
+    "specs": {
+      "Chinese Name": "MATRIX TT 齒輪馬達 (單顆）",
+      "Motor Weight": "30 g",
+      "Working Voltage": "6V–7.2V",
+      "No-Load Speed": "50-250 RPM",
+      "Notes": "Single motor"
+    }
+  },
+  {
+    "code": "MTT-SG001-BK",
+    "name": "MATRIX TT Motor with Brackets (1 Pair)",
+    "category": "MOTOR",
+    "subCategory": "TT",
+    "price": 400,
+    "weight": 200,
+    "moq": 1,
+    "description": "The dual-shaft motor has a shaft on both sides of the body, so an encoder disc can be fitted — a single-shaft motor cannot take one.",
+    "specs": {
+      "Chinese Name": "MATRIX TT 齒輪馬達附支架 (左右一 組)",
+      "Motor Weight": "30 g",
+      "Working Voltage": "6V–7.2V",
+      "No-Load Speed": "50-250 RPM",
+      "Notes": "Set of 2 motors with brackets"
+    }
+  },
+  {
+    "code": "07-0001",
+    "name": "Micro Servo Flanged Plate",
+    "category": "BRACKET & ACCESSORY",
+    "price": 120,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "M-MG90S 微型伺服馬達支架",
+      "Notes": "Pack of 1"
+    }
+  },
+  {
+    "code": "07-0009",
+    "name": "RC Servo Bracket",
+    "category": "BRACKET & ACCESSORY",
+    "price": 50,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "伺服馬達支架",
+      "Notes": "Pack of 1"
+    }
+  },
+  {
+    "code": "07-0005",
+    "name": "Motor Plate - Double Flanged - 5 x 7 Hole",
+    "category": "BRACKET & ACCESSORY",
+    "price": 50,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "雙折邊馬達支架 - 5x7孔",
+      "Length": "64mm",
+      "Width": "48mm",
+      "Thickness": "1.6mm",
+      "Height": "14.3mm",
+      "Tolerance": "±0.7mm",
+      "Notes": "Pack of 1"
+    }
+  },
+  {
+    "code": "07-0011",
+    "name": "DC Motor Hub Bracket",
+    "category": "BRACKET & ACCESSORY",
+    "price": 220,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "DC 馬達支架",
+      "Notes": "Pack of 1"
+    }
+  },
+  {
+    "code": "07-2331",
+    "name": "Motor Plate - Double Flanged - 23 x 31 Hole",
+    "category": "BRACKET & ACCESSORY",
+    "price": 400,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "雙折邊馬達支架 - 23x31孔",
+      "Length": "256mm",
+      "Width": "192mm",
+      "Thickness": "2mm",
+      "Hole Diameter": "30.2mm",
+      "Notes": "Pack of 1"
+    }
+  },
+  {
+    "code": "07-0004",
+    "name": "Bearing Beam - 5 Hole",
+    "category": "BRACKET & ACCESSORY",
+    "price": 50,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "培林接合樑 - 金色5孔",
+      "Length": "40mm",
+      "Width": "9.6mm",
+      "Thickness": "1.6mm",
+      "Holes": "5",
+      "Hole Diameter": "4.2mm",
+      "Tolerance": "±0.7mm",
+      "Notes": "Pack of 1"
+    }
+  },
+  {
+    "code": "07-0006",
+    "name": "Servo Horn Wheel Brace - Short",
+    "category": "BRACKET & ACCESSORY",
+    "price": 50,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "伺服馬達舵盤拉桿 - 短",
+      "Length": "40mm",
+      "Width": "9.6mm",
+      "Thickness": "1.6mm",
+      "Height": "8mm",
+      "Holes": "2",
+      "Hole Diameter": "4.2mm",
+      "Tolerance": "±0.7mm",
+      "Notes": "Pack of 1"
+    }
+  },
+  {
+    "code": "07-0007",
+    "name": "Servo Horn Wheel Brace - Long",
+    "category": "BRACKET & ACCESSORY",
+    "price": 50,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "伺服馬達舵盤拉桿 - 長",
+      "Length": "88mm",
+      "Width": "9.6mm",
+      "Thickness": "1.6mm",
+      "Height": "48mm",
+      "Holes": "9",
+      "Hole Diameter": "4.2mm",
+      "Tolerance": "±0.7mm",
+      "Notes": "Pack of 1"
+    }
+  },
+  {
+    "code": "07-0008",
+    "name": "TT motor shared bracket (set of left and right) with M3 screw",
+    "category": "BRACKET & ACCESSORY",
+    "price": 150,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "TT馬達共用支架(左右一組) 附M3螺 絲螺帽",
+      "Notes": "Includes 4 × SCREWM3X2.3 screws and 4 × SCREWM3X2.3NI nuts"
+    }
+  },
+  {
+    "code": "01-0003",
+    "name": "L Shaped Beam - 3 Hole",
+    "category": "L SHAPED BEAM",
+    "price": 180,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "L型樑 - 3孔",
+      "Length": "24mm",
+      "Width": "14mm",
+      "Thickness": "1.6mm",
+      "Holes": "6",
+      "Hole Diameter": "4.2mm",
+      "Tolerance": "±0.7mm",
+      "Notes": "Pack of 6"
+    }
+  },
+  {
+    "code": "01-0005",
+    "name": "L Shaped Beam - 5 Hole",
+    "category": "L SHAPED BEAM",
+    "price": 200,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "L型樑 - 5孔",
+      "Length": "40mm",
+      "Width": "14mm",
+      "Thickness": "1.6mm",
+      "Holes": "10",
+      "Hole Diameter": "4.2mm",
+      "Tolerance": "±0.7mm",
+      "Notes": "Pack of 6"
+    }
+  },
+  {
+    "code": "01-0007",
+    "name": "L Shaped Beam - 7 Hole",
+    "category": "L SHAPED BEAM",
+    "price": 220,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "L型樑 - 7孔",
+      "Length": "56mm",
+      "Width": "14mm",
+      "Thickness": "1.6mm",
+      "Holes": "14",
+      "Hole Diameter": "4.2mm",
+      "Tolerance": "±0.7mm",
+      "Notes": "Pack of 6"
+    }
+  },
+  {
+    "code": "01-0009",
+    "name": "L Shaped Beam - 9 Hole",
+    "category": "L SHAPED BEAM",
+    "price": 240,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "L型樑 - 9孔",
+      "Length": "72mm",
+      "Width": "14mm",
+      "Thickness": "1.6mm",
+      "Holes": "18",
+      "Hole Diameter": "4.2mm",
+      "Tolerance": "±0.7mm",
+      "Notes": "Pack of 6"
+    }
+  },
+  {
+    "code": "01-0021",
+    "name": "L Shaped Beam - 21 Hole",
+    "category": "L SHAPED BEAM",
+    "price": 400,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "L型樑 - 21孔",
+      "Length": "168mm",
+      "Width": "14mm",
+      "Thickness": "1.6mm",
+      "Holes": "42",
+      "Hole Diameter": "4.2mm",
+      "Tolerance": "±0.7mm",
+      "Notes": "Pack of 6"
+    }
+  },
+  {
+    "code": "01-0029",
+    "name": "L Shaped Beam - 29 Hole",
+    "category": "L SHAPED BEAM",
+    "price": 500,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "L型樑 - 29孔",
+      "Length": "232mm",
+      "Width": "14mm",
+      "Thickness": "1.6mm",
+      "Holes": "58",
+      "Hole Diameter": "4.2mm",
+      "Tolerance": "±0.7mm",
+      "Notes": "Pack of 6"
+    }
+  },
+  {
+    "code": "01-0037",
+    "name": "L Shaped Beam - 37 Hole",
+    "category": "L SHAPED BEAM",
+    "price": 600,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "L型樑 - 37孔",
+      "Length": "296mm",
+      "Width": "14mm",
+      "Thickness": "1.6mm",
+      "Holes": "74",
+      "Hole Diameter": "4.2mm",
+      "Tolerance": "±0.7mm",
+      "Notes": "Pack of 6"
+    }
+  },
+  {
+    "code": "01-0313",
+    "name": "L Shaped Beam XL - 13 Hole",
+    "category": "L SHAPED BEAM",
+    "price": 500,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "XL L型樑 - 13孔",
+      "Length": "104mm",
+      "Width": "30.3mm",
+      "Thickness": "1.6mm",
+      "Holes": "78",
+      "Hole Diameter": "4.2mm",
+      "Tolerance": "±0.7mm",
+      "Notes": "Pack of 6"
+    }
+  },
+  {
+    "code": "01-0317",
+    "name": "L Shaped Beam XL - 17 Hole",
+    "category": "L SHAPED BEAM",
+    "price": 550,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "XL L型樑 - 17孔",
+      "Length": "136mm",
+      "Width": "30.3mm",
+      "Thickness": "1.6mm",
+      "Holes": "102",
+      "Hole Diameter": "4.2mm",
+      "Tolerance": "±0.7mm",
+      "Notes": "Pack of 6"
+    }
+  },
+  {
+    "code": "01-0321",
+    "name": "L Shaped Beam XL - 21 Hole",
+    "category": "L SHAPED BEAM",
+    "price": 700,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "XL L型樑 - 21孔",
+      "Length": "168mm",
+      "Width": "30.3mm",
+      "Thickness": "1.6mm",
+      "Holes": "126",
+      "Hole Diameter": "4.2mm",
+      "Tolerance": "±0.7mm",
+      "Notes": "Pack of 6"
+    }
+  },
+  {
+    "code": "01-0329",
+    "name": "L Shaped Beam XL - 29 Hole",
+    "category": "L SHAPED BEAM",
+    "price": 900,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "XL L型樑 - 29孔",
+      "Length": "232mm",
+      "Width": "30.3mm",
+      "Thickness": "1.6mm",
+      "Holes": "174",
+      "Hole Diameter": "4.2mm",
+      "Tolerance": "±0.7mm",
+      "Notes": "Pack of 6"
+    }
+  },
+  {
+    "code": "01-0337",
+    "name": "L Shaped Beam XL - 37 Hole",
+    "category": "L SHAPED BEAM",
+    "price": 950,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "XL L型樑 - 37孔",
+      "Length": "296mm",
+      "Width": "30.3mm",
+      "Thickness": "1.6mm",
+      "Holes": "222",
+      "Hole Diameter": "4.2mm",
+      "Tolerance": "±0.7mm",
+      "Notes": "Pack of 6"
+    }
+  },
+  {
+    "code": "01-0349",
+    "name": "L Shaped Beam XL - 49 Hole",
+    "category": "L SHAPED BEAM",
+    "price": 1250,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "XL L型樑 - 49孔",
+      "Length": "392mm",
+      "Width": "30.3mm",
+      "Thickness": "1.6mm",
+      "Holes": "294",
+      "Hole Diameter": "4.2mm",
+      "Tolerance": "±0.7mm",
+      "Notes": "Pack of 6"
+    }
+  },
+  {
+    "code": "02-0003",
+    "name": "Flat Beam - 3 Hole",
+    "category": "FLAT BEAM",
+    "price": 140,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "平樑 - 3孔",
+      "Length": "24mm",
+      "Width": "10mm",
+      "Thickness": "1.6mm",
+      "Holes": "3",
+      "Hole Diameter": "4.2mm",
+      "Tolerance": "±0.7mm",
+      "Notes": "Pack of 6"
+    }
+  },
+  {
+    "code": "02-0005",
+    "name": "Flat Beam - 5 Hole",
+    "category": "FLAT BEAM",
+    "price": 160,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "平樑 - 5孔",
+      "Length": "40mm",
+      "Width": "10mm",
+      "Thickness": "1.6mm",
+      "Holes": "5",
+      "Hole Diameter": "4.2mm",
+      "Tolerance": "±0.7mm",
+      "Notes": "Pack of 6"
+    }
+  },
+  {
+    "code": "02-0007",
+    "name": "Flat Beam - 7 Hole",
+    "category": "FLAT BEAM",
+    "price": 180,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "平樑 - 7孔",
+      "Length": "56mm",
+      "Width": "10mm",
+      "Thickness": "1.6mm",
+      "Holes": "7",
+      "Hole Diameter": "4.2mm",
+      "Tolerance": "±0.7mm",
+      "Notes": "Pack of 6"
+    }
+  },
+  {
+    "code": "02-0009",
+    "name": "Flat Beam - 9 Hole",
+    "category": "FLAT BEAM",
+    "price": 200,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "平樑 - 9孔",
+      "Length": "72mm",
+      "Width": "10mm",
+      "Thickness": "1.6mm",
+      "Holes": "9",
+      "Hole Diameter": "4.2mm",
+      "Tolerance": "±0.7mm",
+      "Notes": "Pack of 6"
+    }
+  },
+  {
+    "code": "02-0011",
+    "name": "Flat Beam - 11 Hole",
+    "category": "FLAT BEAM",
+    "price": 220,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "平樑 - 11孔",
+      "Length": "88mm",
+      "Width": "10mm",
+      "Thickness": "1.6mm",
+      "Holes": "11",
+      "Hole Diameter": "4.2mm",
+      "Tolerance": "±0.7mm",
+      "Notes": "Pack of 6"
+    }
+  },
+  {
+    "code": "04-0303",
+    "name": "Gusset Plate 3 x 3 Hole",
+    "category": "GUSSET PLATE",
+    "price": 150,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "接合平板 - 3x3孔",
+      "Length": "24mm",
+      "Width": "24mm",
+      "Thickness": "1.6mm",
+      "Holes": "9",
+      "Hole Diameter": "4.2mm",
+      "Tolerance": "±0.7mm",
+      "Notes": "Pack of 6"
+    }
+  },
+  {
+    "code": "04-0305",
+    "name": "Gusset Plate 3 x 5 Hole",
+    "category": "GUSSET PLATE",
+    "price": 180,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "接合平板 - 3x5孔",
+      "Length": "24mm",
+      "Width": "40mm",
+      "Thickness": "1.6mm",
+      "Holes": "15",
+      "Hole Diameter": "4.2mm",
+      "Tolerance": "±0.7mm",
+      "Notes": "Pack of 6"
+    }
+  },
+  {
+    "code": "04-0307",
+    "name": "Gusset Plate 3 x 7 Hole",
+    "category": "GUSSET PLATE",
+    "price": 200,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "接合平板 - 3x7孔",
+      "Length": "24mm",
+      "Width": "56mm",
+      "Thickness": "1.6mm",
+      "Holes": "21",
+      "Hole Diameter": "4.2mm",
+      "Tolerance": "±0.7mm",
+      "Notes": "Pack of 6"
+    }
+  },
+  {
+    "code": "04-0309",
+    "name": "Gusset Plate 3 x 9 Hole",
+    "category": "GUSSET PLATE",
+    "price": 220,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "接合平板 - 3x9孔",
+      "Length": "24mm",
+      "Width": "72mm",
+      "Thickness": "1.6mm",
+      "Holes": "27",
+      "Hole Diameter": "4.2mm",
+      "Tolerance": "±0.7mm",
+      "Notes": "Pack of 6"
+    }
+  },
+  {
+    "code": "04-0505",
+    "name": "Gusset Plate 5 x 5 Hole",
+    "category": "GUSSET PLATE",
+    "price": 240,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "接合平板 - 5x5孔",
+      "Length": "40mm",
+      "Width": "40mm",
+      "Thickness": "1.6mm",
+      "Holes": "25",
+      "Hole Diameter": "4.2mm",
+      "Tolerance": "±0.7mm",
+      "Notes": "Pack of 6"
+    }
+  },
+  {
+    "code": "04-0921",
+    "name": "Gusset Plate 9 x 21 Hole",
+    "category": "GUSSET PLATE",
+    "price": 800,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "接合平板 - 9x21孔",
+      "Length": "72mm",
+      "Width": "168mm",
+      "Thickness": "1.6mm",
+      "Holes": "189",
+      "Hole Diameter": "4.2mm",
+      "Tolerance": "±0.7mm",
+      "Notes": "Pack of 6"
+    }
+  },
+  {
+    "code": "06-0005",
+    "name": "C Shaped Beam - 5 Hole",
+    "category": "C SHAPED BEAM",
+    "price": 300,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "C型樑 - 5孔",
+      "Length": "40mm",
+      "Width": "32mm",
+      "Thickness": "1.6mm",
+      "Height": "14.3mm",
+      "Holes": "25",
+      "Hole Diameter": "4.2mm",
+      "Tolerance": "±0.7mm",
+      "Notes": "Pack of 6"
+    }
+  },
+  {
+    "code": "06-0009",
+    "name": "C Shaped Beam - 9 Hole",
+    "category": "C SHAPED BEAM",
+    "price": 320,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "C型樑 - 9孔",
+      "Length": "72mm",
+      "Width": "32mm",
+      "Thickness": "1.6mm",
+      "Height": "14.3mm",
+      "Holes": "45",
+      "Hole Diameter": "4.2mm",
+      "Tolerance": "±0.7mm",
+      "Notes": "Pack of 6"
+    }
+  },
+  {
+    "code": "06-0013",
+    "name": "C Shaped Beam - 13 Hole",
+    "category": "C SHAPED BEAM",
+    "price": 600,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "C型樑 - 13孔",
+      "Length": "104mm",
+      "Width": "32mm",
+      "Thickness": "1.6mm",
+      "Height": "14.3mm",
+      "Holes": "65",
+      "Hole Diameter": "4.2mm",
+      "Tolerance": "±0.7mm",
+      "Notes": "Pack of 6"
+    }
+  },
+  {
+    "code": "06-0017",
+    "name": "C Shaped Beam - 17 Hole",
+    "category": "C SHAPED BEAM",
+    "price": 650,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "C型樑 - 17孔",
+      "Length": "136mm",
+      "Width": "32mm",
+      "Thickness": "1.6mm",
+      "Height": "14.3mm",
+      "Holes": "85",
+      "Hole Diameter": "4.2mm",
+      "Tolerance": "±0.7mm",
+      "Notes": "Pack of 6"
+    }
+  },
+  {
+    "code": "06-0021",
+    "name": "C Shaped Beam - 21 Hole",
+    "category": "C SHAPED BEAM",
+    "price": 700,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "C型樑 - 21孔",
+      "Length": "168mm",
+      "Width": "32mm",
+      "Thickness": "1.6mm",
+      "Height": "14.3mm",
+      "Holes": "105",
+      "Hole Diameter": "4.2mm",
+      "Tolerance": "±0.7mm",
+      "Notes": "Pack of 6"
+    }
+  },
+  {
+    "code": "06-0029",
+    "name": "C Shaped Beam - 29 Hole",
+    "category": "C SHAPED BEAM",
+    "price": 750,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "C型樑 - 29孔",
+      "Length": "232mm",
+      "Width": "32mm",
+      "Thickness": "1.6mm",
+      "Height": "14.3mm",
+      "Holes": "145",
+      "Hole Diameter": "4.2mm",
+      "Tolerance": "±0.7mm",
+      "Notes": "Pack of 6"
+    }
+  },
+  {
+    "code": "06-0037",
+    "name": "C Shaped Beam - 37 Hole",
+    "category": "C SHAPED BEAM",
+    "price": 1100,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "C型樑 - 37孔",
+      "Length": "296mm",
+      "Width": "32mm",
+      "Thickness": "1.6mm",
+      "Height": "14.3mm",
+      "Holes": "185",
+      "Hole Diameter": "4.2mm",
+      "Tolerance": "±0.7mm",
+      "Notes": "Pack of 6"
+    }
+  },
+  {
+    "code": "06-0049",
+    "name": "C Shaped Beam - 49 Hole",
+    "category": "C SHAPED BEAM",
+    "price": 1200,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "C型樑 - 49孔",
+      "Length": "392mm",
+      "Width": "32mm",
+      "Thickness": "1.6mm",
+      "Height": "14.3mm",
+      "Holes": "245",
+      "Hole Diameter": "4.2mm",
+      "Tolerance": "±0.7mm",
+      "Notes": "Pack of 6"
+    }
+  },
+  {
+    "code": "06-0339",
+    "name": "C Shaped Beam XL - 39 Hole",
+    "category": "C SHAPED BEAM",
+    "price": 1300,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "XL C型樑 - 39孔",
+      "Length": "312mm",
+      "Width": "32mm",
+      "Thickness": "1.6mm",
+      "Height": "30.3mm",
+      "Holes": "351",
+      "Hole Diameter": "4.2mm",
+      "Tolerance": "±0.7mm",
+      "Notes": "Pack of 6"
+    }
+  },
+  {
+    "code": "06-0347",
+    "name": "C Shaped Beam XL - 47 Hole",
+    "category": "C SHAPED BEAM",
+    "price": 1400,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "XL C型樑 - 47孔",
+      "Length": "376mm",
+      "Width": "32mm",
+      "Thickness": "1.6mm",
+      "Height": "30.3mm",
+      "Holes": "423",
+      "Hole Diameter": "4.2mm",
+      "Tolerance": "±0.7mm",
+      "Notes": "Pack of 6"
+    }
+  },
+  {
+    "code": "06-2232",
+    "name": "C Shaped Beam XL2 - 232mm",
+    "category": "C SHAPED BEAM",
+    "price": 1500,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "厚2mm XL C型樑 - 232mm",
+      "Length": "232mm",
+      "Width": "48mm",
+      "Thickness": "2mm",
+      "Hole Diameter": "14mm",
+      "Tolerance": "±0.7mm",
+      "Notes": "Pack of 6"
+    }
+  },
+  {
+    "code": "06-2296",
+    "name": "C Shaped Beam XL2 - 296mm",
+    "category": "C SHAPED BEAM",
+    "price": 1800,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "厚2mm XL C型樑 - 296mm",
+      "Length": "296mm",
+      "Width": "48mm",
+      "Thickness": "2mm",
+      "Hole Diameter": "14mm",
+      "Tolerance": "±0.7mm",
+      "Notes": "Pack of 6"
+    }
+  },
+  {
+    "code": "06-2424",
+    "name": "C Shaped Beam XL2 - 424mm",
+    "category": "C SHAPED BEAM",
+    "price": 2000,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "厚2mm XL C型樑 - 424mm",
+      "Length": "424mm",
+      "Width": "48mm",
+      "Thickness": "2mm",
+      "Hole Diameter": "14mm",
+      "Tolerance": "±0.7mm",
+      "Notes": "Pack of 6"
+    }
+  },
+  {
+    "code": "03-0001",
+    "name": "Beam Joiner - 1D Straight",
+    "category": "BEAM JOINER",
+    "price": 280,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "樑接合件 - 1D",
+      "Length": "72mm",
+      "Width": "14mm",
+      "Thickness": "1.6mm",
+      "Holes": "18",
+      "Hole Diameter": "4.2mm",
+      "Tolerance": "±0.7mm",
+      "Notes": "Pack of 6"
+    }
+  },
+  {
+    "code": "03-0002",
+    "name": "Beam Joiner - 2D Right Angle",
+    "category": "BEAM JOINER",
+    "price": 300,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "樑接合件 - 2D",
+      "Length": "34.4mm",
+      "Width": "11.2mm",
+      "Thickness": "1.6mm",
+      "Holes": "15",
+      "Hole Diameter": "4.2mm",
+      "Tolerance": "±0.7mm",
+      "Notes": "Pack of 6"
+    }
+  },
+  {
+    "code": "03-0003",
+    "name": "Beam Joiner - 3D Right Angle",
+    "category": "BEAM JOINER",
+    "price": 320,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "樑接合件 - 3D",
+      "Length": "34.4mm",
+      "Width": "11.2mm",
+      "Thickness": "1.6mm",
+      "Height": "34.4mm",
+      "Holes": "21",
+      "Hole Diameter": "4.2mm",
+      "Tolerance": "±0.7mm",
+      "Notes": "Pack of 6"
+    }
+  },
+  {
+    "code": "03-0301",
+    "name": "Beam Joiner XL - 1D Straight",
+    "category": "BEAM JOINER",
+    "price": 350,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "XL 樑接合件 - 1D",
+      "Length": "72mm",
+      "Width": "27.2mm",
+      "Thickness": "1.6mm",
+      "Height": "27.2mm",
+      "Holes": "54",
+      "Hole Diameter": "4.2mm",
+      "Tolerance": "±0.7mm",
+      "Notes": "Pack of 6"
+    }
+  },
+  {
+    "code": "03-0302",
+    "name": "Beam Joiner XL - 2D Right Angle",
+    "category": "BEAM JOINER",
+    "price": 500,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "XL 樑接合件 - 2D",
+      "Length": "74.4mm",
+      "Width": "27.2mm",
+      "Thickness": "1.6mm",
+      "Height": "74.4mm",
+      "Holes": "99",
+      "Hole Diameter": "4.2mm",
+      "Tolerance": "±0.7mm",
+      "Notes": "Pack of 6"
+    }
+  },
+  {
+    "code": "03-0303",
+    "name": "Beam Joiner XL - 3D Right Angle",
+    "category": "BEAM JOINER",
+    "price": 800,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "XL 樑接合件 - 3D",
+      "Length": "74.4mm",
+      "Width": "74.4mm",
+      "Thickness": "1.6mm",
+      "Height": "74.4mm",
+      "Holes": "135",
+      "Hole Diameter": "4.2mm",
+      "Tolerance": "±0.7mm",
+      "Notes": "Pack of 6"
+    }
+  },
+  {
+    "code": "17-0709",
+    "name": "Triangle Plate 6-8-10 Hole",
+    "category": "SPECIAL PLATE",
+    "price": 210,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "6-8-10 三角平板",
+      "Side Lengths": "87mm*72mm*55mm",
+      "Notes": "Pack of 6"
+    }
+  },
+  {
+    "code": "05-0303",
+    "name": "Flanged Plate 3 x 3 Hole",
+    "category": "FLANGED PLATE",
+    "price": 200,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "折邊平板 - 3x3孔",
+      "Length": "32mm",
+      "Width": "24mm",
+      "Thickness": "1.6mm",
+      "Height": "14.3mm",
+      "Holes": "15",
+      "Hole Diameter": "4.2mm",
+      "Tolerance": "±0.7mm",
+      "Notes": "Pack of 6"
+    }
+  },
+  {
+    "code": "05-0305",
+    "name": "Flanged Plate 3 x 5 Hole",
+    "category": "FLANGED PLATE",
+    "price": 400,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "折邊平板 - 3x5孔",
+      "Length": "48mm",
+      "Width": "24mm",
+      "Thickness": "1.6mm",
+      "Height": "14.3mm",
+      "Holes": "21",
+      "Hole Diameter": "4.2mm",
+      "Tolerance": "±0.7mm",
+      "Notes": "Pack of 6"
+    }
+  },
+  {
+    "code": "05-0307",
+    "name": "Flanged Plate 3 x 7 Hole",
+    "category": "FLANGED PLATE",
+    "price": 215,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "折邊平板 - 3x7孔",
+      "Length": "64mm",
+      "Width": "24mm",
+      "Thickness": "1.6mm",
+      "Height": "14.3mm",
+      "Holes": "27",
+      "Hole Diameter": "4.2mm",
+      "Tolerance": "±0.7mm",
+      "Notes": "Pack of 6"
+    }
+  },
+  {
+    "code": "05-0309",
+    "name": "Flanged Plate 3 x 9 Hole",
+    "category": "FLANGED PLATE",
+    "price": 275,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "折邊平板 - 3x9孔",
+      "Length": "80mm",
+      "Width": "24mm",
+      "Thickness": "1.6mm",
+      "Height": "14.3mm",
+      "Holes": "33",
+      "Hole Diameter": "4.2mm",
+      "Tolerance": "±0.7mm",
+      "Notes": "Pack of 6"
+    }
+  },
+  {
+    "code": "10-0028",
+    "name": "4mm D Shaft - 28mm",
+    "category": "D SHAFT",
+    "price": 40,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "4mm D型軸 - 28mm",
+      "Length": "28mm",
+      "Tolerance": "±0.7mm",
+      "Notes": "Pack of 4"
+    }
+  },
+  {
+    "code": "10-0052",
+    "name": "4mm D Shaft - 52mm",
+    "category": "D SHAFT",
+    "price": 80,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "4mm D型軸 - 52mm",
+      "Length": "52mm",
+      "Tolerance": "±0.7mm",
+      "Notes": "Pack of 4"
+    }
+  },
+  {
+    "code": "10-0080",
+    "name": "4mm D Shaft - 80mm",
+    "category": "D SHAFT",
+    "price": 120,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "4mm D型軸 - 80mm",
+      "Length": "80mm",
+      "Tolerance": "±0.7mm",
+      "Notes": "Pack of 4"
+    }
+  },
+  {
+    "code": "10-0132",
+    "name": "4mm D Shaft - 132mm",
+    "category": "D SHAFT",
+    "price": 180,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "4mm D型軸 - 132mm",
+      "Length": "132mm",
+      "Tolerance": "±0.7mm",
+      "Notes": "Pack of 4"
+    }
+  },
+  {
+    "code": "10-0160",
+    "name": "4mm D Shaft - 160mm",
+    "category": "D SHAFT",
+    "price": 220,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "4mm D型軸 - 160mm",
+      "Length": "160mm",
+      "Tolerance": "±0.7mm",
+      "Notes": "Pack of 4"
+    }
+  },
+  {
+    "code": "10-0164",
+    "name": "4mm D Shaft - 164mm",
+    "category": "D SHAFT",
+    "price": 220,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "4mm D型軸 - 164mm",
+      "Length": "164mm",
+      "Tolerance": "±0.7mm",
+      "Notes": "Pack of 4"
+    }
+  },
+  {
+    "code": "10-0280",
+    "name": "4mm D Shaft - 280mm",
+    "category": "D SHAFT",
+    "price": 400,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "4mm D型軸 - 280mm",
+      "Length": "280mm",
+      "Tolerance": "±0.7mm",
+      "Notes": "Pack of 4"
+    }
+  },
+  {
+    "code": "10-6030",
+    "name": "6mm D Shaft - 30mm",
+    "category": "D SHAFT",
+    "price": 400,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "6mm D型軸 - 30mm",
+      "Notes": "Pack of 4"
+    }
+  },
+  {
+    "code": "10-6050",
+    "name": "6mm D Shaft - 50mm",
+    "category": "D SHAFT",
+    "price": 700,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "6mm D型軸 - 50mm",
+      "Notes": "Pack of 4"
+    }
+  },
+  {
+    "code": "10-6080",
+    "name": "6mm D Shaft - 80mm",
+    "category": "D SHAFT",
+    "price": 1000,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "6mm D型軸 - 80mm",
+      "Notes": "Pack of 4"
+    }
+  },
+  {
+    "code": "10-6160",
+    "name": "6mm D Shaft - 160mm",
+    "category": "D SHAFT",
+    "price": 1500,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "6mm D型軸 - 160mm",
+      "Notes": "Pack of 4"
+    }
+  },
+  {
+    "code": "10-6300",
+    "name": "6mm D Shaft - 300mm",
+    "category": "D SHAFT",
+    "price": 2000,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "6mm D型軸 - 300mm",
+      "Notes": "Pack of 4"
+    }
+  },
+  {
+    "code": "08-0019",
+    "name": "4mm axle collar with M4 set screw",
+    "category": "JOINER & COLLAR",
+    "price": 120,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "M4軸套 4mm孔",
+      "Diameter": "11mm",
+      "Height": "8mm",
+      "Shaft": "4mm",
+      "Tolerance": "±0.7mm",
+      "Set Screw": "M4",
+      "Notes": "Pack of 4"
+    }
+  },
+  {
+    "code": "08-0021",
+    "name": "4mm to 4mm coupling with M4 set screw",
+    "category": "JOINER & COLLAR",
+    "price": 120,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "M4軸延長器 4mm-4mm",
+      "Diameter": "11mm",
+      "Height": "15mm",
+      "Shaft": "4mm",
+      "Tolerance": "±0.7mm",
+      "Set Screw": "M4",
+      "Notes": "Pack of 4"
+    }
+  },
+  {
+    "code": "08-0020",
+    "name": "4mm to 6mm Adaptor with M4 set screw",
+    "category": "JOINER & COLLAR",
+    "price": 120,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "M4軸轉接器 4mm-6mm",
+      "Diameter": "11mm",
+      "Height": "15mm",
+      "Shaft": "6mm",
+      "Tolerance": "±0.7mm",
+      "Set Screw": "M4",
+      "Notes": "Pack of 4"
+    }
+  },
+  {
+    "code": "08-0037",
+    "name": "4mm to TT Adapter",
+    "category": "JOINER & COLLAR",
+    "price": 250,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "M4軸轉接器 4mm-TT馬達",
+      "Notes": "Pack of 4"
+    }
+  },
+  {
+    "code": "08-0032",
+    "name": "6mm axle collar with M4 set screw",
+    "category": "JOINER & COLLAR",
+    "price": 120,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "M4軸套 6mm孔",
+      "Notes": "Pack of 4"
+    }
+  },
+  {
+    "code": "08-0033",
+    "name": "6mm to 6mm coupling with M4 set screw",
+    "category": "JOINER & COLLAR",
+    "price": 200,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "M4軸延長器 6mm-6mm",
+      "Notes": "Pack of 4"
+    }
+  },
+  {
+    "code": "09-0004",
+    "name": "M4 Joiner Block - 3 Hole",
+    "category": "JOINER & COLLAR",
+    "price": 500,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "M4 接合塊 - 3孔",
+      "Notes": "Pack of 4"
+    }
+  },
+  {
+    "code": "08-0006",
+    "name": "4mm Omni Flat Wheel Nut",
+    "category": "HUB",
+    "price": 120,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "平輪螺帽 4mm孔",
+      "Width": "31mm",
+      "Height": "2.4mm",
+      "Shaft": "4mm",
+      "Tolerance": "±0.7mm",
+      "Notes": "Pack of 4"
+    }
+  },
+  {
+    "code": "08-0024",
+    "name": "4mm Omni Thin Wheel with M4 set screw",
+    "category": "HUB",
+    "price": 350,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "M4軸盤 4mm孔",
+      "Width": "31mm",
+      "Height": "8mm",
+      "Shaft": "4mm",
+      "Tolerance": "±0.7mm",
+      "Set Screw": "M4",
+      "Notes": "Pack of 4"
+    }
+  },
+  {
+    "code": "08-0007",
+    "name": "4mm hub with M4 set screw",
+    "category": "HUB",
+    "price": 350,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "M4輪轂 4mm孔",
+      "Width": "21mm",
+      "Height": "9mm",
+      "Shaft": "4mm",
+      "Tolerance": "±0.7mm",
+      "Set Screw": "M4",
+      "Notes": "Pack of 4"
+    }
+  },
+  {
+    "code": "08-0014",
+    "name": "6mm Omni Flat Wheel Nut",
+    "category": "HUB",
+    "price": 120,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "平輪螺帽 6mm孔",
+      "Width": "31mm",
+      "Height": "2.4mm",
+      "Shaft": "6mm",
+      "Tolerance": "±0.7mm",
+      "Notes": "Pack of 4"
+    }
+  },
+  {
+    "code": "08-0013",
+    "name": "6mm Omni thin Wheel",
+    "category": "HUB",
+    "price": 350,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "M4軸盤 6mm孔",
+      "Width": "31mm",
+      "Height": "8mm",
+      "Shaft": "6mm",
+      "Tolerance": "±0.7mm",
+      "Set Screw": "M4",
+      "Notes": "Pack of 4"
+    }
+  },
+  {
+    "code": "08-0008",
+    "name": "6mm hub with M4 set screw",
+    "category": "HUB",
+    "price": 350,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "M4輪轂 6mm孔",
+      "Width": "21mm",
+      "Height": "9mm",
+      "Shaft": "6mm",
+      "Tolerance": "±0.7mm",
+      "Set Screw": "M4",
+      "Notes": "Pack of 4"
+    }
+  },
+  {
+    "code": "08-0039",
+    "name": "6mm Flanged Ball Bearing",
+    "category": "HUB",
+    "price": 1800,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "法籃球轴承 6mm x14mm x5mm",
+      "Notes": "Pack of 4"
+    }
+  },
+  {
+    "code": "08-0015",
+    "name": "4mm x 15mm bearing tube",
+    "category": "BEARING TUBE",
+    "price": 120,
+    "weight": 200,
+    "moq": 2,
+    "specs": {
+      "Chinese Name": "15mm黃銅套筒 孔寬4mm",
+      "Inner Diameter": "4mm",
+      "Outer Diameter": "7mm",
+      "Length": "15mm",
+      "Tolerance": "±0.7mm",
+      "Notes": "Pack of 4"
+    }
+  },
+  {
+    "code": "08-0030",
+    "name": "4mm x 30mm bearing tube",
+    "category": "BEARING TUBE",
+    "price": 200,
+    "weight": 200,
+    "moq": 2,
+    "specs": {
+      "Chinese Name": "30mm黃銅套筒 孔寬4mm",
+      "Inner Diameter": "4mm",
+      "Outer Diameter": "7mm",
+      "Length": "35mm",
+      "Tolerance": "±0.7mm",
+      "Notes": "Pack of 4"
+    }
+  },
+  {
+    "code": "08-0018",
+    "name": "6mm x 15mm bearing tube",
+    "category": "BEARING TUBE",
+    "price": 120,
+    "weight": 200,
+    "moq": 2,
+    "specs": {
+      "Chinese Name": "15mm黃銅套筒 孔寬6mm",
+      "Inner Diameter": "6mm",
+      "Outer Diameter": "7mm",
+      "Length": "15mm",
+      "Tolerance": "±0.7mm",
+      "Notes": "Pack of 4"
+    }
+  },
+  {
+    "code": "08-0017",
+    "name": "6mm x 30mm bearing tube",
+    "category": "BEARING TUBE",
+    "price": 150,
+    "weight": 200,
+    "moq": 2,
+    "specs": {
+      "Chinese Name": "30mm黃銅套筒 孔寬6mm",
+      "Inner Diameter": "6mm",
+      "Outer Diameter": "7mm",
+      "Length": "30mm",
+      "Tolerance": "±0.7mm",
+      "Notes": "Pack of 4"
+    }
+  },
+  {
+    "code": "12-0024",
+    "name": "M4 Gear - 24 Tooth",
+    "category": "GEAR",
+    "price": 900,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "M4 藍色塑膠齒輪 - 24齒",
+      "Teeth": "24",
+      "Height": "15.3",
+      "Diameter": "25.71mm",
+      "Notes": "Pack of 4"
+    }
+  },
+  {
+    "code": "12-0040",
+    "name": "M4 Gear - 40 Tooth",
+    "category": "GEAR",
+    "price": 1200,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "M4 藍色塑膠齒輪 - 40齒",
+      "Teeth": "40",
+      "Height": "15.3",
+      "Diameter": "41.68mm",
+      "Notes": "Pack of 4"
+    }
+  },
+  {
+    "code": "12-0056",
+    "name": "M4 Gear - 56 Tooth",
+    "category": "GEAR",
+    "price": 1500,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "M4 藍色塑膠齒輪 - 56齒",
+      "Teeth": "56",
+      "Height": "15.3",
+      "Diameter": "57.9mm",
+      "Notes": "Pack of 4"
+    }
+  },
+  {
+    "code": "13-0024",
+    "name": "Metal Gear - 24 Tooth",
+    "category": "GEAR",
+    "price": 800,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "金屬齒輪 - 24齒",
+      "Teeth": "24",
+      "Diameter": "25mm",
+      "Notes": "Pack of 4"
+    }
+  },
+  {
+    "code": "13-0040",
+    "name": "Metal Gear - 40 Tooth",
+    "category": "GEAR",
+    "price": 900,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "金屬齒輪 - 40齒",
+      "Teeth": "40",
+      "Diameter": "42mm",
+      "Notes": "Pack of 4"
+    }
+  },
+  {
+    "code": "13-0056",
+    "name": "Metal Gear - 56 Tooth",
+    "category": "GEAR",
+    "price": 1500,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "金屬齒輪 - 56齒",
+      "Teeth": "56",
+      "Diameter": "57.5mm",
+      "Notes": "Pack of 4"
+    }
+  },
+  {
+    "code": "13-0104",
+    "name": "Metal Gear - 104 Tooth",
+    "category": "GEAR",
+    "price": 2500,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "金屬齒輪 - 104齒",
+      "Teeth": "104",
+      "Diameter": "57.5mm",
+      "Notes": "Pack of 4"
+    }
+  },
+  {
+    "code": "25-1X240",
+    "name": "Roller Chain 25 x 240 Link",
+    "category": "CHAIN KIT",
+    "price": 620,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "鏈條#25-1x240 5呎",
+      "Notes": "1 pc"
+    }
+  },
+  {
+    "code": "25-1X480",
+    "name": "Roller Chain 25 x 480 Link",
+    "category": "CHAIN KIT",
+    "price": 1000,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "鏈條#25-1x480 5呎",
+      "Notes": "1 pc"
+    }
+  },
+  {
+    "code": "A025016",
+    "name": "25A Chain Gear - 16 Tooth",
+    "category": "CHAIN KIT",
+    "price": 700,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "25A型 16齒鏈輪",
+      "Notes": "1 pc"
+    }
+  },
+  {
+    "code": "A025024",
+    "name": "25A Chain Gear - 24 Tooth",
+    "category": "CHAIN KIT",
+    "price": 800,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "25A型 24齒鏈輪",
+      "Notes": "1 pc"
+    }
+  },
+  {
+    "code": "A025032",
+    "name": "25A Chain Gear - 32 Tooth",
+    "category": "CHAIN KIT",
+    "price": 1000,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "25A型 32齒鏈輪",
+      "Notes": "1 pc"
+    }
+  },
+  {
+    "code": "2GT-36T",
+    "name": "2GT Synchronous Wheel - 36 Tooth",
+    "category": "SYNCHRONOUS WHEEL",
+    "price": 300,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "2GT型 36齒同步輪槽寬7 內孔6",
+      "Notes": "1 pc"
+    }
+  },
+  {
+    "code": "2GT-852-6",
+    "name": "2GT Synchronous Belt - 852 x 6mm",
+    "category": "SYNCHRONOUS WHEEL",
+    "price": 300,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "2GT型 852mm長 x 6mm寬同步帶",
+      "Notes": "1 pc"
+    }
+  },
+  {
+    "code": "12-0001",
+    "name": "Tooth Belt - 7 Hole",
+    "category": "LINEAR SLIDE",
+    "price": 200,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "塑膠齒帶 - 7孔",
+      "Length": "55mm",
+      "Width": "22.5",
+      "Holes": "14",
+      "Tolerance": "0.5mm",
+      "Notes": "Pack of 6"
+    }
+  },
+  {
+    "code": "12-0002",
+    "name": "Linear Slide - 3 Hole",
+    "category": "LINEAR SLIDE",
+    "price": 250,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "塑膠滑軌 - 3孔",
+      "Length": "23.5mm",
+      "Width": "11",
+      "Holes": "3",
+      "Tolerance": "0.5mm",
+      "Notes": "Pack of 6"
+    }
+  },
+  {
+    "code": "MGN09H",
+    "name": "MG Series 9mm Extended Micro Interchangeable Stainless Steel Linear Guide (350mm)",
+    "category": "LINEAR SLIDE",
+    "price": 3275,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "MG 系列 9mm加長型微小互換性不 銹鋼線性滑軌(350mm) 防塵包裝",
+      "Notes": "1 pc"
+    }
+  },
+  {
+    "code": "MGN15H",
+    "name": "MG Series 15mm Extended Micro Interchangeable Stainless Steel Linear Guide (350mm)",
+    "category": "LINEAR SLIDE",
+    "price": 4545,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "MG 系列 15mm加長型微小互換性不 銹鋼線性滑軌(350mm) 防塵包裝",
+      "Notes": "1 pc"
+    }
+  },
+  {
+    "code": "18-0128",
+    "name": "128mm Leadscrew",
+    "category": "LEADSCREW",
+    "price": 500,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "螺桿 128mm",
+      "Notes": "Pack of 4"
+    }
+  },
+  {
+    "code": "18-0256",
+    "name": "256mm Leadscrew",
+    "category": "LEADSCREW",
+    "price": 600,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "螺桿 256mm",
+      "Notes": "Pack of 4"
+    }
+  },
+  {
+    "code": "18-0001",
+    "name": "Leadscrew Block",
+    "category": "LEADSCREW",
+    "price": 150,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "螺桿固定座 方形螺帽",
+      "Notes": "Pack of 6"
+    }
+  },
+  {
+    "code": "13-0003",
+    "name": "Caster Wheel - 48mm",
+    "category": "WHEEL",
+    "price": 100,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "48mm 滾輪",
+      "Diameter": "48mm",
+      "Notes": "Set of 2"
+    }
+  },
+  {
+    "code": "13-0001",
+    "name": "Wheel - 96mm - M3 Hole",
+    "category": "WHEEL",
+    "price": 900,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "96mm 輪子 - M3孔",
+      "Diameter": "96mm",
+      "Notes": "Set of 2"
+    }
+  },
+  {
+    "code": "13-0009",
+    "name": "Wider Wheel - 79mm",
+    "category": "WHEEL",
+    "price": 600,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "79mm 越野輪",
+      "Overall Diameter": "92mm",
+      "Tire Wall Thickness": "6mm",
+      "Rim Diameter": "79mm",
+      "Tolerance": "0.7mm",
+      "Notes": "Set of 2"
+    }
+  },
+  {
+    "code": "13-0008",
+    "name": "Single Omni Wheel-94mm (1pcs)",
+    "category": "WHEEL",
+    "price": 400,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "萬向輪（單顆）94mm",
+      "Notes": "Single unit"
+    }
+  },
+  {
+    "code": "16-0002",
+    "name": "6mm Omni wheel (2pcs/SET)",
+    "category": "WHEEL",
+    "price": 800,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "萬向輪（兩顆一組）6mm",
+      "Notes": "1 set"
+    }
+  },
+  {
+    "code": "13-0013",
+    "name": "A SET of 100mm 4inch Aluminium mecanum wheel(4pc) rollers + Wheel Hub Assembly 6mm",
+    "category": "WHEEL",
+    "price": 500,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "100mm Aluminium麥克歐姆輪 (4顆 一組)",
+      "Notes": "Set of 4"
+    }
+  },
+  {
+    "code": "13-0014",
+    "name": "A SET of 203mm 8inch Aluminium mecanum wheel(4pc) rollers + Wheel Hub Assembly 6mm",
+    "category": "WHEEL",
+    "price": 6000,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "203mm Aluminium麥克歐姆輪 (4顆 一組)",
+      "Notes": "Set of 4"
+    }
+  },
+  {
+    "code": "13-0015",
+    "name": "6mm Plastic Mecanum Wheel - 100mm",
+    "category": "WHEEL",
+    "price": 2800,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "麥克納姆輪組 (軸6mm) 100mm /4 顆一組",
+      "Notes": "Set of 4"
+    }
+  },
+  {
+    "code": "TT-TIRE_OR",
+    "name": "MATRIX TT Wheel (Off-Road)",
+    "category": "WHEEL",
+    "price": 50,
+    "weight": 200,
+    "moq": 2,
+    "specs": {
+      "Chinese Name": "MATRIX TT馬達輪胎（越野輪）",
+      "Notes": "Single unit"
+    }
+  },
+  {
+    "code": "TT-TIRE_B",
+    "name": "MATRIX TT Wheel (Blue Rim)",
+    "category": "WHEEL",
+    "price": 50,
+    "weight": 200,
+    "moq": 2,
+    "specs": {
+      "Chinese Name": "MATRIX TT馬達輪胎（藍框霧面胎）",
+      "Notes": "Single unit"
+    }
+  },
+  {
+    "code": "13-0010",
+    "name": "MATRIX Steel Ball Caster",
+    "category": "WHEEL",
+    "price": 20,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "MATRIX 鋼珠滾輪",
+      "Notes": "Single unit"
+    }
+  },
+  {
+    "code": "11-3404",
+    "name": "M4 Flat Point set screw - 4mm",
+    "category": "SCREW",
+    "price": 400,
+    "weight": 200,
+    "moq": 100,
+    "specs": {
+      "Chinese Name": "M4 止付螺絲 - 4mm",
+      "Length": "4mm",
+      "Notes": "100 pcs / pack"
+    }
+  },
+  {
+    "code": "11-4108",
+    "name": "M4 Button Head Screw - 8mm",
+    "category": "SCREW",
+    "price": 400,
+    "weight": 200,
+    "moq": 100,
+    "specs": {
+      "Chinese Name": "M4六角圓頭螺絲 - 8mm",
+      "Length": "8mm",
+      "Notes": "100 pcs / pack"
+    }
+  },
+  {
+    "code": "11-4112",
+    "name": "M4 Button Head Screw - 12mm",
+    "category": "SCREW",
+    "price": 400,
+    "weight": 200,
+    "moq": 100,
+    "specs": {
+      "Chinese Name": "M4六角圓頭螺絲 - 12mm",
+      "Length": "12mm",
+      "Notes": "100 pcs / pack"
+    }
+  },
+  {
+    "code": "11-4116",
+    "name": "M4 Button Head Screw - 16mm",
+    "category": "SCREW",
+    "price": 400,
+    "weight": 200,
+    "moq": 100,
+    "specs": {
+      "Chinese Name": "M4六角圓頭螺絲 - 16mm",
+      "Length": "16mm",
+      "Notes": "100 pcs / pack"
+    }
+  },
+  {
+    "code": "11-4120",
+    "name": "M4 Button Head Screw - 20mm",
+    "category": "SCREW",
+    "price": 500,
+    "weight": 200,
+    "moq": 100,
+    "specs": {
+      "Chinese Name": "M4六角圓頭螺絲 - 20mm",
+      "Length": "20mm",
+      "Notes": "100 pcs / pack"
+    }
+  },
+  {
+    "code": "11-4124",
+    "name": "M4 Button Head Screw - 24mm",
+    "category": "SCREW",
+    "price": 500,
+    "weight": 200,
+    "moq": 100,
+    "specs": {
+      "Chinese Name": "M4六角圓頭螺絲 - 24mm",
+      "Length": "24mm",
+      "Notes": "100 pcs / pack"
+    }
+  },
+  {
+    "code": "11-4140",
+    "name": "M4 Button Head Screw - 40mm",
+    "category": "SCREW",
+    "price": 500,
+    "weight": 200,
+    "moq": 100,
+    "specs": {
+      "Chinese Name": "M4六角圓頭螺絲 - 40mm",
+      "Length": "40mm",
+      "Notes": "100 pcs / pack"
+    }
+  },
+  {
+    "code": "11-4501",
+    "name": "M4 Hex Nut",
+    "category": "NUT",
+    "price": 100,
+    "weight": 200,
+    "moq": 100,
+    "specs": {
+      "Chinese Name": "M4 螺帽",
+      "Notes": "100 pcs / pack"
+    }
+  },
+  {
+    "code": "11-4502",
+    "name": "M4 Hex Nut With Tooth Washer",
+    "category": "NUT",
+    "price": 200,
+    "weight": 200,
+    "moq": 100,
+    "specs": {
+      "Chinese Name": "M4 帶齒螺帽",
+      "Notes": "100 pcs / pack"
+    }
+  },
+  {
+    "code": "11-4503",
+    "name": "M4 Hex Nut With Nylon Lock",
+    "category": "NUT",
+    "price": 600,
+    "weight": 200,
+    "moq": 100,
+    "specs": {
+      "Chinese Name": "M4 尼龍防鬆六角螺帽",
+      "Notes": "100 pcs / pack"
+    }
+  },
+  {
+    "code": "11-6000-XXP",
+    "name": "MATRIX Quick Connector - battery box",
+    "category": "NUT",
+    "price": 125,
+    "weight": 200,
+    "moq": 20,
+    "specs": {
+      "Chinese Name": "MATRIX快速插銷黑 - 電池盒專用",
+      "Notes": "20 pcs / pack"
+    }
+  },
+  {
+    "code": "11-6050-XXP",
+    "name": "MATRIX Quick Connector - 5mm",
+    "category": "NUT",
+    "price": 125,
+    "weight": 200,
+    "moq": 20,
+    "description": "Joins 2 layers of structure.",
+    "specs": {
+      "Chinese Name": "MATRIX快速插銷黑 - 5mm",
+      "Notes": "20 pcs / pack"
+    }
+  },
+  {
+    "code": "11-6070-XXP",
+    "name": "MATRIX Quick Connector - 7mm",
+    "category": "NUT",
+    "price": 125,
+    "weight": 200,
+    "moq": 20,
+    "description": "Joins 3 layers of structure.",
+    "specs": {
+      "Chinese Name": "MATRIX快速插銷白 - 7mm",
+      "Notes": "20 pcs / pack"
+    }
+  },
+  {
+    "code": "11-6120-XXP",
+    "name": "MATRIX Quick Connector - 12mm",
+    "category": "NUT",
+    "price": 125,
+    "weight": 200,
+    "moq": 20,
+    "description": "Joins 1 layer of structure + spacer + Technic brick.",
+    "specs": {
+      "Chinese Name": "MATRIX快速插銷藍 - 12mm",
+      "Notes": "20 pcs / pack"
+    }
+  },
+  {
+    "code": "11-7050-XXP",
+    "name": "MATRIX Quick Connector - 5mm",
+    "category": "NUT",
+    "price": 125,
+    "weight": 200,
+    "moq": 20,
+    "description": "Compatible with Technic bricks.",
+    "specs": {
+      "Chinese Name": "樂高快速插銷黑-上座+下座",
+      "Notes": "20 pcs / pack"
+    }
+  },
+  {
+    "code": "11-4402",
+    "name": "M4 Nylon Washer",
+    "category": "WASHER & SPACER",
+    "price": 200,
+    "weight": 200,
+    "moq": 100,
+    "specs": {
+      "Chinese Name": "M4 尼龍墊圈",
+      "Notes": "100 pcs / pack"
+    }
+  },
+  {
+    "code": "11-4403",
+    "name": "M4 Nylon Shoulder Washer",
+    "category": "WASHER & SPACER",
+    "price": 200,
+    "weight": 200,
+    "moq": 100,
+    "specs": {
+      "Chinese Name": "M4 尼龍有肩墊圈",
+      "Diameter": "10mm",
+      "Height": "8mm",
+      "Notes": "100 pcs / pack"
+    }
+  },
+  {
+    "code": "09-0003",
+    "name": "M4 Standoff Spacer 16mm",
+    "category": "WASHER & SPACER",
+    "price": 100,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "M4六角柱-16mm",
+      "Notes": "Pack of 4"
+    }
+  },
+  {
+    "code": "09-0001",
+    "name": "M4 Standoff Spacer 32mm",
+    "category": "WASHER & SPACER",
+    "price": 200,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "M4六角柱-32mm",
+      "Notes": "Pack of 4"
+    }
+  },
+  {
+    "code": "13-0005",
+    "name": "Spacer - 4mm",
+    "category": "WASHER & SPACER",
+    "price": 120,
+    "weight": 200,
+    "moq": 10,
+    "specs": {
+      "Chinese Name": "塑膠墊片 - 4mm",
+      "Diameter": "12mm",
+      "Height": "4mm",
+      "Holes": "4.2mm",
+      "Notes": "Pack of 6"
+    }
+  },
+  {
+    "code": "13-0004",
+    "name": "Spacer - 8mm",
+    "category": "WASHER & SPACER",
+    "price": 100,
+    "weight": 200,
+    "moq": 10,
+    "specs": {
+      "Chinese Name": "塑膠墊片 - 8mm",
+      "Diameter": "12mm",
+      "Height": "8mm",
+      "Holes": "4.2mm",
+      "Notes": "Pack of 6"
+    }
+  },
+  {
+    "code": "MMX12-000-S-CBM",
+    "name": "MATRIX Motor Controller - 12V Set with CAN Bus Module",
+    "category": "MOTOR CONTROLLER",
+    "price": 2800,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "MATRIX 12V馬達擴充及CAN Bus套組",
+      "Notes": "Sold together with MS-019-JST"
+    }
+  },
+  {
+    "code": "0622",
+    "name": "Panasonic NCR18650B 3350mAh Button-Top 18650 Battery (2pcs) with Battery Box",
+    "category": "BATTERY",
+    "price": 500,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "Panasonic NCR18650B 3350mAh 有凸點 18650 充電電池 2顆/組 含 電池盒",
+      "Notes": "2 pcs / set"
+    }
+  },
+  {
+    "code": "08-0036",
+    "name": "4mm TT Shaft Adapter with M4 set screw",
+    "category": "JOINER & COLLAR",
+    "price": 400,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "M4 TT轉接軸 4mm",
+      "Notes": "Pack of 4"
+    }
+  },
+  {
+    "code": "08-0038",
+    "name": "Shaft Retaining Ring - 6mm Bore",
+    "category": "JOINER & COLLAR",
+    "price": 1150,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "輪軸固定圈(中心孔6mm)",
+      "Notes": "Pack of 4"
+    }
+  },
+  {
+    "code": "11-2210",
+    "name": "Screw M2*10 (Nickel-plated) for MG90S",
+    "category": "BRACKET & ACCESSORY",
+    "price": 100,
+    "weight": 200,
+    "moq": 100,
+    "specs": {
+      "Chinese Name": "螺絲M2*10 (鍍鎳) MG90S用",
+      "Previous Part No.": "SCREWM2X10",
+      "Notes": "100 pcs / pack"
+    }
+  },
+  {
+    "code": "11-2501",
+    "name": "Nut M2 (Nickel-plated) - Compatible with : SCREWM2X10",
+    "category": "BRACKET & ACCESSORY",
+    "price": 100,
+    "weight": 200,
+    "moq": 100,
+    "specs": {
+      "Chinese Name": "螺帽M2 (鍍鎳) - 搭配貨號: SCREWM2X10使用",
+      "Previous Part No.": "SCREWM2X10NI",
+      "Notes": "100 pcs / pack"
+    }
+  },
+  {
+    "code": "11-2_5205",
+    "name": "Round Head Cross Screw M2.5X5mm (Stainless Steel) for MG90S Servo",
+    "category": "BRACKET & ACCESSORY",
+    "price": 200,
+    "weight": 200,
+    "moq": 100,
+    "specs": {
+      "Chinese Name": "圓頭十字螺絲M2.5X5mm (不鏽鋼) MG90S舵盤用",
+      "Previous Part No.": "SCREWM2.5X4",
+      "Notes": "100 pcs / pack"
+    }
+  },
+  {
+    "code": "11-3205",
+    "name": "Screw M3*5 (Stainless Steel) for 17-335MG",
+    "category": "BRACKET & ACCESSORY",
+    "price": 150,
+    "weight": 200,
+    "moq": 100,
+    "specs": {
+      "Chinese Name": "螺絲M3*5 (不鏽鋼) for 17-335MG 大伺服馬達用",
+      "Previous Part No.": "SCREWM3X5",
+      "Notes": "100 pcs / pack"
+    }
+  },
+  {
+    "code": "11-3223",
+    "name": "Screw M3*2.3 (Nickel-plated) for (PART NUMBER: MTT-MG001)",
+    "category": "BRACKET & ACCESSORY",
+    "price": 100,
+    "weight": 200,
+    "moq": 100,
+    "specs": {
+      "Chinese Name": "螺絲M3*2.3 (鍍鎳) FOR 小藍TT馬達",
+      "Previous Part No.": "SCREWM3X2.3",
+      "Notes": "100 pcs / pack"
+    }
+  },
+  {
+    "code": "11-3501",
+    "name": "Nut M3 (Nickel-plated) - Compatible with SCREWM3X2.3",
+    "category": "BRACKET & ACCESSORY",
+    "price": 100,
+    "weight": 200,
+    "moq": 100,
+    "specs": {
+      "Chinese Name": "螺帽M3 (鍍鎳) - 搭配貨號: SCREWM3X2.3使用",
+      "Previous Part No.": "SCREWM3X2.3NI",
+      "Notes": "100 pcs / pack"
+    }
+  },
+  {
+    "code": "14-0014",
+    "name": "MATRIX 12V 3000mAH NiMH Battery",
+    "category": "BATTERY",
+    "price": 2700,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "MATRIX 12V 3000mAH鎳氫電池",
+      "Notes": "Set of 1 battery + 1 charger"
+    }
+  },
+  {
+    "code": "14-0016",
+    "name": "MATRIX 12V XT30 Battery Charger",
+    "category": "BATTERY",
+    "price": 0,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "MATRIX 12V XT30電池充電器"
+    }
+  },
+  {
+    "code": "14-0018",
+    "name": "MATRIX 12V 3000mAH NiMH Battery-XT30",
+    "category": "BATTERY",
+    "price": 2700,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "MATRIX 12V 3000mAH XT30鎳氫 電池",
+      "Notes": "1 battery"
+    }
+  },
+  {
+    "code": "14-0018+14-0019",
+    "name": "MATRIX 12V 3000mAH NiMH Battery-XT30+12V Battery Charger-XT30",
+    "category": "BATTERY",
+    "price": 2700,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "MATRIX 12V 3000mAH XT30鎳氫 電池+充電器",
+      "Notes": "Set of 1 battery + 1 charger"
+    }
+  },
+  {
+    "code": "14-0019",
+    "name": "MATRIX 12V Battery Charger- XT30",
+    "category": "BATTERY",
+    "price": 300,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "MATRIX 12V XT30電池充電器",
+      "Notes": "1 charger"
+    }
+  },
+  {
+    "code": "15-0001",
+    "name": "MATRIX Quick Connector Staple",
+    "category": "BRACKET & ACCESSORY",
+    "price": 80,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "MATRIX快速插銷拔插器",
+      "Notes": "1 pc"
+    }
+  },
+  {
+    "code": "19-0036",
+    "name": "Ball & Socket Linkage - 36mm",
+    "category": "JOINER & COLLAR",
+    "price": 400,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "球窩關節連桿 - 36mm",
+      "Notes": "Pack of 4"
+    }
+  },
+  {
+    "code": "19-0052",
+    "name": "Ball & Socket Linkage - 52mm",
+    "category": "JOINER & COLLAR",
+    "price": 800,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "球窩關節連桿 - 52mm",
+      "Notes": "Pack of 4"
+    }
+  },
+  {
+    "code": "19-0068",
+    "name": "Ball & Socket Linkage - 68mm",
+    "category": "JOINER & COLLAR",
+    "price": 1500,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "球窩關節連桿 - 68mm",
+      "Notes": "Pack of 4"
+    }
+  },
+  {
+    "code": "19-0128",
+    "name": "Ball & Socket Linkage - 128mm",
+    "category": "JOINER & COLLAR",
+    "price": 2000,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "球窩關節連桿 - 128mm",
+      "Notes": "Pack of 4"
+    }
+  },
+  {
+    "code": "50-0004",
+    "name": "Gear Kit",
+    "category": "GEAR",
+    "price": 1000,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "齒輪套件 Gear Kit",
+      "Notes": "1 pc"
+    }
+  },
+  {
+    "code": "8020P-2",
+    "name": "2mm Hex Wrench and Crosshead Screwdriver",
+    "category": "BRACKET & ACCESSORY",
+    "price": 180,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "雙頭螺絲起子-2mm六角及十字",
+      "Notes": "1 pc"
+    }
+  },
+  {
+    "code": "CB-J2G200",
+    "name": "JST to Grove Cable 200mm",
+    "category": "CABLE",
+    "price": 20,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "JST轉Grove 線材200mm",
+      "Connector": "JST TO GROVE"
+    }
+  },
+  {
+    "code": "CB-J2J200",
+    "name": "JST Cable 200mm",
+    "category": "CABLE",
+    "price": 30,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "JST 線材200mm",
+      "Connector": "JST"
+    }
+  },
+  {
+    "code": "CB-J2J400",
+    "name": "JST Cable 400mm",
+    "category": "CABLE",
+    "price": 35,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "JST 線材400mm",
+      "Connector": "JST"
+    }
+  },
+  {
+    "code": "CB-J2J600",
+    "name": "JST Cable 600mm",
+    "category": "CABLE",
+    "price": 40,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "JST 線材600mm",
+      "Connector": "JST"
+    }
+  },
+  {
+    "code": "CB-J2R200",
+    "name": "JST to RJ12 Cable 200mm",
+    "category": "CABLE",
+    "price": 20,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "JST 轉 RJ12 線材 200mm",
+      "Connector": "JST TO RJ12"
+    }
+  },
+  {
+    "code": "ME12DC-0001-BK",
+    "name": "MATRIX 12V DC High Torque Encoder Motor with Cable & Brackets",
+    "category": "MOTOR",
+    "subCategory": "DC",
+    "price": 2200,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "MATRIX 12V高扭力編碼器馬達含線 材與支架",
+      "Notes": "Includes motor bracket and screws"
+    }
+  },
+  {
+    "code": "MRC-MG996R-BK",
+    "name": "MATRIX RC Servo with metal gear box & Brackets & Horn",
+    "category": "MOTOR",
+    "subCategory": "SERVO",
+    "price": 500,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "MATRIX 金屬齒輪伺服馬達附支架、 舵盤",
+      "Operating Voltage": "4.8V–6V",
+      "No-Load Speed": "0.18 sec/60° · 0.15 sec/60°",
+      "Stall Current": "160 mA ±10% · 170 mA ±10%",
+      "Stall Torque": "9 kg·cm · 13 kg·cm",
+      "No-Load Current": "1100 mA ±10% · 1300 mA ±10%",
+      "Operating Angle": "360°",
+      "Notes": "Includes motor bracket and servo horn"
+    }
+  },
+  {
+    "code": "MS-019-JST",
+    "name": "MATRIX CAN Bus Module Pack (JST)",
+    "category": "SENSOR",
+    "price": 200,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "MATRIX CAN Bus模組JST包",
+      "Connector": "JST"
+    }
+  },
+  {
+    "code": "MS-019-RJ12",
+    "name": "MATRIX CAN Bus Module Pack (RJ12)",
+    "category": "SENSOR",
+    "price": 200,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "MATRIX CAN Bus模組RJ12包",
+      "Connector": "RJ12"
+    }
+  },
+  {
+    "code": "R1-13-0012",
+    "name": "Micro Servo Horn Wheel",
+    "category": "BRACKET & ACCESSORY",
+    "price": 45,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "微型伺服馬達舵盤(小)",
+      "Previous Part No.": "13-0012",
+      "Notes": "Pack of 1; includes 1 × screw 11-2_5205"
+    }
+  },
+  {
+    "code": "R2-13-0002",
+    "name": "Servo Horn Wheel",
+    "category": "BRACKET & ACCESSORY",
+    "price": 285,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "伺服馬達舵機盤(大)",
+      "Previous Part No.": "13-0002",
+      "Diameter": "47mm",
+      "Notes": "Pack of 2; includes 2 × screw 11-3205"
+    }
+  },
+  {
+    "code": "SCREW1.6X10",
+    "name": "Screw M1.6*10 (Nickel-plated) for Ultrasonic Sensor",
+    "category": "SCREW",
+    "price": 100,
+    "weight": 200,
+    "moq": 100,
+    "specs": {
+      "Chinese Name": "螺絲M1.6*10 (鍍鎳) FOR 超音波",
+      "Notes": "100 pcs / pack"
+    }
+  },
+  {
+    "code": "SCREWM1.6NI",
+    "name": "Nut M1.6 (Nickel-plated) - Compatible with : SCREW1.6X10",
+    "category": "NUT",
+    "price": 100,
+    "weight": 200,
+    "moq": 100,
+    "specs": {
+      "Chinese Name": "螺帽M1.6 (鍍鎳) - 搭配貨號: SCREW1.6X10使用",
+      "Notes": "100 pcs / pack"
+    }
+  },
+  {
+    "code": "SCREWM2.5X5",
+    "name": "M2.5X5mm Nickel-plated screw for Raspberry Pi",
+    "category": "SCREW",
+    "price": 200,
+    "weight": 200,
+    "moq": 100,
+    "specs": {
+      "Chinese Name": "螺絲M2.5X5mm (鍍鎳) 樹莓派用",
+      "Notes": "100 pcs / pack"
+    }
+  },
+  {
+    "code": "SCREWM2.5X5 NI",
+    "name": "Nut M2.5 (Nickel-plated) - Compatible with : SCREW M2.5X5mm",
+    "category": "NUT",
+    "price": 200,
+    "weight": 200,
+    "moq": 100,
+    "specs": {
+      "Chinese Name": "螺帽M2.5 (鍍鎳) - 搭配貨號: 螺絲 M2.5X5mm使用",
+      "Notes": "100 pcs / pack"
+    }
+  },
+  {
+    "code": "SCREWM3HEX8",
+    "name": "M3 Hex Screw - 8mm",
+    "category": "SCREW",
+    "price": 200,
+    "weight": 200,
+    "moq": 100,
+    "specs": {
+      "Chinese Name": "M3六角螺絲-8mm",
+      "Notes": "100 pcs / pack"
+    }
+  },
+  {
+    "code": "SCREWM3X10",
+    "name": "Screw M3*10 (Nickel-plated) for Line Tracking Sensor",
+    "category": "SCREW",
+    "price": 100,
+    "weight": 200,
+    "moq": 100,
+    "specs": {
+      "Chinese Name": "螺絲M3*10 (鍍鎳) for 循線感測器",
+      "Notes": "100 pcs / pack"
+    }
+  },
+  {
+    "code": "SCREWM3X5.5NI",
+    "name": "Nut M3 (Nickel-plated) - Compatible with SCREWM3X10 (Motor)",
+    "category": "NUT",
+    "price": 100,
+    "weight": 200,
+    "moq": 100,
+    "specs": {
+      "Chinese Name": "螺帽M3 (鍍鎳) - 搭配貨號: SCREWM3X10使用(馬達)",
+      "Notes": "100 pcs / pack"
+    }
+  },
+  {
+    "code": "SCREWM4HEX4",
+    "name": "M4 Hex Screw - 4mm",
+    "category": "SCREW",
+    "price": 200,
+    "weight": 200,
+    "moq": 100,
+    "specs": {
+      "Chinese Name": "M4六角螺絲-4mm",
+      "Notes": "100 pcs / pack"
+    }
+  },
+  {
+    "code": "SCREWM4X10",
+    "name": "Screw M2.3X10 (Nickel-plated) for Matrix Controller",
+    "category": "SCREW",
+    "price": 100,
+    "weight": 200,
+    "moq": 100,
+    "specs": {
+      "Chinese Name": "螺絲M2.3X10(鍍鎳) FOR Matrix控制 器",
+      "Notes": "100 pcs / pack"
+    }
+  },
+  {
+    "code": "SCREWM4X10 P",
+    "name": "Round Head M4 screw, (M4*10), screw length 10mm",
+    "category": "SCREW",
+    "price": 100,
+    "weight": 200,
+    "moq": 100,
+    "specs": {
+      "Chinese Name": "M4螺絲 圓頭螺絲（M4*10）螺絲部 分長10MM",
+      "Notes": "100 pcs / pack"
+    }
+  },
+  {
+    "code": "SCREWM4X4",
+    "name": "Screw M4*4",
+    "category": "SCREW",
+    "price": 400,
+    "weight": 200,
+    "moq": 100,
+    "specs": {
+      "Chinese Name": "螺絲M4*4 (止付)",
+      "Notes": "100 pcs / pack"
+    }
   },
   {
     "code": "MMX12-000-CBM",
@@ -90,7 +3612,8 @@
     "category": "BUNDLE",
     "price": 1600,
     "weight": 200,
-    "moq": 1
+    "moq": 1,
+    "eol": true
   },
   {
     "code": "MMJ-000",
@@ -98,7 +3621,8 @@
     "category": "CONTROLLER",
     "price": 0,
     "weight": 200,
-    "moq": 1
+    "moq": 1,
+    "eol": true
   },
   {
     "code": "MM-000 V2",
@@ -106,32 +3630,8 @@
     "category": "CONTROLLER",
     "price": 0,
     "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "MR-000 V2-4",
-    "name": "MATRIX Mini Controller V2.4",
-    "category": "CONTROLLER",
-    "price": 1450,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "MA-000",
-    "name": "MATRIX Mini R4 Controller",
-    "category": "CONTROLLER",
-    "price": 6000,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "KNR-MBS0214",
-    "name": "KNRm Controller",
-    "category": "CONTROLLER",
-    "price": 49493,
-    "weight": 200,
-    "eol": true,
-    "moq": 1
+    "moq": 1,
+    "eol": true
   },
   {
     "code": "14-0003",
@@ -143,28 +3643,13 @@
     "moq": 1
   },
   {
-    "code": "MJ2",
-    "name": "MATRIX JOYSTICK II",
-    "category": "JOY STICK",
-    "price": 1500,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "18650-HD",
-    "name": "18650x2 Battery Box",
-    "category": "BATTERY",
-    "price": 65,
-    "weight": 200,
-    "moq": 1
-  },
-  {
     "code": "5521DC-06V2",
     "name": "6 Cell AA Battery Box",
     "category": "BATTERY",
     "price": 0,
     "weight": 200,
-    "moq": 1
+    "moq": 1,
+    "eol": true
   },
   {
     "code": "14-0004",
@@ -172,7 +3657,8 @@
     "category": "BATTERY",
     "price": 0,
     "weight": 200,
-    "moq": 1
+    "moq": 1,
+    "eol": true
   },
   {
     "code": "MS-003V2",
@@ -191,7 +3677,8 @@
     "subCategory": "ANALOG",
     "price": 150,
     "weight": 200,
-    "moq": 1
+    "moq": 1,
+    "eol": true
   },
   {
     "code": "MS-013",
@@ -200,7 +3687,8 @@
     "subCategory": "ANALOG",
     "price": 200,
     "weight": 200,
-    "moq": 1
+    "moq": 1,
+    "eol": true
   },
   {
     "code": "MS-014",
@@ -209,7 +3697,8 @@
     "subCategory": "ANALOG",
     "price": 150,
     "weight": 200,
-    "moq": 1
+    "moq": 1,
+    "eol": true
   },
   {
     "code": "MS-016",
@@ -218,7 +3707,8 @@
     "subCategory": "ANALOG",
     "price": 200,
     "weight": 200,
-    "moq": 1
+    "moq": 1,
+    "eol": true
   },
   {
     "code": "28995",
@@ -247,7 +3737,8 @@
     "subCategory": "DIGITAL",
     "price": 250,
     "weight": 200,
-    "moq": 1
+    "moq": 1,
+    "eol": true
   },
   {
     "code": "MS-001",
@@ -256,7 +3747,8 @@
     "subCategory": "DIGITAL",
     "price": 0,
     "weight": 200,
-    "moq": 1
+    "moq": 1,
+    "eol": true
   },
   {
     "code": "MS-011",
@@ -265,7 +3757,8 @@
     "subCategory": "DIGITAL",
     "price": 200,
     "weight": 200,
-    "moq": 1
+    "moq": 1,
+    "eol": true
   },
   {
     "code": "MS-012",
@@ -274,7 +3767,8 @@
     "subCategory": "DIGITAL",
     "price": 200,
     "weight": 200,
-    "moq": 1
+    "moq": 1,
+    "eol": true
   },
   {
     "code": "MS-015",
@@ -283,7 +3777,8 @@
     "subCategory": "DIGITAL",
     "price": 200,
     "weight": 200,
-    "moq": 1
+    "moq": 1,
+    "eol": true
   },
   {
     "code": "28015",
@@ -312,7 +3807,8 @@
     "subCategory": "IIC",
     "price": 600,
     "weight": 200,
-    "moq": 1
+    "moq": 1,
+    "eol": true
   },
   {
     "code": "MS-009",
@@ -331,7 +3827,8 @@
     "subCategory": "IIC",
     "price": 600,
     "weight": 200,
-    "moq": 1
+    "moq": 1,
+    "eol": true
   },
   {
     "code": "MS-017",
@@ -340,7 +3837,8 @@
     "subCategory": "IIC",
     "price": 600,
     "weight": 200,
-    "moq": 1
+    "moq": 1,
+    "eol": true
   },
   {
     "code": "BNO055",
@@ -350,24 +3848,6 @@
     "price": 0,
     "weight": 200,
     "eol": true,
-    "moq": 1
-  },
-  {
-    "code": "MS-018V2-JST",
-    "name": "MATRIX Line Tracer 10CH Pack V2(JST)",
-    "category": "SENSOR",
-    "subCategory": "IIC",
-    "price": 600,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "MS-018V2-RJ12",
-    "name": "MATRIX Line Tracer 10CH Pack V2(RJ12)",
-    "category": "SENSOR",
-    "subCategory": "IIC",
-    "price": 600,
-    "weight": 200,
     "moq": 1
   },
   {
@@ -387,25 +3867,8 @@
     "subCategory": "UART",
     "price": 3300,
     "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "MMRC-MG90S",
-    "name": "MATRIX Micro Servo (metal gear)",
-    "category": "MOTOR",
-    "subCategory": "SERVO",
-    "price": 200,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "MRC-MG15-180",
-    "name": "MATRIX RC Servo (metal gear)",
-    "category": "MOTOR",
-    "subCategory": "SERVO",
-    "price": 800,
-    "weight": 200,
-    "moq": 1
+    "moq": 1,
+    "eol": true
   },
   {
     "code": "MRC-MG25-180",
@@ -414,7 +3877,8 @@
     "subCategory": "SERVO",
     "price": 0,
     "weight": 200,
-    "moq": 1
+    "moq": 1,
+    "eol": true
   },
   {
     "code": "MRC-MG17-335",
@@ -457,15 +3921,6 @@
     "moq": 1
   },
   {
-    "code": "MRC-TB2-180",
-    "name": "MATRIX RC Servo with Technic Brick Form x2",
-    "category": "MOTOR",
-    "subCategory": "SERVO",
-    "price": 1150,
-    "weight": 200,
-    "moq": 1
-  },
-  {
     "code": "METB-SG001",
     "name": "MATRIX TB Encoder Medium Motor",
     "category": "MOTOR",
@@ -473,33 +3928,6 @@
     "price": 0,
     "weight": 200,
     "eol": true,
-    "moq": 1
-  },
-  {
-    "code": "METT-MG001",
-    "name": "MATRIX TT Encoder Motor",
-    "category": "MOTOR",
-    "subCategory": "TT",
-    "price": 0,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "MTT-MG001",
-    "name": "MATRIX TT Motor",
-    "category": "MOTOR",
-    "subCategory": "TT",
-    "price": 400,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "MTT-SG001",
-    "name": "MATRIX TT Motor",
-    "category": "MOTOR",
-    "subCategory": "TT",
-    "price": 400,
-    "weight": 200,
     "moq": 1
   },
   {
@@ -543,14 +3971,6 @@
     "moq": 1
   },
   {
-    "code": "07-0001",
-    "name": "Micro Servo Bracket",
-    "category": "BRACKET & ACCESSORY",
-    "price": 120,
-    "weight": 200,
-    "moq": 1
-  },
-  {
     "code": "07-0002",
     "name": "Servo Bracket",
     "category": "BRACKET & ACCESSORY",
@@ -560,44 +3980,12 @@
     "moq": 1
   },
   {
-    "code": "07-0009",
-    "name": "RC Servo Bracket",
-    "category": "BRACKET & ACCESSORY",
-    "price": 50,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "07-0005",
-    "name": "DC Motor Double Flanged Bracket - 5 x 7 Hole",
-    "category": "BRACKET & ACCESSORY",
-    "price": 50,
-    "weight": 200,
-    "moq": 1
-  },
-  {
     "code": "07-0010",
     "name": "DC Motor Hub Bracket (EOL)",
     "category": "BRACKET & ACCESSORY",
     "price": 0,
     "weight": 200,
     "eol": true,
-    "moq": 1
-  },
-  {
-    "code": "07-0011",
-    "name": "DC Motor Hub Bracket",
-    "category": "BRACKET & ACCESSORY",
-    "price": 220,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "07-2331",
-    "name": "DC Motor Double Flanged Bracket - 23 x 31 Hole",
-    "category": "BRACKET & ACCESSORY",
-    "price": 400,
-    "weight": 200,
     "moq": 1
   },
   {
@@ -619,44 +4007,13 @@
     "moq": 1
   },
   {
-    "code": "07-0004",
-    "name": "Servo Bearing Beam - 5 Hole",
-    "category": "BRACKET & ACCESSORY",
-    "price": 50,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "07-0006",
-    "name": "Servo Horn Wheel Brace - Short",
-    "category": "BRACKET & ACCESSORY",
-    "price": 50,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "07-0007",
-    "name": "Servo Horn Wheel Brace - Long",
-    "category": "BRACKET & ACCESSORY",
-    "price": 50,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "07-0008",
-    "name": "TT Motor Bracket (Set of Left and Right)",
-    "category": "BRACKET & ACCESSORY",
-    "price": 150,
-    "weight": 200,
-    "moq": 1
-  },
-  {
     "code": "13-0012",
     "name": "Micro Servo Horn Wheel",
     "category": "BRACKET & ACCESSORY",
     "price": 45,
     "weight": 200,
-    "moq": 1
+    "moq": 1,
+    "eol": true
   },
   {
     "code": "13-0002",
@@ -664,303 +4021,8 @@
     "category": "BRACKET & ACCESSORY",
     "price": 285,
     "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "01-0003",
-    "name": "L Shaped Beam - 3 Hole",
-    "category": "L SHAPED BEAM",
-    "price": 180,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "01-0005",
-    "name": "L Shaped Beam - 5 Hole",
-    "category": "L SHAPED BEAM",
-    "price": 200,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "01-0007",
-    "name": "L Shaped Beam - 7 Hole",
-    "category": "L SHAPED BEAM",
-    "price": 220,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "01-0009",
-    "name": "L Shaped Beam - 9 Hole",
-    "category": "L SHAPED BEAM",
-    "price": 240,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "01-0021",
-    "name": "L Shaped Beam - 21 Hole",
-    "category": "L SHAPED BEAM",
-    "price": 400,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "01-0029",
-    "name": "L Shaped Beam - 29 Hole",
-    "category": "L SHAPED BEAM",
-    "price": 500,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "01-0037",
-    "name": "L Shaped Beam - 37 Hole",
-    "category": "L SHAPED BEAM",
-    "price": 600,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "01-0313",
-    "name": "L Shaped Beam XL - 13 Hole",
-    "category": "L SHAPED BEAM",
-    "price": 500,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "01-0317",
-    "name": "L Shaped Beam XL - 17 Hole",
-    "category": "L SHAPED BEAM",
-    "price": 550,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "01-0321",
-    "name": "L Shaped Beam XL - 21 Hole",
-    "category": "L SHAPED BEAM",
-    "price": 700,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "01-0329",
-    "name": "L Shaped Beam XL - 29 Hole",
-    "category": "L SHAPED BEAM",
-    "price": 900,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "01-0337",
-    "name": "L Shaped Beam XL - 37 Hole",
-    "category": "L SHAPED BEAM",
-    "price": 950,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "01-0349",
-    "name": "L Shaped Beam XL - 49 Hole",
-    "category": "L SHAPED BEAM",
-    "price": 1250,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "02-0003",
-    "name": "Flat Beam - 3 Hole",
-    "category": "FLAT BEAM",
-    "price": 140,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "02-0005",
-    "name": "Flat Beam - 5 Hole",
-    "category": "FLAT BEAM",
-    "price": 160,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "02-0007",
-    "name": "Flat Beam - 7 Hole",
-    "category": "FLAT BEAM",
-    "price": 180,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "02-0009",
-    "name": "Flat Beam - 9 Hole",
-    "category": "FLAT BEAM",
-    "price": 200,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "02-0011",
-    "name": "Flat Beam - 11 Hole",
-    "category": "FLAT BEAM",
-    "price": 220,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "04-0303",
-    "name": "Gusset Plate 3 x 3 Hole",
-    "category": "GUSSET PLATE",
-    "price": 150,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "04-0305",
-    "name": "Gusset Plate 3 x 5 Hole",
-    "category": "GUSSET PLATE",
-    "price": 180,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "04-0307",
-    "name": "Gusset Plate 3 x 7 Hole",
-    "category": "GUSSET PLATE",
-    "price": 200,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "04-0309",
-    "name": "Gusset Plate 3 x 9 Hole",
-    "category": "GUSSET PLATE",
-    "price": 220,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "04-0505",
-    "name": "Gusset Plate 5 x 5 Hole",
-    "category": "GUSSET PLATE",
-    "price": 240,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "04-0921",
-    "name": "Gusset Plate 9 x 21 Hole",
-    "category": "GUSSET PLATE",
-    "price": 800,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "06-0005",
-    "name": "C Shaped Beam - 5 Hole",
-    "category": "C SHAPED BEAM",
-    "price": 300,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "06-0009",
-    "name": "C Shaped Beam - 9 Hole",
-    "category": "C SHAPED BEAM",
-    "price": 320,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "06-0013",
-    "name": "C Shaped Beam - 13 Hole",
-    "category": "C SHAPED BEAM",
-    "price": 600,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "06-0017",
-    "name": "C Shaped Beam - 17 Hole",
-    "category": "C SHAPED BEAM",
-    "price": 650,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "06-0021",
-    "name": "C Shaped Beam - 21 Hole",
-    "category": "C SHAPED BEAM",
-    "price": 700,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "06-0029",
-    "name": "C Shaped Beam - 29 Hole",
-    "category": "C SHAPED BEAM",
-    "price": 750,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "06-0037",
-    "name": "C Shaped Beam - 37 Hole",
-    "category": "C SHAPED BEAM",
-    "price": 1100,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "06-0049",
-    "name": "C Shaped Beam - 49 Hole",
-    "category": "C SHAPED BEAM",
-    "price": 1200,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "06-0339",
-    "name": "C Shaped Beam XL - 39 Hole",
-    "category": "C SHAPED BEAM",
-    "price": 1300,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "06-0347",
-    "name": "C Shaped Beam XL - 47 Hole",
-    "category": "C SHAPED BEAM",
-    "price": 1400,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "06-2232",
-    "name": "C Shaped Beam XL2 - 232mm",
-    "category": "C SHAPED BEAM",
-    "price": 1500,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "06-2296",
-    "name": "C Shaped Beam XL2 - 296mm",
-    "category": "C SHAPED BEAM",
-    "price": 1800,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "06-2424",
-    "name": "C Shaped Beam XL2 - 424mm",
-    "category": "C SHAPED BEAM",
-    "price": 2000,
-    "weight": 200,
-    "moq": 1
+    "moq": 1,
+    "eol": true
   },
   {
     "code": "06-2216",
@@ -990,214 +4052,6 @@
     "moq": 1
   },
   {
-    "code": "03-0001",
-    "name": "Beam Joiner - 1D Straight",
-    "category": "BEAM JOINER",
-    "price": 280,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "03-0002",
-    "name": "Beam Joiner - 2D Right Angle",
-    "category": "BEAM JOINER",
-    "price": 300,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "03-0003",
-    "name": "Beam Joiner - 3D Right Angle",
-    "category": "BEAM JOINER",
-    "price": 320,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "03-0301",
-    "name": "Beam Joiner XL-1D Straight",
-    "category": "BEAM JOINER",
-    "price": 350,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "03-0302",
-    "name": "Beam Joiner XL-2D Right Angle",
-    "category": "BEAM JOINER",
-    "price": 500,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "03-0303",
-    "name": "Beam Joiner XL-3D Right Angle",
-    "category": "BEAM JOINER",
-    "price": 800,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "17-0709",
-    "name": "Triangle Plate 6-8-10 Hole",
-    "category": "SPECIAL PLATE",
-    "price": 210,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "05-0303",
-    "name": "Flanged Plate 3 x 3 Hole",
-    "category": "FLANGED PLATE",
-    "price": 200,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "05-0305",
-    "name": "Flanged Plate 3 x 5 Hole",
-    "category": "FLANGED PLATE",
-    "price": 400,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "05-0307",
-    "name": "Flanged Plate 3 x 7 Hole",
-    "category": "FLANGED PLATE",
-    "price": 215,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "05-0309",
-    "name": "Flanged Plate 3 x 9 Hole",
-    "category": "FLANGED PLATE",
-    "price": 275,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "10-0028",
-    "name": "4mm D Shaft - 28mm",
-    "category": "D SHAFT",
-    "price": 40,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "10-0052",
-    "name": "4mm D Shaft - 52mm",
-    "category": "D SHAFT",
-    "price": 80,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "10-0080",
-    "name": "4mm D Shaft - 80mm",
-    "category": "D SHAFT",
-    "price": 120,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "10-0132",
-    "name": "4mm D Shaft - 132mm",
-    "category": "D SHAFT",
-    "price": 180,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "10-0160",
-    "name": "4mm D Shaft - 160mm",
-    "category": "D SHAFT",
-    "price": 220,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "10-0164",
-    "name": "4mm D Shaft - 164mm",
-    "category": "D SHAFT",
-    "price": 220,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "10-0280",
-    "name": "4mm D Shaft - 280mm",
-    "category": "D SHAFT",
-    "price": 400,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "10-6030",
-    "name": "6mm D Shaft - 30mm",
-    "category": "D SHAFT",
-    "price": 400,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "10-6050",
-    "name": "6mm D Shaft - 50mm",
-    "category": "D SHAFT",
-    "price": 700,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "10-6080",
-    "name": "6mm D Shaft - 80mm",
-    "category": "D SHAFT",
-    "price": 1000,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "10-6160",
-    "name": "6mm D Shaft - 160mm",
-    "category": "D SHAFT",
-    "price": 1500,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "10-6300",
-    "name": "6mm D Shaft - 300mm",
-    "category": "D SHAFT",
-    "price": 2000,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "08-0019",
-    "name": "4mm Axle Collar with M4 set screw",
-    "category": "JOINER & COLLAR",
-    "price": 120,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "08-0021",
-    "name": "4mm to 4mm Coupling with M4 set screw",
-    "category": "JOINER & COLLAR",
-    "price": 120,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "08-0020",
-    "name": "4mm to 6mm Adaptor with M4 set screw",
-    "category": "JOINER & COLLAR",
-    "price": 120,
-    "weight": 200,
-    "moq": 1
-  },
-  {
     "code": "08-0031",
     "name": "4mm to TT Adapter with M4 set screw",
     "category": "JOINER & COLLAR",
@@ -1207,237 +4061,13 @@
     "moq": 1
   },
   {
-    "code": "08-0037",
-    "name": "4mm to TT Adapter with M4 set screw",
-    "category": "JOINER & COLLAR",
-    "price": 250,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "08-0032",
-    "name": "6mm Axle Collar with M4 set screw",
-    "category": "JOINER & COLLAR",
-    "price": 120,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "08-0033",
-    "name": "6mm to 6mm Coupling with M4 set screw",
-    "category": "JOINER & COLLAR",
-    "price": 200,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "09-0004",
-    "name": "4mm Joiner Block with M3 set screw",
-    "category": "JOINER & COLLAR",
-    "price": 500,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "08-0006",
-    "name": "4mm Omni Flat Wheel Nut",
-    "category": "HUB",
-    "price": 120,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "08-0024",
-    "name": "4mm Omni Thin Wheel with M4 set screw",
-    "category": "HUB",
-    "price": 350,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "08-0007",
-    "name": "4mm Hub with M4 set screw",
-    "category": "HUB",
-    "price": 350,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "08-0014",
-    "name": "6mm Omni Flat Wheel Nut",
-    "category": "HUB",
-    "price": 120,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "08-0013",
-    "name": "6mm Omni Thin Wheel with M4 set screw",
-    "category": "HUB",
-    "price": 350,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "08-0008",
-    "name": "6mm Hub with M4 set screw",
-    "category": "HUB",
-    "price": 350,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "08-0039",
-    "name": "6mm Flanged Ball Bearing",
-    "category": "HUB",
-    "price": 1800,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "08-0015",
-    "name": "4mm Bearing Tube - 15mm",
-    "category": "BEARING TUBE",
-    "price": 120,
-    "weight": 200,
-    "moq": 2
-  },
-  {
-    "code": "08-0030",
-    "name": "4mm Bearing Tube - 30mm",
-    "category": "BEARING TUBE",
-    "price": 200,
-    "weight": 200,
-    "moq": 2
-  },
-  {
-    "code": "08-0018",
-    "name": "6mm Bearing Tube - 15mm",
-    "category": "BEARING TUBE",
-    "price": 120,
-    "weight": 200,
-    "moq": 2
-  },
-  {
-    "code": "08-0017",
-    "name": "6mm Bearing Tube - 30mm",
-    "category": "BEARING TUBE",
-    "price": 150,
-    "weight": 200,
-    "moq": 2
-  },
-  {
-    "code": "12-0024",
-    "name": "Gear - 24 Tooth with M4 set screw",
-    "category": "GEAR",
-    "price": 900,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "12-0040",
-    "name": "Gear - 40 Tooth with M4 set screw",
-    "category": "GEAR",
-    "price": 1200,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "12-0056",
-    "name": "Gear - 56 Tooth with M4 set screw",
-    "category": "GEAR",
-    "price": 1500,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "13-0024",
-    "name": "Metal Gear - 24 Tooth",
-    "category": "GEAR",
-    "price": 800,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "13-0040",
-    "name": "Metal Gear - 40 Tooth",
-    "category": "GEAR",
-    "price": 900,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "13-0056",
-    "name": "Metal Gear - 56 Tooth",
-    "category": "GEAR",
-    "price": 1500,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "13-0104",
-    "name": "Metal Gear - 104 Tooth",
-    "category": "GEAR",
-    "price": 2500,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "25-1X240",
-    "name": "Roller Chain 25 x 240 Link",
-    "category": "CHAIN KIT",
-    "price": 620,
-    "weight": 200,
-    "eol": true,
-    "moq": 1
-  },
-  {
-    "code": "25-1X480",
-    "name": "Roller Chain 25 x 480 Link",
-    "category": "CHAIN KIT",
-    "price": 1000,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "A025016",
-    "name": "25A Chain Gear - 16 Tooth",
-    "category": "CHAIN KIT",
-    "price": 700,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "A025024",
-    "name": "25A Chain Gear - 24 Tooth",
-    "category": "CHAIN KIT",
-    "price": 800,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "A025032",
-    "name": "25A Chain Gear - 32 Tooth",
-    "category": "CHAIN KIT",
-    "price": 1000,
-    "weight": 200,
-    "moq": 1
-  },
-  {
     "code": "2GT-20T",
     "name": "2GT Synchronous Wheel - 20 Tooth",
     "category": "SYNCHRONOUS WHEEL",
     "price": 0,
     "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "2GT-36T",
-    "name": "2GT Synchronous Wheel - 36 Tooth",
-    "category": "SYNCHRONOUS WHEEL",
-    "price": 300,
-    "weight": 200,
-    "moq": 1
+    "moq": 1,
+    "eol": true
   },
   {
     "code": "2GT-48T",
@@ -1445,7 +4075,8 @@
     "category": "SYNCHRONOUS WHEEL",
     "price": 0,
     "weight": 200,
-    "moq": 1
+    "moq": 1,
+    "eol": true
   },
   {
     "code": "2GT-172-6",
@@ -1453,103 +4084,8 @@
     "category": "SYNCHRONOUS WHEEL",
     "price": 0,
     "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "2GT-852-6",
-    "name": "2GT Synchronous Belt - 852 x 6mm",
-    "category": "SYNCHRONOUS WHEEL",
-    "price": 300,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "12-0001",
-    "name": "Tooth Belt -7 Hole",
-    "category": "LINEAR SLIDE",
-    "price": 200,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "12-0002",
-    "name": "Linear Slide - 3 Hole",
-    "category": "LINEAR SLIDE",
-    "price": 250,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "MGN09H",
-    "name": "HIWIN Miniature Guides MGN HIRES Series",
-    "category": "LINEAR SLIDE",
-    "price": 3275,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "MGN15H",
-    "name": "HIWIN Miniature Guides MGN HIRES Series",
-    "category": "LINEAR SLIDE",
-    "price": 4545,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "18-0128",
-    "name": "Leadscrew - 128mm",
-    "category": "LEADSCREW",
-    "price": 500,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "18-0256",
-    "name": "Leadscrew - 256mm",
-    "category": "LEADSCREW",
-    "price": 600,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "18-0001",
-    "name": "Leadscrew Block",
-    "category": "LEADSCREW",
-    "price": 150,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "13-0003",
-    "name": "Caster Wheel - 48mm",
-    "category": "WHEEL",
-    "price": 100,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "13-0001",
-    "name": "Wheel - 96mm with M3 set screw",
-    "category": "WHEEL",
-    "price": 900,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "13-0009",
-    "name": "Wide Wheel - 79mm",
-    "category": "WHEEL",
-    "price": 0,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "13-0008",
-    "name": "Single Omni Wheel - 94mm",
-    "category": "WHEEL",
-    "price": 400,
-    "weight": 200,
-    "moq": 1
+    "moq": 1,
+    "eol": true
   },
   {
     "code": "16-0001",
@@ -1557,63 +4093,8 @@
     "category": "WHEEL",
     "price": 0,
     "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "16-0002",
-    "name": "6mm Double Omni Wheel - 94mm",
-    "category": "WHEEL",
-    "price": 800,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "13-0013",
-    "name": "6mm Mecanum Wheel - 100mm",
-    "category": "WHEEL",
-    "price": 500,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "13-0014",
-    "name": "6mm Mecanum Wheel - 203mm",
-    "category": "WHEEL",
-    "price": 6000,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "13-0015",
-    "name": "6mm Plastic Mecanum Wheel - 100mm",
-    "category": "WHEEL",
-    "price": 2800,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "TT-TIRE_OR",
-    "name": "MATRIX TT Wheel (Off-Road)",
-    "category": "WHEEL",
-    "price": 50,
-    "weight": 200,
-    "moq": 2
-  },
-  {
-    "code": "TT-TIRE_B",
-    "name": "MATRIX TT Wheel (Blue Rim)",
-    "category": "WHEEL",
-    "price": 50,
-    "weight": 200,
-    "moq": 2
-  },
-  {
-    "code": "13-0010",
-    "name": "MATRIX Steel Ball Caster",
-    "category": "WHEEL",
-    "price": 20,
-    "weight": 200,
-    "moq": 1
+    "moq": 1,
+    "eol": true
   },
   {
     "code": "11-3104",
@@ -1621,7 +4102,8 @@
     "category": "SCREW",
     "price": 0,
     "weight": 200,
-    "moq": 100
+    "moq": 100,
+    "eol": true
   },
   {
     "code": "11-3106",
@@ -1629,7 +4111,8 @@
     "category": "SCREW",
     "price": 0,
     "weight": 200,
-    "moq": 100
+    "moq": 100,
+    "eol": true
   },
   {
     "code": "11-3204",
@@ -1637,15 +4120,8 @@
     "category": "SCREW",
     "price": 0,
     "weight": 200,
-    "moq": 100
-  },
-  {
-    "code": "11-3404",
-    "name": "M4 Flat Point set screw - 4mm",
-    "category": "SCREW",
-    "price": 100,
-    "weight": 200,
-    "moq": 100
+    "moq": 100,
+    "eol": true
   },
   {
     "code": "11-3608",
@@ -1654,54 +4130,6 @@
     "price": 0,
     "weight": 200,
     "eol": true,
-    "moq": 100
-  },
-  {
-    "code": "11-4108",
-    "name": "M4 Button Head Screw - 8mm",
-    "category": "SCREW",
-    "price": 400,
-    "weight": 200,
-    "moq": 100
-  },
-  {
-    "code": "11-4112",
-    "name": "M4 Button Head Screw - 12mm",
-    "category": "SCREW",
-    "price": 200,
-    "weight": 200,
-    "moq": 100
-  },
-  {
-    "code": "11-4116",
-    "name": "M4 Button Head Screw - 16mm",
-    "category": "SCREW",
-    "price": 200,
-    "weight": 200,
-    "moq": 100
-  },
-  {
-    "code": "11-4120",
-    "name": "M4 Button Head Screw - 20mm",
-    "category": "SCREW",
-    "price": 500,
-    "weight": 200,
-    "moq": 100
-  },
-  {
-    "code": "11-4124",
-    "name": "M4 Button Head Screw - 24mm",
-    "category": "SCREW",
-    "price": 300,
-    "weight": 200,
-    "moq": 100
-  },
-  {
-    "code": "11-4140",
-    "name": "M4 Button Head Screw - 40mm",
-    "category": "SCREW",
-    "price": 400,
-    "weight": 200,
     "moq": 100
   },
   {
@@ -1714,36 +4142,13 @@
     "moq": 100
   },
   {
-    "code": "11-4501",
-    "name": "M4 Hex Nut",
-    "category": "NUT",
-    "price": 100,
-    "weight": 200,
-    "moq": 100
-  },
-  {
-    "code": "11-4502",
-    "name": "M4 Hex Nut with Tooth Washer",
-    "category": "NUT",
-    "price": 200,
-    "weight": 200,
-    "moq": 100
-  },
-  {
-    "code": "11-4503",
-    "name": "M4 Hex Nut with Nylon Lock",
-    "category": "NUT",
-    "price": 600,
-    "weight": 200,
-    "moq": 100
-  },
-  {
     "code": "11-6000",
     "name": "MATRIX Quick Connector – Battery Box",
     "category": "NUT",
     "price": 125,
     "weight": 200,
-    "moq": 20
+    "moq": 20,
+    "eol": true
   },
   {
     "code": "11-6050",
@@ -1751,7 +4156,8 @@
     "category": "NUT",
     "price": 125,
     "weight": 200,
-    "moq": 20
+    "moq": 20,
+    "eol": true
   },
   {
     "code": "11-6070",
@@ -1759,7 +4165,8 @@
     "category": "NUT",
     "price": 125,
     "weight": 200,
-    "moq": 20
+    "moq": 20,
+    "eol": true
   },
   {
     "code": "11-6120",
@@ -1767,7 +4174,8 @@
     "category": "NUT",
     "price": 125,
     "weight": 200,
-    "moq": 20
+    "moq": 20,
+    "eol": true
   },
   {
     "code": "11-7050",
@@ -1775,55 +4183,8 @@
     "category": "NUT",
     "price": 125,
     "weight": 200,
-    "moq": 20
-  },
-  {
-    "code": "11-4402",
-    "name": "M4 Nylon Washer",
-    "category": "WASHER & SPACER",
-    "price": 200,
-    "weight": 200,
-    "moq": 100
-  },
-  {
-    "code": "11-4403",
-    "name": "M4 Nylon Shoulder Washer",
-    "category": "WASHER & SPACER",
-    "price": 200,
-    "weight": 200,
-    "moq": 100
-  },
-  {
-    "code": "09-0003",
-    "name": "M4 Standoff Spacer - 16mm",
-    "category": "WASHER & SPACER",
-    "price": 100,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "09-0001",
-    "name": "M4 Standoff Spacer - 32mm",
-    "category": "WASHER & SPACER",
-    "price": 200,
-    "weight": 200,
-    "moq": 1
-  },
-  {
-    "code": "13-0005",
-    "name": "Spacer -4mm",
-    "category": "WASHER & SPACER",
-    "price": 0,
-    "weight": 200,
-    "moq": 10
-  },
-  {
-    "code": "13-0004",
-    "name": "Spacer - 48mm",
-    "category": "WASHER & SPACER",
-    "price": 0,
-    "weight": 200,
-    "moq": 10
+    "moq": 20,
+    "eol": true
   },
   {
     "code": "MMX12-000",
@@ -1831,6 +4192,7 @@
     "category": "MOTOR CONTROLLER",
     "price": 3000,
     "weight": 200,
-    "moq": 1
+    "moq": 1,
+    "eol": true
   }
 ]

@@ -3195,6 +3195,7 @@
     "price": 2700,
     "weight": 200,
     "moq": 1,
+    "eol": true,
     "specs": {
       "Chinese Name": "MATRIX 12V 3000mAH鎳氫電池",
       "Notes": "Set of 1 battery + 1 charger"
@@ -3387,10 +3388,10 @@
     "code": "ME12DC-0001-BK",
     "name": "MATRIX 12V DC High Torque Encoder Motor with Cable & Brackets",
     "category": "MOTOR",
-    "subCategory": "DC",
     "price": 2200,
     "weight": 200,
     "moq": 1,
+    "subCategory": "DC",
     "specs": {
       "Chinese Name": "MATRIX 12V高扭力編碼器馬達含線 材與支架",
       "Notes": "Includes motor bracket and screws"
@@ -4201,5 +4202,38 @@
     "price": 0,
     "weight": 200,
     "moq": 1
+  },
+  {
+    "code": "14-0006",
+    "name": "Servo Ext Wire 200mm",
+    "category": "CABLE",
+    "price": 0,
+    "weight": 5,
+    "moq": 1
+  },
+  {
+    "code": "14-0007",
+    "name": "Servo Ext Wire 450mm",
+    "category": "CABLE",
+    "price": 0,
+    "weight": 5,
+    "moq": 1
+  },
+  {
+    "code": "MTL-K1",
+    "name": "MATRIX Tool - kit 1",
+    "category": "TOOL",
+    "price": 0,
+    "weight": 300,
+    "moq": 1
+  },
+  {
+    "code": "50-0015",
+    "name": "Tool Kit",
+    "category": "TOOL",
+    "price": 0,
+    "weight": 200,
+    "moq": 1,
+    "eol": true
   }
 ]

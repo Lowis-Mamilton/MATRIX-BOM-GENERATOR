@@ -199,7 +199,7 @@
   {
     "code": "18650-HD",
     "name": "18650 Battery Box",
-    "category": "BATTERY",
+    "category": "POWER SUPPLY",
     "price": 65,
     "weight": 200,
     "moq": 1,
@@ -3077,7 +3077,7 @@
   {
     "code": "0622",
     "name": "Panasonic NCR18650B 3350mAh Button-Top 18650 Battery (2pcs) with Battery Box",
-    "category": "BATTERY",
+    "category": "POWER SUPPLY",
     "price": 500,
     "weight": 200,
     "moq": 1,
@@ -3113,7 +3113,7 @@
   {
     "code": "11-2210",
     "name": "Screw M2*10 (Nickel-plated) for MG90S",
-    "category": "BRACKET & ACCESSORY",
+    "category": "SCREW",
     "price": 100,
     "weight": 200,
     "moq": 100,
@@ -3126,7 +3126,7 @@
   {
     "code": "11-2501",
     "name": "Nut M2 (Nickel-plated) - Compatible with : SCREWM2X10",
-    "category": "BRACKET & ACCESSORY",
+    "category": "NUT",
     "price": 100,
     "weight": 200,
     "moq": 100,
@@ -3139,7 +3139,7 @@
   {
     "code": "11-2_5205",
     "name": "Round Head Cross Screw M2.5X5mm (Stainless Steel) for MG90S Servo",
-    "category": "BRACKET & ACCESSORY",
+    "category": "SCREW",
     "price": 200,
     "weight": 200,
     "moq": 100,
@@ -3152,7 +3152,7 @@
   {
     "code": "11-3205",
     "name": "Screw M3*5 (Stainless Steel) for 17-335MG",
-    "category": "BRACKET & ACCESSORY",
+    "category": "SCREW",
     "price": 150,
     "weight": 200,
     "moq": 100,
@@ -3165,7 +3165,7 @@
   {
     "code": "11-3223",
     "name": "Screw M3*2.3 (Nickel-plated) for (PART NUMBER: MTT-MG001)",
-    "category": "BRACKET & ACCESSORY",
+    "category": "SCREW",
     "price": 100,
     "weight": 200,
     "moq": 100,
@@ -3178,7 +3178,7 @@
   {
     "code": "11-3501",
     "name": "Nut M3 (Nickel-plated) - Compatible with SCREWM3X2.3",
-    "category": "BRACKET & ACCESSORY",
+    "category": "NUT",
     "price": 100,
     "weight": 200,
     "moq": 100,
@@ -3191,7 +3191,7 @@
   {
     "code": "14-0014",
     "name": "MATRIX 12V 3000mAH NiMH Battery",
-    "category": "BATTERY",
+    "category": "POWER SUPPLY",
     "price": 2700,
     "weight": 200,
     "moq": 1,
@@ -3201,20 +3201,9 @@
     }
   },
   {
-    "code": "14-0016",
-    "name": "MATRIX 12V XT30 Battery Charger",
-    "category": "BATTERY",
-    "price": 0,
-    "weight": 200,
-    "moq": 1,
-    "specs": {
-      "Chinese Name": "MATRIX 12V XT30電池充電器"
-    }
-  },
-  {
     "code": "14-0018",
     "name": "MATRIX 12V 3000mAH NiMH Battery-XT30",
-    "category": "BATTERY",
+    "category": "POWER SUPPLY",
     "price": 2700,
     "weight": 200,
     "moq": 1,
@@ -3226,19 +3215,22 @@
   {
     "code": "14-0018+14-0019",
     "name": "MATRIX 12V 3000mAH NiMH Battery-XT30+12V Battery Charger-XT30",
-    "category": "BATTERY",
+    "category": "POWER SUPPLY",
     "price": 2700,
     "weight": 200,
     "moq": 1,
     "specs": {
       "Chinese Name": "MATRIX 12V 3000mAH XT30鎳氫 電池+充電器",
       "Notes": "Set of 1 battery + 1 charger"
-    }
+    },
+    "photos": [
+      "14-0018+14-0019-2.png"
+    ]
   },
   {
     "code": "14-0019",
     "name": "MATRIX 12V Battery Charger- XT30",
-    "category": "BATTERY",
+    "category": "POWER SUPPLY",
     "price": 300,
     "weight": 200,
     "moq": 1,
@@ -3250,7 +3242,7 @@
   {
     "code": "15-0001",
     "name": "MATRIX Quick Connector Staple",
-    "category": "BRACKET & ACCESSORY",
+    "category": "NUT",
     "price": 80,
     "weight": 200,
     "moq": 1,
@@ -3322,7 +3314,7 @@
   {
     "code": "8020P-2",
     "name": "2mm Hex Wrench and Crosshead Screwdriver",
-    "category": "BRACKET & ACCESSORY",
+    "category": "TOOL",
     "price": 180,
     "weight": 200,
     "moq": 1,
@@ -3645,7 +3637,7 @@
   {
     "code": "5521DC-06V2",
     "name": "6 Cell AA Battery Box",
-    "category": "BATTERY",
+    "category": "POWER SUPPLY",
     "price": 0,
     "weight": 200,
     "moq": 1,
@@ -3654,7 +3646,7 @@
   {
     "code": "14-0004",
     "name": "Battery 9.6V SC2400mAH",
-    "category": "BATTERY",
+    "category": "POWER SUPPLY",
     "price": 0,
     "weight": 200,
     "moq": 1,
@@ -3859,16 +3851,6 @@
     "weight": 200,
     "eol": true,
     "moq": 1
-  },
-  {
-    "code": "MS-010V2",
-    "name": "M-Vision AI Cam V2",
-    "category": "SENSOR",
-    "subCategory": "UART",
-    "price": 3300,
-    "weight": 200,
-    "moq": 1,
-    "eol": true
   },
   {
     "code": "MRC-MG25-180",
@@ -4194,5 +4176,30 @@
     "weight": 200,
     "moq": 1,
     "eol": true
+  },
+  {
+    "code": "MJ5",
+    "name": "MATRIX JOYSTICK V",
+    "category": "JOY STICK",
+    "price": 1500,
+    "weight": 200,
+    "moq": 1,
+    "specs": {
+      "Chinese Name": "MATRIX 搖桿 5",
+      "Wireless": "2.4GHz wireless communication for a stable remote-control link.",
+      "Power": "Powered by 2 × AAA batteries.",
+      "Pairing": "Pairs with its dedicated wireless receiver; controllers are normally pre-paired at the factory.",
+      "Recommended Mode": "The MJ2 supports analog mode (default) and digital mode.",
+      "Important": "Keep the controller in the default analog mode for correct thumbstick readings. Switching to digital mode can cause erratic signal output.",
+      "Notes": "Includes adapter board and cable"
+    }
+  },
+  {
+    "code": "14-0017",
+    "name": "MATRIX EMS Panel",
+    "category": "POWER SUPPLY",
+    "price": 0,
+    "weight": 200,
+    "moq": 1
   }
 ]

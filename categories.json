@@ -12,7 +12,7 @@
     "name": "JOY STICK"
   },
   {
-    "name": "BATTERY"
+    "name": "POWER SUPPLY"
   },
   {
     "name": "SENSOR",
@@ -96,5 +96,8 @@
   },
   {
     "name": "WASHER & SPACER"
+  },
+  {
+    "name": "TOOL"
   }
 ]

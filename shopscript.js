@@ -24,6 +24,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   // from a product detail page or after a hash route falls back to default.
   let lastCategory  = "BUNDLE";
   let lastMobileAll = false;
+  // Active search query (null when not searching) — lets the detail page's
+  // Back link return to the result list instead of the category.
+  let lastSearch = null;
 
   // ─── Helpers ─────────────────────────────────────────────────
   const formatMoney = n => Number(n || 0).toLocaleString("en-US");
@@ -154,6 +157,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     // Clear any product-detail hash quietly (no hashchange re-render) so
     // the back button doesn't loop back into the detail page we're leaving.
     if (location.hash) history.replaceState(null, "", location.pathname + location.search);
+    resetSearchBox(); // picking a category leaves search mode
 
     const clickedLi  = e.target.parentNode;
     const isMobile   = window.innerWidth <= 768;
@@ -297,113 +301,249 @@ document.addEventListener("DOMContentLoaded", async () => {
       items = productData.filter(p => p.category === key);
     }
 
+    renderProductGrid(key, items);
+  }
+
+  // Renders a titled grid of product cards into #content-area. Shared by
+  // category sections and search results. The title is set via textContent
+  // because search titles contain user input.
+  function renderProductGrid(title, items) {
+    content.innerHTML = "";
+
     const section = document.createElement("div");
     section.className = "product-section";
 
     const header = document.createElement("div");
     header.className = "section-header";
-    header.innerHTML = `
-      <h2>${key}</h2>
-      <span class="section-count">${items.length} items</span>
-    `;
+    const h2 = document.createElement("h2");
+    h2.textContent = title;
+    const count = document.createElement("span");
+    count.className = "section-count";
+    count.textContent = `${items.length} items`;
+    header.append(h2, count);
     section.appendChild(header);
 
     const grid = document.createElement("div");
     grid.className = "product-grid";
     section.appendChild(grid);
 
-    items.forEach(p => {
-      const card = document.createElement("div");
-      card.className = "product-card" + (p.eol ? " eol" : "");
-
-      // Image area
-      const imgWrap = document.createElement("div");
-      imgWrap.className = "card-img-wrap";
-      if (p.eol) {
-        const eolBadge = document.createElement("span");
-        eolBadge.className = "badge-eol";
-        eolBadge.textContent = "EOL";
-        imgWrap.appendChild(eolBadge);
-      }
-      if (p.price === 0 && !p.eol) {
-        const naBadge = document.createElement("span");
-        naBadge.className = "badge-na";
-        naBadge.textContent = "INQUIRE";
-        imgWrap.appendChild(naBadge);
-      }
-      const img = document.createElement("img");
-      img.src = `img/${p.code}.png`;
-      img.alt = p.code;
-      img.onerror = fallbackToPlaceholder;
-      imgWrap.appendChild(img);
-      card.appendChild(imgWrap);
-
-      // Card body
-      const body = document.createElement("div");
-      body.className = "card-body";
-
-      const codeEl = document.createElement("div");
-      codeEl.className = "product-code";
-      codeEl.textContent = p.code;
-
-      const nameEl = document.createElement("div");
-      nameEl.className = "product-name";
-      nameEl.textContent = p.name;
-
-      const priceEl = document.createElement("div");
-      priceEl.className = "product-price" + (p.price === 0 ? " na" : "");
-      priceEl.textContent = p.price === 0 ? "Price on request" : `NT$${formatMoney(p.price)}`;
-
-      const moqEl = document.createElement("div");
-      moqEl.className = "moq-badge";
-      moqEl.innerHTML = `<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 7H4a2 2 0 00-2 2v10a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2z"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg> MOQ: ${p.moq}`;
-
-      // Quantity control — built as real DOM elements so events work
-      const qtyRow = document.createElement("div");
-      qtyRow.className = "qty-row";
-
-      const qtyCtrl = document.createElement("div");
-      qtyCtrl.className = "quantity-control";
-
-      const minusBtn = document.createElement("button");
-      minusBtn.className = "minus";
-      minusBtn.textContent = "−";
-      minusBtn.type = "button";
-
-      const qtyInput = document.createElement("input");
-      qtyInput.type = "number";
-      qtyInput.min = "0";
-      qtyInput.value = p.qty;
-
-      const plusBtn = document.createElement("button");
-      plusBtn.className = "plus";
-      plusBtn.textContent = "+";
-      plusBtn.type = "button";
-
-      qtyCtrl.appendChild(minusBtn);
-      qtyCtrl.appendChild(qtyInput);
-      qtyCtrl.appendChild(plusBtn);
-      qtyRow.appendChild(qtyCtrl);
-
-      body.appendChild(codeEl);
-      body.appendChild(nameEl);
-      body.appendChild(priceEl);
-      body.appendChild(moqEl);
-      body.appendChild(qtyRow);
-      card.appendChild(body);
-      grid.appendChild(card);
-
-      attachQtyControl(p, { minus: minusBtn, input: qtyInput, plus: plusBtn });
-
-      // Clicking the card (outside the qty controls) opens the detail page.
-      card.addEventListener("click", e => {
-        if (qtyRow.contains(e.target)) return;
-        location.hash = `item/${encodeURIComponent(p.code)}`;
-      });
-    });
+    items.forEach(p => grid.appendChild(buildProductCard(p)));
 
     content.appendChild(section);
+    return section;
   }
+
+  // Builds one product card (image, badges, price, MOQ, qty control) wired
+  // to the cart and to the detail-page route.
+  function buildProductCard(p) {
+    const card = document.createElement("div");
+    card.className = "product-card" + (p.eol ? " eol" : "");
+
+    // Image area
+    const imgWrap = document.createElement("div");
+    imgWrap.className = "card-img-wrap";
+    if (p.eol) {
+      const eolBadge = document.createElement("span");
+      eolBadge.className = "badge-eol";
+      eolBadge.textContent = "EOL";
+      imgWrap.appendChild(eolBadge);
+    }
+    if (p.price === 0 && !p.eol) {
+      const naBadge = document.createElement("span");
+      naBadge.className = "badge-na";
+      naBadge.textContent = "INQUIRE";
+      imgWrap.appendChild(naBadge);
+    }
+    const img = document.createElement("img");
+    img.src = `img/${p.code}.png`;
+    img.alt = p.code;
+    img.onerror = fallbackToPlaceholder;
+    imgWrap.appendChild(img);
+    card.appendChild(imgWrap);
+
+    // Card body
+    const body = document.createElement("div");
+    body.className = "card-body";
+
+    const codeEl = document.createElement("div");
+    codeEl.className = "product-code";
+    codeEl.textContent = p.code;
+
+    const nameEl = document.createElement("div");
+    nameEl.className = "product-name";
+    nameEl.textContent = p.name;
+
+    const priceEl = document.createElement("div");
+    priceEl.className = "product-price" + (p.price === 0 ? " na" : "");
+    priceEl.textContent = p.price === 0 ? "Price on request" : `NT$${formatMoney(p.price)}`;
+
+    const moqEl = document.createElement("div");
+    moqEl.className = "moq-badge";
+    moqEl.innerHTML = `<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 7H4a2 2 0 00-2 2v10a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2z"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg> MOQ: ${p.moq}`;
+
+    // Quantity control — built as real DOM elements so events work
+    const qtyRow = document.createElement("div");
+    qtyRow.className = "qty-row";
+
+    const qtyCtrl = document.createElement("div");
+    qtyCtrl.className = "quantity-control";
+
+    const minusBtn = document.createElement("button");
+    minusBtn.className = "minus";
+    minusBtn.textContent = "−";
+    minusBtn.type = "button";
+
+    const qtyInput = document.createElement("input");
+    qtyInput.type = "number";
+    qtyInput.min = "0";
+    qtyInput.value = p.qty;
+
+    const plusBtn = document.createElement("button");
+    plusBtn.className = "plus";
+    plusBtn.textContent = "+";
+    plusBtn.type = "button";
+
+    qtyCtrl.appendChild(minusBtn);
+    qtyCtrl.appendChild(qtyInput);
+    qtyCtrl.appendChild(plusBtn);
+    qtyRow.appendChild(qtyCtrl);
+
+    body.appendChild(codeEl);
+    body.appendChild(nameEl);
+    body.appendChild(priceEl);
+    body.appendChild(moqEl);
+    body.appendChild(qtyRow);
+    card.appendChild(body);
+
+    attachQtyControl(p, { minus: minusBtn, input: qtyInput, plus: plusBtn });
+
+    // Clicking the card (outside the qty controls) opens the detail page.
+    card.addEventListener("click", e => {
+      if (qtyRow.contains(e.target)) return;
+      location.hash = `item/${encodeURIComponent(p.code)}`;
+    });
+
+    return card;
+  }
+
+  // ─── Search ──────────────────────────────────────────────────
+  // Whole-catalog search over code/name/category/subCategory. Every
+  // whitespace-separated term must appear (case-insensitive substring).
+  // Results live at #search/<query> so the back button from a detail page
+  // and shared links both land on the same result list.
+  const searchInput = document.getElementById("search-input");
+  const searchClear = document.getElementById("search-clear");
+  const SEARCH_DEBOUNCE_MS = 200;
+  let searchTimer = null;
+
+  function searchProducts(query) {
+    const terms = query.toLowerCase().split(/\s+/).filter(Boolean);
+    return productData.filter(p => {
+      const hay = [p.code, p.name, p.category, p.subCategory]
+        .filter(Boolean).join(" ").toLowerCase();
+      return terms.every(t => hay.includes(t));
+    });
+  }
+
+  function searchHash(query) {
+    return `#search/${encodeURIComponent(query)}`;
+  }
+
+  // decodeURIComponent throws on a stray "%" in a hand-typed/pasted URL.
+  function safeDecode(s) {
+    try { return decodeURIComponent(s); } catch { return s; }
+  }
+
+  // Resets the search box and state without re-rendering the content area.
+  function resetSearchBox() {
+    clearTimeout(searchTimer);
+    lastSearch = null;
+    searchInput.value = "";
+    searchClear.hidden = true;
+  }
+
+  function showSearchResults(query) {
+    lastSearch = query;
+    if (searchInput.value.trim() !== query) searchInput.value = query;
+    searchClear.hidden = false;
+    sidebar.querySelectorAll("li").forEach(li => li.classList.remove("active"));
+
+    const results = searchProducts(query);
+    const section = renderProductGrid(`Search: "${query}"`, results);
+
+    if (results.length === 0) {
+      const empty = document.createElement("div");
+      empty.className = "search-empty";
+      const msg = document.createElement("p");
+      msg.textContent = `No products match "${query}"`;
+      const link = document.createElement("a");
+      link.href = "#";
+      link.textContent = "Clear search";
+      link.addEventListener("click", e => { e.preventDefault(); clearSearch(); });
+      empty.append(msg, link);
+      section.appendChild(empty);
+    }
+
+    content.scrollTop = 0;
+  }
+
+  // Leaves search mode and returns to the last category viewed.
+  function clearSearch() {
+    resetSearchBox();
+    if (location.hash) history.replaceState(null, "", location.pathname + location.search);
+    showSection(lastCategory, lastMobileAll);
+    highlightSidebarFor(lastCategory);
+  }
+
+  function runSearchFromInput() {
+    const query = searchInput.value.trim();
+    if (!query) { clearSearch(); return; }
+    if (query === lastSearch && location.hash === searchHash(query)) return;
+
+    if (location.hash.startsWith("#search/")) {
+      // Already on a results page: refine in place, no new history entry.
+      history.replaceState(null, "", searchHash(query));
+      showSearchResults(query);
+    } else {
+      // Entering search: push one history entry; hashchange renders it.
+      location.hash = searchHash(query);
+    }
+  }
+
+  searchInput.addEventListener("input", () => {
+    searchClear.hidden = searchInput.value === "";
+    clearTimeout(searchTimer);
+    searchTimer = setTimeout(runSearchFromInput, SEARCH_DEBOUNCE_MS);
+  });
+
+  searchInput.addEventListener("keydown", e => {
+    if (e.key === "Escape") {
+      e.preventDefault();
+      clearSearch();
+      searchInput.blur();
+    } else if (e.key === "Enter") {
+      clearTimeout(searchTimer);
+      runSearchFromInput();
+      if (window.innerWidth <= 768) searchInput.blur(); // drop the on-screen keyboard
+    }
+  });
+
+  searchClear.addEventListener("click", () => {
+    clearSearch();
+    searchInput.focus();
+  });
+
+  // "/" focuses the search box, unless the user is typing somewhere or an
+  // overlay (lightbox / export modal) is open.
+  document.addEventListener("keydown", e => {
+    if (e.key !== "/" || e.ctrlKey || e.metaKey || e.altKey) return;
+    const t = e.target;
+    if (t.isContentEditable || ["INPUT", "TEXTAREA", "SELECT"].includes(t.tagName)) return;
+    if (document.querySelector(".lightbox, .export-modal")) return;
+    e.preventDefault();
+    searchInput.focus();
+    searchInput.select();
+  });
 
   // ─── Product detail page ──────────────────────────────────────
   // Renders a single product's detail view (image, price, MOQ, specs
@@ -510,6 +650,11 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     detail.querySelector(".detail-back-link").addEventListener("click", e => {
       e.preventDefault();
+      if (lastSearch) {
+        history.replaceState(null, "", searchHash(lastSearch));
+        showSearchResults(lastSearch);
+        return;
+      }
       history.replaceState(null, "", location.pathname + location.search);
       showSection(lastCategory, lastMobileAll);
       highlightSidebarFor(lastCategory);
@@ -764,6 +909,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   function showExportModal(cb) {
     const autoWeight = getTotalWeight();
     const m = document.createElement("div");
+    m.className = "export-modal"; // hook only (styles are inline) — lets the "/" shortcut see it's open
     m.style.cssText = `
       position:fixed;top:0;left:0;width:100%;height:100%;
       background:rgba(0,0,0,0.4);
@@ -1275,10 +1421,14 @@ document.addEventListener("DOMContentLoaded", async () => {
   // ─── Routing: #item/<code> opens a product detail page, anything
   // else falls back to the last (or default) category. ──────────
   function handleHashRoute() {
-    const m = location.hash.match(/^#item\/(.+)$/);
-    if (m) {
-      showProductDetail(decodeURIComponent(m[1]));
+    const item   = location.hash.match(/^#item\/(.+)$/);
+    const search = location.hash.match(/^#search\/(.*)$/);
+    if (item) {
+      showProductDetail(safeDecode(item[1]));
+    } else if (search && safeDecode(search[1]).trim()) {
+      showSearchResults(safeDecode(search[1]).trim());
     } else {
+      resetSearchBox();
       showSection(lastCategory, lastMobileAll);
       highlightSidebarFor(lastCategory);
     }
